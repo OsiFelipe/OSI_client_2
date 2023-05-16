@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0f1f023e.css",
+    "main.js": "/static/js/main.e5035108.js",
+    "static/js/787.8be83b1d.chunk.js": "/static/js/787.8be83b1d.chunk.js",
+    "static/media/background.jpg": "/static/media/background.faaef85164e6f5fe7460.jpg",
+    "static/media/PCP.png": "/static/media/PCP.b8c147757407983db427.png",
+    "static/media/pcp_design.png": "/static/media/pcp_design.31bff084469f7c85dd9d.png",
+    "static/media/onepage.png": "/static/media/onepage.b26aa92fa552c5cace29.png",
+    "static/media/pag3.png": "/static/media/pag3.81f47a9052d8be722093.png",
+    "static/media/page1.png": "/static/media/page1.95676fe39a2cb7c75850.png",
+    "static/media/page2.png": "/static/media/page2.d26732003fc1153ec12a.png",
+    "static/media/GL.jpg": "/static/media/GL.56f446827e443e88b9f6.jpg",
+    "static/media/gas_lift_packer_design.png": "/static/media/gas_lift_packer_design.ae4b8ad692fb674f4eb6.png",
+    "static/media/gas_lift_design.png": "/static/media/gas_lift_design.7445b10977660ff07487.png",
+    "static/media/OSI.png": "/static/media/OSI.ece9d8007345158321a3.png",
+    "index.html": "/index.html",
+    "main.0f1f023e.css.map": "/static/css/main.0f1f023e.css.map",
+    "main.e5035108.js.map": "/static/js/main.e5035108.js.map",
+    "787.8be83b1d.chunk.js.map": "/static/js/787.8be83b1d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0f1f023e.css",
+    "static/js/main.e5035108.js"
+  ]
+}

@@ -1,0 +1,226 @@
+@use "../../utils/" as *
+@import "../../utils/variables"
+
+.dataGrid
+    padding: 0 1rem
+    text-align: center
+
+.title
+    color: $primary-color,
+    font-weight: bold,
+    margin-bottom: 0.5rem,
+    font-size: 1.5rem
+
+.button 
+  background: $complementary-color
+  color: $primary-color
+  border: 1px solid $primary-color 
+  padding: 5% 10%
+  border-radius: 5px
+  cursor: pointer
+  box-shadow: 1px 1px 2px 0px $primary-color
+  font-weight: bold
+
+  &:hover,&:active
+    background: $primary-color
+    color: $sec-complementary-color
+
+
+.form
+  display: flex,
+  flex-direction: column,
+  width: 50%
+  padding: 2rem
+
+.input
+  margin-top: 1rem
+  height: 2rem,
+  border-radius: 10px,
+  padding: 1%
+  border: 1px solid $primary-color
+
+.submitButton
+  @extend .button
+  margin-top: 2rem,
+  width: 50%
+  padding: 2%
+
+.modal 
+  position: fixed,
+  left: 25%,
+  top: 10%,
+  z-index: 200,
+  width: 50%
+  background-color: white,
+  padding: 0.5rem 0,
+  border: $boder-default,
+  display: flex,
+  flex-direction: column,
+  border-radius: 10px,
+  align-items: center,  
+  animation: 1s popup,
+
+  @include mobile()
+    width: 90%
+
+.modal-closed 
+  position: fixed,
+  z-index: 200,
+  width: 30%,
+  background-color: white,
+  padding: 1rem,
+  border: $boder-default,
+  display: flex,
+  flex-direction: column,
+  border-radius: 15px,
+  align-items: center,  
+  animation: 1s hide,
+
+  @include mobile()
+    width: 90%
+  
+
+.modal__message 
+  padding: 1rem,
+  text-align: -webkit-center,
+
+
+.modal__title__error
+  color: $danger-color,
+
+
+.backdrop 
+  position: fixed,
+  top: 0,
+  left: 0,
+  z-index: 100,
+  width: 100vw,
+  height: 100vh,
+  background: rgba(0, 0, 0, 0.5),
+  transition: opacity 0.2s linear,
+  animation: 1s hide,
+
+.backdrop-closed 
+  position: fixed,
+  top: 0,
+  left: 0,
+  z-index: 100,
+  width: 100vw,
+  height: 100vh,
+  background: rgba(0, 0, 0, 0.5),
+  transition: opacity 0.2s linear,
+  animation: 1s back-popup,
+
+
+.modal_buttons 
+    width: 100%,
+    text-align: center,
+    padding: 1rem,
+    display: flex,
+    flex-direction: row, 
+    justify-content: space-evenly
+
+
+.modal__button 
+  border: $boder-default,
+  width: 40%,
+  height: 5vh,
+  background: $primary-color,
+  color: $secondary-color,
+  border-radius: 4px,
+  cursor: pointer,
+
+
+  &:hover,
+  &:active 
+    box-shadow: 1px 1px 1px $primary-color,
+    background: red,
+    transform: scale(1.1),
+    color: $primary-color
+
+.modal__button--cancel 
+  @extend .modal__button
+  background-color: $warning-color
+
+.spinner 
+  position: fixed,
+  left: 50%,
+  top: 25%,
+  border: 4px solid $primary-color,
+  border-left-color: transparent,
+  border-radius: 50%,
+  width: 100px,
+  height: 100px,
+  animation: spin 1s linear infinite,
+
+
+.titleContainer
+  display: flex, 
+  align-items: center
+  margin-top: 1rem
+  margin-bottom: 1rem
+
+.line 
+  flex: 1, 
+  background-color: $complementary-color 
+  height: 3px 
+
+.title
+  padding: 0 1rem
+  color: $primary-color,
+  font-weight: bold,
+  margin-bottom: 1rem,
+  font-size: 2rem
+  align-self: center
+
+
+.alert 
+  position: fixed,
+  top: 100px,
+  right: 0
+  padding: 20px,
+  font-size: 16px,
+  color: #ffffff,
+  animation: alert-box 1s ease
+
+
+@keyframes popup 
+  from 
+    transform: translateY(-10vh),
+    opacity: 0,
+
+  to 
+    transform: translateY(0),
+    opacity: 1,
+
+@keyframes hide 
+  from 
+    opacity: 0,
+  to 
+    opacity: 1
+    
+ 
+@keyframes spin 
+  from 
+    transform: rotate(0deg),
+  
+  to 
+    transform: rotate(360deg),
+    
+
+@keyframes back-popup 
+  from 
+    opacity: 1,
+
+  to 
+    opacity: 0,
+
+@keyframes alert-box 
+  0% 
+    right: -10%
+  
+  100% 
+    right: 0%
+  
+
+

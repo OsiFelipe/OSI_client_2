@@ -1,0 +1,110 @@
+@use "../utils/" as *
+@import "../utils/variables"
+
+.line
+  height:2px,
+  border-width:0,
+  color: $complementary-color,
+  background-color:$complementary-color,
+
+.grid-col
+    display: flex,
+    flex-direction: column
+
+.techProposalForm
+    display: flex,
+    flex-direction: column,
+    padding: 2rem 1rem
+    overflow-x: hidden
+
+.grid
+    display: flex
+    flex-direction: row
+    place-content: center
+    align-content: center
+    height: 85vh
+    margin-top: 1rem
+
+@include smallScreen()
+    .grid
+        flex-direction: column
+
+.subGrid
+    display: flex,
+    flex-direction: column,
+    width: 100%
+
+.balancePage
+    width: 100%
+    display: flex,
+    flex-direction: column,
+    align-items: center
+
+.box
+    border: 1px solid $primary-color
+    padding: 2% 5%
+    color:  $primary-color
+    border-radius: 10px
+    margin-bottom: 1rem
+    font-weight: bold,
+
+
+
+.subheader
+    width: 100%,
+    display: flex,
+    flex-direction: row,
+    justify-content: flex-start
+
+.button 
+  background: $complementary-color
+  color: $primary-color
+  border: 1px solid $primary-color 
+  padding: 1%
+  border-radius: 5px
+  margin: 1rem 2rem,
+  cursor: pointer
+  box-shadow: 1px 1px 2px 0px $primary-color
+  font-weight: bold
+
+  &:hover,&:active
+    background: $primary-color
+    color: $sec-complementary-color
+
+.mainButton
+    background: $complementary-color
+    color: $primary-color
+    border: 1px solid $primary-color 
+    padding: 10%
+    border-radius: 5px
+    margin: 2rem 2rem,
+    cursor: pointer
+    box-shadow: 1px 1px 2px 0px $primary-color
+    font-weight: bold
+
+    &:hover,&:active
+        background: $primary-color
+        color: $sec-complementary-color
+
+
+.title
+    color: $primary-color,
+    font-weight: bold,
+    margin-bottom: 1rem,
+    font-size: 2rem
+    align-self: center
+
+.buttonProp
+    padding: 0 5rem
+    display: flex,
+    flex-direction: row,
+    justify-content: space-between,
+    margin-bottom: 1rem
+    margin-top: 2rem
+
+.center
+    text-align: -webkit-center
+
+.pageContent
+    padding: 3%
+

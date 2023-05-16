@@ -1,0 +1,548 @@
+@use "./../utils/" as *
+@import "./../utils/variables"
+
+
+.grid
+    display: flex,
+    flex-direction: row
+
+.grid-col
+    display: flex,
+    flex-direction: column
+
+.title
+  margin-top: 2rem
+  color: $primary-color,
+  font-weight: bold,
+  margin-bottom: 1rem,
+  font-size: 2rem
+  align-self: center
+
+
+.button 
+  background: $complementary-color
+  color: $primary-color
+  border: 1px solid $primary-color 
+  padding: 5% 10%
+  border-radius: 5px
+  cursor: pointer
+  box-shadow: 1px 1px 2px 0px $primary-color
+  font-weight: bold
+
+  &:hover,&:active
+    background: $primary-color
+    color: $sec-complementary-color
+
+
+.mainForm
+  display: flex,
+  flex-direction: row
+
+
+
+.form
+  display: flex,
+  flex-direction: column,
+  width: 70%
+  text-align: -webkit-center
+
+.columnSla
+  width: 25vw,
+  padding: 1rem,
+  margin-top: 5rem
+
+.slaImage
+  width: 100%,
+  animation: 1s popup,
+
+.input
+  margin-top: 1rem
+  height: 2rem,
+  border-radius: 10px,
+  padding: 1%
+  border: 1px solid $primary-color
+
+
+.submitButton
+  @extend .button
+  margin-top: 2rem,
+  width: 50%
+  padding: 2%
+
+.image 
+  width: 10vw,
+  border-radius: 10px
+  transition: 0.3s
+
+.toolBottom 
+    margin-top: 250px
+    color: $primary-color,
+    font-weight: bold,
+    font-size: 1rem
+
+.toolDescription 
+    color: $primary-color,
+    font-weight: bold,
+    font-size: 1rem
+
+.addToolForm
+  display: flex,
+  flex-direction: column
+
+.customToolForm
+  text-align: -webkit-center
+  display: flex,
+  flex-direction: column,
+  padding-left: 10%,
+  padding-right: 10%,
+
+.solItem
+  height: 300px
+  width: 60%
+  border: 1px solid $primary-color 
+  padding: 10px
+  border-radius: 10px,
+  margin-bottom: 10px,
+  overflow-y: hidden
+
+  img
+    width: 100%
+
+.simulationForm
+  text-align: -webkit-center
+
+.solutionForm
+  display: flex,
+  flex-direction: row,
+  justify-content: space-evenly
+
+.buttonTally
+  padding: 0 5rem
+  display: flex,
+  flex-direction: row,
+  justify-content: space-around,
+  margin-bottom: 1rem
+
+.buttonGral
+  @extend .buttonTally
+  margin-top: 2rem
+
+.buttonForm
+  padding: 0 2rem
+  display: flex,
+  flex-direction: row,
+  justify-content: space-around,
+  margin-bottom: 1rem
+  margin-top: 2rem
+
+.tableContainer
+  overflow-x: scroll
+
+.tableTally
+  border-collapse: collapse,
+  border-radius: 10px
+  margin: 25px 0,
+  font-size: 0.9em,
+  min-width: 400px,
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15),
+
+  thead tr
+    background-color: $primary-color
+    color: #ffffff
+    text-align: center
+
+  th, td
+    padding: 5px 5px,
+
+  tbody tr
+    border-bottom: 1px solid #dddddd
+
+  tbody tr:nth-of-type(even)
+    background-color: #f3f3f3
+
+  tbody tr:last-of-type
+    border-bottom: 2px solid $primary-color
+
+  tbody tr.last-row 
+    font-weight: bold
+    color: #009879
+
+.tableSales
+  border-collapse: collapse,
+  border-radius: 10px
+  margin: 25px,
+  font-size: 0.9em,
+  min-width: 400px,
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15),
+
+  thead tr
+    background-color: #2F75B5
+    color: #ffffff
+    text-align: center
+
+  th, td
+    padding: 12px 15px,
+
+  tbody tr
+    border-bottom: 1px solid #dddddd
+
+  tbody tr:nth-of-type(even)
+    background-color: #f3f3f3
+
+  tbody tr:last-of-type
+    border-bottom: 2px solid $primary-color
+
+  tbody tr.last-row 
+    font-weight: bold
+    color: #009879
+
+.wbdContainer
+  align-self: center
+
+.tableWbd
+  border-collapse: collapse,
+  margin: 25px 0,
+  font-size: 1.2em,
+  min-width: 400px,
+
+  thead tr
+    background-color: $primary-color
+    color: #ffffff
+    text-align: center
+
+  th, td
+    padding: 10px 20px,
+    text-align: center,
+
+  tbody tr
+    border-bottom: 1px solid #dddddd
+
+
+  tbody tr:last-of-type
+    border-bottom: 2px solid $primary-color
+
+  tbody tr.last-row 
+    font-weight: bold
+    color: #009879
+
+.tableTechContainer
+  place-self: center
+
+.tableTech
+  border-collapse: collapse,
+  border-radius: 10px
+  margin: 25px 0,
+  font-size: 0.9em,
+  min-width: 400px,
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15),
+
+  thead tr
+    background-color: $primary-color
+    color: #ffffff
+    text-align: center
+
+  th, td
+    padding: 12px 20px,
+
+  tbody tr
+    border-bottom: 1px solid #dddddd
+
+    &:hover,&:active
+      background-color: $complementary-transparent
+
+  tbody tr:nth-of-type(even)
+    background-color: #f3f3f3
+
+    &:hover,&:active
+      background-color: $complementary-transparent
+
+  tbody tr:last-of-type
+    border-bottom: 2px solid $primary-color
+
+  tbody tr.last-row 
+    font-weight: bold
+    color: #009879
+
+
+.fieldButton
+  display: flex,
+  flex-direction: row,
+  align-items: inherit,
+  justify-content: center,
+
+.errorPage
+  margin-top: 5rem
+
+.iconErrorMessage
+  color: $complementary-color
+  font-size: 3rem
+  text-align: -webkit-center
+
+.errorMessage
+  color: $danger-color
+  font-size: 1.5rem
+  text-align: -webkit-center
+
+
+
+.frame 
+  position: fixed,
+  top: 10%,
+  padding-bottom: 10px,
+  z-index: 200,
+  width: 80%
+  background-color: white,
+  border: $boder-default,
+  display: flex,
+  flex-direction: column,
+  border-radius: 10px,
+  align-items: center,  
+  animation: 1s popup,
+
+  @include mobile()
+    width: 90%
+
+.modal-closed 
+  position: fixed,
+  z-index: 200,
+  width: 30%,
+  background-color: white,
+  padding: 1rem,
+  border: $boder-default,
+  display: flex,
+  flex-direction: column,
+  border-radius: 15px,
+  align-items: center,  
+  animation: 1s hide,
+
+  @include mobile()
+    width: 90%
+  
+
+.modal__message 
+  padding: 1rem,
+  text-align: -webkit-center,
+
+
+.modal__title__error
+  color: $danger-color,
+
+
+.backdrop 
+  position: fixed,
+  top: 0,
+  left: 0,
+  z-index: 100,
+  width: 100vw,
+  height: 100vh,
+  background: rgba(0, 0, 0, 0.5),
+  transition: opacity 0.2s linear,
+  animation: 1s hide,
+
+.backdrop-closed 
+  position: fixed,
+  top: 0,
+  left: 0,
+  z-index: 100,
+  width: 100vw,
+  height: 100vh,
+  background: rgba(0, 0, 0, 0.5),
+  transition: opacity 0.2s linear,
+  animation: 1s back-popup,
+
+
+.modal_buttons 
+    width: 100%,
+    text-align: center,
+    padding: 1rem,
+    display: flex,
+    flex-direction: row, 
+    justify-content: space-evenly
+
+
+.modal__button 
+  border: $boder-default,
+  width: 40%,
+  height: 5vh,
+  background: $primary-color,
+  color: $secondary-color,
+  border-radius: 4px,
+  cursor: pointer,
+
+
+  &:hover,
+  &:active 
+    box-shadow: 1px 1px 1px $primary-color,
+    background: red,
+    transform: scale(1.1),
+    color: $primary-color
+
+.modal__button--cancel 
+  @extend .modal__button
+  background-color: $warning-color
+
+.closeButton
+  width: 100%
+  display: flex,
+  flex-direction: row
+  justify-content: right
+
+.wbdInfo
+  border: solid 1px $primary-color
+  text-align: center
+  padding: 1rem
+  border-radius: 15px,
+  text-align: -webkit-center,
+  display: flex,
+  flex-direction: column,
+  width: 70%
+
+.simulatorResults
+  border: solid 1px $primary-color
+  padding: 1rem 2rem,
+  margin: 2rem 1rem 1rem 1rem
+  text-align: center
+  border-radius: 15px
+  text-align: -webkit-center
+
+.simulator
+  border: solid 1px $primary-color
+  padding: 1rem 2rem,
+  margin: 2rem 1rem 1rem 1rem
+  text-align: center
+  border-radius: 15px
+  background-color: rgba(90,100,119,0.1)
+  text-align: -webkit-center
+
+.wellbore3d
+  text-align: center
+  text-align: -webkit-center
+  
+  img
+    border: solid 1px $primary-color
+    border-radius: 15px
+    padding: 1rem
+    width: 50%
+
+
+.buttonWell3d
+  display: flex,
+  flex-direction: row
+  justify-content: space-around
+
+
+
+.wrapper 
+    position: fixed,
+    z-index: 200,
+    width: 30%,
+    top: 30%,
+    left: 35%
+    color: #eeeeee
+    max-width: 550px
+    border-radius: 10px
+    background-color: rgba(90,100,119,0.8)
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75)
+
+    h2 
+        margin: 35px 0
+        font-weight: bold
+        font-size: 20px
+    
+
+
+.group 
+    display: flex
+    flex-direction: column
+    flex-wrap: nowrap
+    margin-top: 35px
+    padding: 0 35px
+    align-items: center
+
+    .label 
+        position: absolute
+        -webkit-transition: all 0.5s ease
+        -moz-transition: all 0.5s ease
+        -ms-transition: all 0.5s ease
+        -o-transition: all 0.5s ease
+        transition: all 0.5s ease
+        pointer-events: none
+    
+
+    .input 
+        width: 350px
+        background-color: transparent
+        border: none
+        color: white
+        border-bottom: solid 1px white
+        outline: none
+
+        &:focus ~ label,
+        &:valid ~ label 
+            margin-top: -25px
+            -webkit-transition: all 0.5s ease
+            -moz-transition: all 0.5s ease
+            -ms-transition: all 0.5s ease
+            -o-transition: all 0.5s ease
+            transition: all 0.5s ease
+
+.button 
+    color: #eeeeee
+    background-color: $complementary-color
+    outline: none
+    padding: 2% 5%
+    margin: 35px 0
+    border: none
+    border-bottom: solid 1px white
+    -webkit-transition: all 1s linear
+    -moz-transition: all 1s linear
+    -ms-transition: all 1s linear
+    -o-transition: all 1s linear
+    transition: all 1s linear
+
+    &:hover 
+        color: #bbe1fa
+        border-bottom: solid 1px #bbe1fa
+        -webkit-transition: all 1s linear
+        -moz-transition: all 1s linear
+        -ms-transition: all 1s linear
+        -o-transition: all 1s linear
+        transition: all 1s linear
+
+
+.chart 
+  width: 90%,
+  align-self: center 
+
+.productImage
+  height: 20vh,
+  max-height: 20vh,
+  border: 1px solid $complementary-color,
+  border-radius: 10px,
+  display: flex,
+  justify-content: center,
+  align-items: center,
+
+  img
+    width: 10%
+    transform: rotate(-90deg)
+
+
+@keyframes popup 
+  from 
+    transform: translateY(-10vh),
+    opacity: 0,
+
+  to 
+    transform: translateY(0),
+    opacity: 1,
+
+@keyframes hide 
+  from 
+    opacity: 0,
+  to 
+    opacity: 1
+
+
+
+
