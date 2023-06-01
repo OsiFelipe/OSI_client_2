@@ -57,14 +57,9 @@ const DataProvider = ({ children }: Props) => {
   useEffect(() => {
     setTimeout(() => {
       setIsSuccess(false);
-    }, 3000);
-  }, [isSuccess]);
-
-  useEffect(() => {
-    setTimeout(() => {
       setIsError(false);
     }, 3000);
-  }, [isError]);
+  }, [isSuccess]);
 
   useEffect(() => {
     if (
@@ -290,7 +285,7 @@ const DataProvider = ({ children }: Props) => {
     let sumOfLengths = baseDepth;
     for (let i = 0; i < index; i++) {
       if (i === 0) {
-        if (basicInfo.sla.id === 1) {
+        if (basicInfo.sla.id === 1 || basicInfo.sla.id === 0) {
           sumOfLengths += 0;
         } else {
           sumOfLengths += newTally[i].length * newTally[i].quantity;
@@ -315,7 +310,7 @@ const DataProvider = ({ children }: Props) => {
     let sumOfLengths = baseDepth;
     for (let i = 0; i <= index; i++) {
       if (i === 0) {
-        if (basicInfo.sla.id === 1) {
+        if (basicInfo.sla.id === 1 || basicInfo.sla.id === 0) {
           sumOfLengths += 0;
         } else {
           sumOfLengths += newTally[i].length * newTally[i].quantity;
@@ -884,35 +879,36 @@ const DataProvider = ({ children }: Props) => {
   };
 
   const handleCreatePdf = () => {
-    // const tol = basicInfo.bhaInfo.tol
-    //   ? parseFloat(basicInfo.bhaInfo.tol)
-    //   : basicInfo.mdDepth + totalLenght;
+    const tol = basicInfo.bhaInfo.tol;
     let allWellboreArray: WbdItemProps[] = [];
     for (let j = 0; j < wbdDesign.length; j++) {
-      // if (j === wbdDesign.length - 1) {
-      //   setLastBottom(wbdDesign[j].tool.bottom || 1);
-      //   console.log("ddddddddd", wbdDesign[j]);
-      // }
-      const top = wbdDesign[j].tool.top;
-      console.log(top);
-      const bottom = wbdDesign[j].tool.top;
-      console.log(bottom);
-      // if (top <= tol && bottom >= tol) console.log(wbdDesign[j]);
-      if (
-        wbdDesign[j].tool.quantity === 1 &&
-        wbdDesign[j].tool.quantity !== 0 &&
-        wbdDesign[j].tool.id !== 0
-      ) {
-        allWellboreArray.push(wbdDesign[j]);
+      const top = tallyDesign[j].top;
+      const bottom = tallyDesign[j].bottom;
+      const isTol = top && bottom && tol && top <= tol && bottom >= tol;
+      let item = wbdDesign[j];
+      if (item.tool.quantity === 1 && item.tool.id !== 0) {
+        if (isTol) item = { ...item, tol: true };
+        allWellboreArray.push(item);
       } else if (
-        wbdDesign[j].tool.quantity !== 1 &&
-        wbdDesign[j].tool.quantity !== 0 &&
-        wbdDesign[j].tool.id !== 0
+        item.tool.quantity !== 1 &&
+        item.tool.quantity !== 0 &&
+        item.tool.id !== 0
       ) {
         let totalTools = Array.from(
-          { length: wbdDesign[j].tool.quantity },
-          (_) => wbdDesign[j]
+          { length: item.tool.quantity },
+          (_, index) => {
+            const {
+              tool: { length },
+            } = item;
+            if (isTol) {
+              const temp = tol - top;
+              const toolIndex = Math.floor(temp / length);
+              if (toolIndex === index) return { ...item, tol: true };
+            }
+            return item;
+          }
         );
+
         allWellboreArray.push(...totalTools);
       }
     }
@@ -963,7 +959,6 @@ const DataProvider = ({ children }: Props) => {
         newPage.length > 0 && design.push(newPage);
       }
     }
-    console.log(design);
     setDesignByPage(design);
   };
 

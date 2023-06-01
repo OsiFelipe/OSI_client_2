@@ -47,6 +47,7 @@ export const TallyDesignForm = () => {
     onEditTally,
     onCancelEdition,
     fetchDataTally,
+    fetchDataProducts,
     onResetValues,
     onCreatePdf,
     isSuccess,
@@ -63,6 +64,10 @@ export const TallyDesignForm = () => {
       onResetValues();
     }
   }, [idTally]);
+
+  useEffect(() => {
+    fetchDataProducts();
+  }, []);
 
   const buttons = [
     {
@@ -87,7 +92,7 @@ export const TallyDesignForm = () => {
       title: !inPdf ? "To Pdf" : "Go Back",
       action: () => {
         onCreatePdf();
-        //setInPdf(!inPdf);
+        setInPdf(!inPdf);
       },
       icon: !inPdf ? <PictureAsPdfIcon /> : <ArrowBackIosIcon />,
     },

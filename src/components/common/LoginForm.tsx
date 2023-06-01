@@ -5,12 +5,18 @@ import { useState } from "react";
 export const LoginForm = ({
   onClickLogin,
 }: {
-  onClickLogin: (username: string) => void;
+  onClickLogin: (username: string, pass: string) => void;
 }) => {
   const [username, setUsername] = useState("");
   const [pass, setPass] = useState("");
   return (
-    <form className={styles.wrapper} onSubmit={() => onClickLogin(username)}>
+    <form
+      className={styles.wrapper}
+      onSubmit={(event) => {
+        event.preventDefault();
+        onClickLogin(username, pass);
+      }}
+    >
       <h2>LOGIN</h2>
       <section className={styles.group}>
         <input

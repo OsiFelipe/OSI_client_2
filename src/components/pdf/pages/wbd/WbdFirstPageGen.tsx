@@ -82,10 +82,22 @@ const styles = StyleSheet.create({
     left: 146,
     width: "50px",
   },
+  toolPCPTol: {
+    position: "relative",
+    top: 60,
+    left: 87.5,
+    width: "50px",
+  },
   tool: {
     position: "relative",
     top: 65,
     left: 146,
+    width: "50px",
+  },
+  toolTol: {
+    position: "relative",
+    top: 65,
+    left: 87.5,
     width: "50px",
   },
   column: {
@@ -106,6 +118,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  lineTol: {
+    position: "relative",
+    top: 60,
+    left: 90,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   description: {
     position: "relative",
     top: 60,
@@ -122,6 +142,15 @@ const styles = StyleSheet.create({
     fontSize: 7,
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  descriptionTol: {
+    position: "relative",
+    top: 60,
+    left: 100,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "white",
   },
   lineSN: {
     position: "relative",
@@ -154,6 +183,39 @@ const styles = StyleSheet.create({
     fontSize: 7,
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "white",
+  },
+  innerToolTol: {
+    position: "relative",
+    top: 65,
+    left: 36.5,
+    width: "50px",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  lineInnerTol: {
+    position: "relative",
+    top: 60,
+    left: 40,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  descriptionInnerTol: {
+    position: "relative",
+    top: 60,
+    left: 50,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  tolDepth: {
+    position: "relative",
+    top: 60,
+    left: 70,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 });
 
@@ -161,7 +223,8 @@ export const WbdFirstPageGen = ({
   tools,
   slaId,
   data: {
-    basicInfo: { mdDepth },
+    basicInfo: { mdDepth, bhaInfo },
+    lastBottom,
   },
 }: {
   tools: WbdItemProps[];
@@ -207,41 +270,80 @@ export const WbdFirstPageGen = ({
         {tools.map((item, index) =>
           item && item.tool.imagePath ? (
             <View style={styles.row} key={index}>
+              {item.tol && (
+                <Text style={styles.tolDepth}>TOL @ {bhaInfo?.tol} MD ft</Text>
+              )}
               <Image
                 key={index}
                 cache
-                style={slaId === 3 ? styles.toolPCP : styles.tool}
+                style={
+                  slaId === 3
+                    ? item.tol
+                      ? styles.toolPCPTol
+                      : styles.toolPCP
+                    : item.tol
+                    ? styles.toolTol
+                    : styles.tool
+                }
                 src={`${process.env.REACT_APP_SERVER}${item.tool.imagePath}`}
                 fixed
               />
-              {item.tool.innerTools ? (
+              {item.tool.innerTools && item.tool.innerTools.imagePath ? (
                 <>
                   <Image
                     cache
-                    style={styles.innerTool}
+                    style={item.tol ? styles.innerToolTol : styles.innerTool}
                     src={`${process.env.REACT_APP_SERVER}${item.tool.innerTools.imagePath}`}
                     fixed
                   />
-                  <Text key={index} style={styles.lineInner} fixed>
+                  <Text
+                    key={index}
+                    style={item.tol ? styles.lineInnerTol : styles.lineInner}
+                    fixed
+                  >
                     _________
                   </Text>
-                  <Text key={index} style={styles.descriptionInner} fixed>
+                  <Text
+                    key={index}
+                    style={
+                      item.tol
+                        ? styles.descriptionInnerTol
+                        : styles.descriptionInner
+                    }
+                    fixed
+                  >
                     {item.tool.description || item.tool.name}
                     {slaId === 0 && index === 0 && mdDepth && mdDepth !== 0
                       ? ` @ ${mdDepth} MD ft`
                       : ""}
+                    {lastBottom &&
+                      index === tools.length - 1 &&
+                      `@ ${lastBottom.toFixed(2)} MD ft`}
                   </Text>
                 </>
               ) : (
                 <>
-                  <Text key={index} style={styles.line} fixed>
+                  <Text
+                    key={index}
+                    style={item.tol ? styles.lineTol : styles.line}
+                    fixed
+                  >
                     _________
                   </Text>
-                  <Text key={index} style={styles.description} fixed>
+                  <Text
+                    key={index}
+                    style={
+                      item.tol ? styles.descriptionTol : styles.description
+                    }
+                    fixed
+                  >
                     {item.tool.description || item.tool.name}
                     {slaId === 0 && index === 0 && mdDepth && mdDepth !== 0
                       ? ` @ ${mdDepth} MD ft`
                       : ""}
+                    {lastBottom &&
+                      index === tools.length - 1 &&
+                      `@ ${lastBottom.toFixed(2)} MD ft`}
                   </Text>
                 </>
               )}

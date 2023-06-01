@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
-import { WbdItemProps } from "../../../../interfaces/interfaces";
+import { DataProps, WbdItemProps } from "../../../../interfaces/interfaces";
 import wbdImage from "../../../../utils/images/page1.png";
 import slaImage from "../../../../utils/images/PCP.png";
 import designImage from "../../../../utils/images/pcp_design.png";
@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
     left: 146,
     width: "50px",
   },
+  toolTol: {
+    position: "relative",
+    top: 60,
+    left: 87.5,
+    width: "50px",
+  },
   column: {
     display: "flex",
     flexDirection: "column",
@@ -60,6 +66,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  lineTol: {
+    position: "relative",
+    top: 60,
+    left: 90,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   description: {
     position: "relative",
     top: 60,
@@ -70,7 +84,7 @@ const styles = StyleSheet.create({
   },
   innerTool: {
     position: "relative",
-    top: 65,
+    top: 60,
     left: 95,
     width: "50px",
     alignItems: "center",
@@ -92,9 +106,58 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  innerToolTol: {
+    position: "relative",
+    top: 60,
+    left: 37,
+    width: "50px",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  lineInnerTol: {
+    position: "relative",
+    top: 60,
+    left: 40,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  descriptionInnerTol: {
+    position: "relative",
+    top: 60,
+    left: 50,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  descriptionTol: {
+    position: "relative",
+    top: 60,
+    left: 100,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  tolDepth: {
+    position: "relative",
+    top: 60,
+    left: 70,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
 
-export const WbdFirstPagePCP = ({ tools }: { tools: WbdItemProps[] }) => {
+export const WbdFirstPagePCP = ({
+  tools,
+  data: {
+    basicInfo: { bhaInfo },
+  },
+}: {
+  tools: WbdItemProps[];
+  data: DataProps;
+}) => {
   return (
     <Page style={styles.body}>
       <Image cache style={styles.image} src={wbdImage} fixed />
@@ -104,9 +167,12 @@ export const WbdFirstPagePCP = ({ tools }: { tools: WbdItemProps[] }) => {
         {tools.map((item, index) =>
           item && item.tool.imagePath ? (
             <View style={styles.row} key={index}>
+              {item.tol && (
+                <Text style={styles.tolDepth}>TOL @ {bhaInfo?.tol} MD ft</Text>
+              )}
               <Image
                 cache
-                style={styles.tool}
+                style={item.tol ? styles.toolTol : styles.tool}
                 src={`${process.env.REACT_APP_SERVER}${item.tool.imagePath}`}
                 fixed
               />
@@ -114,23 +180,45 @@ export const WbdFirstPagePCP = ({ tools }: { tools: WbdItemProps[] }) => {
                 <>
                   <Image
                     cache
-                    style={styles.innerTool}
+                    style={item.tol ? styles.innerToolTol : styles.innerTool}
                     src={`${process.env.REACT_APP_SERVER}${item.tool.innerTools.imagePath}`}
                     fixed
                   />
-                  <Text key={index} style={styles.lineInner} fixed>
+                  <Text
+                    key={index}
+                    style={item.tol ? styles.lineInnerTol : styles.lineInner}
+                    fixed
+                  >
                     _________
                   </Text>
-                  <Text key={index} style={styles.descriptionInner} fixed>
+                  <Text
+                    key={index}
+                    style={
+                      item.tol
+                        ? styles.descriptionInnerTol
+                        : styles.descriptionInner
+                    }
+                    fixed
+                  >
                     {item.tool.description || item.tool.name}
                   </Text>
                 </>
               ) : (
                 <>
-                  <Text key={index} style={styles.line} fixed>
+                  <Text
+                    key={index}
+                    style={item.tol ? styles.lineTol : styles.line}
+                    fixed
+                  >
                     _________
                   </Text>
-                  <Text key={index} style={styles.description} fixed>
+                  <Text
+                    key={index}
+                    style={
+                      item.tol ? styles.descriptionTol : styles.description
+                    }
+                    fixed
+                  >
                     {item.tool.description || item.tool.name}
                   </Text>
                 </>

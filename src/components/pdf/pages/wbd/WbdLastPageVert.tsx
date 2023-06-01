@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
 import { WbdItemProps, DataProps } from "../../../../interfaces/interfaces";
-import wbdImage from "../../../../utils/images/pag3.png";
+import wbdImage from "../../../../utils/images/page3_vert.png";
 
 const styles = StyleSheet.create({
   body: {
@@ -17,7 +17,13 @@ const styles = StyleSheet.create({
   tool: {
     position: "relative",
     top: 60,
-    left: 146,
+    left: 138,
+    width: "50px",
+  },
+  toolTol: {
+    position: "relative",
+    top: 60,
+    left: 79.5,
     width: "50px",
   },
   column: {
@@ -33,7 +39,15 @@ const styles = StyleSheet.create({
   line: {
     position: "relative",
     top: 60,
-    left: 150,
+    left: 140,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  lineTol: {
+    position: "relative",
+    top: 60,
+    left: 85,
     fontSize: 7,
     justifyContent: "space-between",
     alignItems: "center",
@@ -41,7 +55,7 @@ const styles = StyleSheet.create({
   description: {
     position: "relative",
     top: 60,
-    left: 160,
+    left: 150,
     fontSize: 7,
     justifyContent: "space-between",
     alignItems: "center",
@@ -49,8 +63,8 @@ const styles = StyleSheet.create({
   },
   innerTool: {
     position: "relative",
-    top: 65,
-    left: 95,
+    top: 60,
+    left: 87,
     width: "50px",
     alignItems: "center",
     justifyContent: "center",
@@ -58,7 +72,7 @@ const styles = StyleSheet.create({
   lineInner: {
     position: "relative",
     top: 60,
-    left: 100,
+    left: 90,
     fontSize: 7,
     justifyContent: "space-between",
     alignItems: "center",
@@ -66,16 +80,59 @@ const styles = StyleSheet.create({
   descriptionInner: {
     position: "relative",
     top: 60,
-    left: 110,
+    left: 100,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  innerToolTol: {
+    position: "relative",
+    top: 60,
+    left: 29,
+    width: "50px",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  lineInnerTol: {
+    position: "relative",
+    top: 60,
+    left: 30,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  descriptionInnerTol: {
+    position: "relative",
+    top: 60,
+    left: 40,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  descriptionTol: {
+    position: "relative",
+    top: 60,
+    left: 100,
+    fontSize: 7,
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  tolDepth: {
+    position: "relative",
+    top: 60,
+    left: 65,
     fontSize: 7,
     justifyContent: "space-between",
     alignItems: "center",
   },
 });
-
 export const WbdLastPageVert = ({
   tools,
-  data: { lastBottom },
+  data: {
+    lastBottom,
+    basicInfo: { bhaInfo },
+  },
 }: {
   tools: WbdItemProps[];
   data: DataProps;
@@ -87,10 +144,13 @@ export const WbdLastPageVert = ({
         {tools.map((item, index) =>
           item && item.tool.imagePath ? (
             <View style={styles.row} key={index}>
+              {item.tol && (
+                <Text style={styles.tolDepth}>TOL @ {bhaInfo?.tol} MD ft</Text>
+              )}
               <Image
                 key={index}
                 cache
-                style={styles.tool}
+                style={item.tol ? styles.toolTol : styles.tool}
                 src={`${process.env.REACT_APP_SERVER}${item.tool.imagePath}`}
                 fixed
               />
@@ -98,14 +158,26 @@ export const WbdLastPageVert = ({
                 <>
                   <Image
                     cache
-                    style={styles.innerTool}
+                    style={item.tol ? styles.innerToolTol : styles.innerTool}
                     src={`${process.env.REACT_APP_SERVER}${item.tool.innerTools.imagePath}`}
                     fixed
                   />
-                  <Text key={index} style={styles.lineInner} fixed>
+                  <Text
+                    key={index}
+                    style={item.tol ? styles.lineInnerTol : styles.lineInner}
+                    fixed
+                  >
                     _________
                   </Text>
-                  <Text key={index} style={styles.descriptionInner} fixed>
+                  <Text
+                    key={index}
+                    style={
+                      item.tol
+                        ? styles.descriptionInnerTol
+                        : styles.descriptionInner
+                    }
+                    fixed
+                  >
                     {item.tool.description || item.tool.name}{" "}
                     {lastBottom &&
                       index === tools.length - 1 &&
@@ -114,10 +186,20 @@ export const WbdLastPageVert = ({
                 </>
               ) : (
                 <>
-                  <Text key={index} style={styles.line} fixed>
+                  <Text
+                    key={index}
+                    style={item.tol ? styles.lineTol : styles.line}
+                    fixed
+                  >
                     _________
                   </Text>
-                  <Text key={index} style={styles.description} fixed>
+                  <Text
+                    key={index}
+                    style={
+                      item.tol ? styles.descriptionTol : styles.description
+                    }
+                    fixed
+                  >
                     {item.tool.description || item.tool.name}{" "}
                     {lastBottom &&
                       index === tools.length - 1 &&

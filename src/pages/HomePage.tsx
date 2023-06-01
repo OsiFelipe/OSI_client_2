@@ -3,9 +3,12 @@ import { NavBar, ShowContent, CardHomePage } from "../components";
 import styles from "./main.module.sass";
 import OsiImage from "../utils/images/OSI.png";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext";
 
 export const HomePage = () => {
   const navigate = useNavigate();
+  const { isLoading } = useContext(AuthContext);
 
   const cards = [
     {
@@ -64,8 +67,8 @@ export const HomePage = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}></Grid>
           {cards.map((card) => (
-            <Grid item xs={4}>
-              <CardHomePage card={card} key={card.id} />
+            <Grid item xs={4} key={card.id}>
+              <CardHomePage card={card} />
             </Grid>
           ))}
         </Grid>
@@ -73,5 +76,5 @@ export const HomePage = () => {
     </>
   );
 
-  return <ShowContent error={""} isLoading={false} content={content} />;
+  return <ShowContent error={""} isLoading={isLoading} content={content} />;
 };

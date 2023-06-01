@@ -138,7 +138,7 @@ export const BasicInfoPage = ({
         </View>
         <View style={styles.tableRow}>
           <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>SLA:</Text>
+            <Text style={styles.tableCell}>ALS:</Text>
           </View>
           <View style={styles.tableCol}>
             <Text style={styles.tableCell}>{sla.name}</Text>

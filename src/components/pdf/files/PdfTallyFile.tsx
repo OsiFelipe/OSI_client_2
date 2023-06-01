@@ -33,27 +33,47 @@ export const PdfTallyFile = ({ data }: { data: DataProps }) => {
                 )}
                 {data.basicInfo.sla.id === 1 &&
                   !data.basicInfo.bhaInfo?.sandLift && (
-                    <WbdFirstPageESP tools={itemsByPage} key={index} />
+                    <WbdFirstPageESP
+                      tools={itemsByPage}
+                      data={data}
+                      key={index}
+                    />
                   )}
                 {data.basicInfo.sla.id === 1 &&
                   data.basicInfo.bhaInfo?.sandLift && (
-                    <WbdFirstPageEspSL tools={itemsByPage} key={index} />
+                    <WbdFirstPageEspSL
+                      tools={itemsByPage}
+                      data={data}
+                      key={index}
+                    />
                   )}
                 {data.basicInfo.sla.id === 2 &&
                   !data.basicInfo.bhaInfo?.glPacker && (
-                    <WbdFirstPageGL tools={itemsByPage} key={index} />
+                    <WbdFirstPageGL
+                      tools={itemsByPage}
+                      data={data}
+                      key={index}
+                    />
                   )}
                 {data.basicInfo.sla.id === 2 &&
                   data.basicInfo.bhaInfo?.glPacker && (
-                    <WbdFirstPageGlPacker tools={itemsByPage} key={index} />
+                    <WbdFirstPageGlPacker
+                      tools={itemsByPage}
+                      data={data}
+                      key={index}
+                    />
                   )}
                 {data.basicInfo.sla.id === 3 && (
-                  <WbdFirstPagePCP tools={itemsByPage} key={index} />
+                  <WbdFirstPagePCP
+                    tools={itemsByPage}
+                    data={data}
+                    key={index}
+                  />
                 )}
               </>
             ) : index < data.designByPage.length - 1 &&
               itemsByPage.length > 0 ? (
-              <WbdSecondPage tools={itemsByPage} key={index} />
+              <WbdSecondPage tools={itemsByPage} data={data} key={index} />
             ) : (
               index === data.designByPage.length - 1 &&
               itemsByPage.length > 0 && (

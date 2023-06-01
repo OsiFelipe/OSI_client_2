@@ -1,45 +1,109 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "./AuthContext";
+import { Base64 } from "js-base64";
+import { isExpired, decodeToken } from "react-jwt";
+import { useRequest } from "../hooks";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
 const AuthProvider = ({ children }: Props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { handleRequest } = useRequest();
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const localLoggedIn = localStorage.getItem("isLoggedIn");
-    if (localLoggedIn === "true") {
-      setIsLoggedIn(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    validateSession();
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsError(false);
+    }, 3000);
+  }, [isSuccess]);
+
   const logoutHandler = async () => {
-    localStorage.removeItem("isLoggedIn");
+    setIsLoading(true);
+    localStorage.clear();
     setIsLoggedIn(false);
-    await navigate("/");
+    navigate("/");
+    setIsLoading(false);
   };
 
-  const loginHandler = (username: string) => {
+  const loginHandler = (username: string, pass: string) => {
+    setIsLoading(true);
     try {
-      localStorage.setItem("isLoggedIn", "true");
-      setIsLoggedIn(true);
-      navigate("/home");
+      const loop1Pass = Base64.encode(pass);
+      const loop2Pass = Base64.encode(loop1Pass);
+      const data = {
+        user: username,
+        password: loop2Pass,
+      };
+      let options: RequestInit = {
+        method: "POST",
+        body: JSON.stringify(data),
+      };
+      handleRequest({ endpoint: "login", options })
+        .then((response) => {
+          if (response.data.token) {
+            // const loop1 = Base64.encode(response.data.token);
+            // const loop2 = Base64.encode(loop1);
+            // const loop3 = Base64.encode(loop2);
+            // const loop4 = Base64.encode(loop3);
+            // const loop5 = Base64.encode(loop4);
+            // const loop6 = Base64.encode(loop5);
+            // const loop7 = Base64.encode(loop6);
+            localStorage.setItem("info", response.data.token);
+            navigate(0);
+            setIsSuccess(true);
+          } else {
+            setIsLoading(false);
+            setIsError(true);
+          }
+        })
+        .catch(() => setIsError(true));
     } catch (e) {
+      setIsLoading(false);
+      setIsError(true);
       throw new Error("Not Authorized, please contact the Administrator");
     }
+  };
+
+  const validateSession = () => {
+    if (validateToken()) {
+      setIsLoggedIn(true);
+      setIsLoading(false);
+    } else {
+      logoutHandler();
+    }
+  };
+
+  const validateToken = (): boolean => {
+    const token = localStorage.getItem("info");
+    if (token) {
+      const expired = isExpired(token);
+      if (expired) return false;
+    } else {
+      return false;
+    }
+    return true;
   };
 
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn,
+        isSuccess,
+        isError,
+        isLoading,
         onLogin: loginHandler,
         onLogout: logoutHandler,
+        validateToken,
       }}
     >
       {children}

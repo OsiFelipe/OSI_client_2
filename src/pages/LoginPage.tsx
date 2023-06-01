@@ -1,14 +1,26 @@
 import React from "react";
-import { LoginForm } from "../components";
+import { AlertComponent, LoginForm, ShowContent } from "../components";
 import styles from "./main.module.sass";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
 export const LoginPage = () => {
-  const { onLogin } = useContext(AuthContext);
-  return (
-    <div className={styles.center}>
-      <LoginForm onClickLogin={onLogin} />
-    </div>
+  const { onLogin, isLoading, isSuccess, isError } = useContext(AuthContext);
+  let content: JSX.Element | JSX.Element[];
+  content = (
+    <>
+      <div className={styles.center}>
+        <LoginForm onClickLogin={onLogin} />
+      </div>
+      {isSuccess && <AlertComponent type="success" />}
+      {isError && (
+        <AlertComponent
+          type="error"
+          message={"Not Authorized, please contact the Administrator"}
+        />
+      )}
+    </>
   );
+
+  return <ShowContent error={""} isLoading={isLoading} content={content} />;
 };
