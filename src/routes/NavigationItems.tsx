@@ -21,6 +21,7 @@ import CalculateIcon from "@mui/icons-material/Calculate";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import GradientIcon from "@mui/icons-material/Gradient";
 import CompressIcon from "@mui/icons-material/Compress";
+import SmartToyIcon from "@mui/icons-material/SmartToy";
 
 export const NavigationItems = () => {
   const [openPropOption, setOpenPropOption] = useState(false);
@@ -37,134 +38,164 @@ export const NavigationItems = () => {
   const handleClickSimulator = () => {
     setOpenSimOption(!openSimOption);
   };
+
+  const navItems = [
+    {
+      id: 0,
+      onClick: () => navigate("/home"),
+      icon: <HomeIcon />,
+      name: "Home",
+    },
+    {
+      id: 1,
+      onClick: () => navigate("/home"),
+      icon: <SupervisorAccountIcon />,
+      name: "Admin",
+    },
+    {
+      id: 2,
+      onClick: handleClickProp,
+      icon: <PrecisionManufacturingOutlinedIcon />,
+      name: "Technical Design",
+      openCloseOption: openPropOption,
+      children: [
+        {
+          id: 0,
+          onClick: () => navigate("/tech/0"),
+          icon: <DesignServicesIcon />,
+          name: "Create",
+          children: [],
+        },
+        {
+          id: 1,
+          onClick: () => navigate("/tech/all"),
+          icon: <FormatListNumberedIcon />,
+          name: "See All",
+          children: [],
+        },
+      ],
+    },
+    {
+      id: 2,
+      onClick: handleClickTally,
+      icon: <VerticalSplitIcon />,
+      name: "Tally Design",
+      openCloseOption: openTallyOption,
+      children: [
+        {
+          id: 0,
+          onClick: () => navigate("/tally/0"),
+          icon: <DesignServicesIcon />,
+          name: "Create",
+        },
+        {
+          id: 1,
+          onClick: () => navigate("/tally/all"),
+          icon: <FormatListNumberedIcon />,
+          name: "See All",
+        },
+      ],
+    },
+    {
+      id: 3,
+      onClick: () => navigate("/well"),
+      icon: <OilBarrelIcon />,
+      name: "Wells",
+    },
+    {
+      id: 4,
+      onClick: () => navigate("/client"),
+      icon: <PermContactCalendarIcon />,
+      name: "Clients",
+    },
+    {
+      id: 4,
+      onClick: () => navigate("/sales/all"),
+      icon: <SellIcon />,
+      name: "Sales",
+    },
+    {
+      id: 5,
+      onClick: () => navigate("/products"),
+      icon: <CategoryIcon />,
+      name: "Products",
+    },
+    {
+      id: 6,
+      onClick: handleClickSimulator,
+      icon: <CalculateIcon />,
+      name: "Simulators",
+      openCloseOption: openSimOption,
+      children: [
+        {
+          id: 0,
+          onClick: () => navigate("/sim/sand"),
+          icon: <GradientIcon />,
+          name: "Sand",
+        },
+        {
+          id: 1,
+          onClick: () => navigate("/sim/gas"),
+          icon: <WorkspacesIcon />,
+          name: "Gas",
+        },
+        {
+          id: 2,
+          onClick: () => navigate("/sim/press"),
+          icon: <CompressIcon />,
+          name: "Pressure",
+        },
+      ],
+    },
+    {
+      id: 7,
+      onClick: () => navigate("/stepper"),
+      icon: <SmartToyIcon />,
+      name: "Designer",
+    },
+  ];
   return (
     <List
       sx={{ width: "100%", maxWidth: 360, color: "background.paper" }}
       component="nav"
     >
-      <ListItemButton onClick={() => navigate("/home")}>
-        <ListItemIcon sx={{ color: "background.paper" }}>
-          <HomeIcon />
-        </ListItemIcon>
-        <ListItemText primary="Home" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/home")}>
-        <ListItemIcon sx={{ color: "background.paper" }}>
-          <SupervisorAccountIcon />
-        </ListItemIcon>
-        <ListItemText primary="Admin" />
-      </ListItemButton>
-      <ListItemButton onClick={handleClickProp}>
-        <ListItemIcon sx={{ color: "background.paper" }}>
-          <PrecisionManufacturingOutlinedIcon />
-        </ListItemIcon>
-        <ListItemText primary="Technical Design" />
-        {openPropOption ? (
-          <ExpandLess sx={{ color: "background.paper" }} />
-        ) : (
-          <ExpandMore sx={{ color: "background.paper" }} />
-        )}
-      </ListItemButton>
-      <Collapse in={openPropOption} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/tech/0")}>
+      {navItems.map((item) => (
+        <React.Fragment key={item.id}>
+          <ListItemButton onClick={item.onClick}>
             <ListItemIcon sx={{ color: "background.paper" }}>
-              <DesignServicesIcon />
+              {item.icon}
             </ListItemIcon>
-            <ListItemText primary="Create" />
+            <ListItemText primary={item.name} />
+            {item.children && (
+              <>
+                {item.openCloseOption ? (
+                  <ExpandLess sx={{ color: "background.paper" }} />
+                ) : (
+                  <ExpandMore sx={{ color: "background.paper" }} />
+                )}
+              </>
+            )}
           </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/tech/all")}>
-            <ListItemIcon sx={{ color: "background.paper" }}>
-              <FormatListNumberedIcon />
-            </ListItemIcon>
-            <ListItemText primary="See All" />
-          </ListItemButton>
-        </List>
-      </Collapse>
-      <ListItemButton onClick={handleClickTally}>
-        <ListItemIcon sx={{ color: "background.paper" }}>
-          <VerticalSplitIcon />
-        </ListItemIcon>
-        <ListItemText primary="Tally Design" />
-        {openTallyOption ? (
-          <ExpandLess sx={{ color: "background.paper" }} />
-        ) : (
-          <ExpandMore sx={{ color: "background.paper" }} />
-        )}
-      </ListItemButton>
-      <Collapse in={openTallyOption} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/tally/0")}>
-            <ListItemIcon sx={{ color: "background.paper" }}>
-              <DesignServicesIcon />
-            </ListItemIcon>
-            <ListItemText primary="Create" />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/tally/all")}>
-            <ListItemIcon sx={{ color: "background.paper" }}>
-              <FormatListNumberedIcon />
-            </ListItemIcon>
-            <ListItemText primary="See All" />
-          </ListItemButton>
-        </List>
-      </Collapse>
-      <ListItemButton onClick={() => navigate("/well")}>
-        <ListItemIcon sx={{ color: "background.paper" }}>
-          <OilBarrelIcon />
-        </ListItemIcon>
-        <ListItemText primary="Wells" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/client")}>
-        <ListItemIcon sx={{ color: "background.paper" }}>
-          <PermContactCalendarIcon />
-        </ListItemIcon>
-        <ListItemText primary="Clients" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/sales/all")}>
-        <ListItemIcon sx={{ color: "background.paper" }}>
-          <SellIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sales" />
-      </ListItemButton>
-      <ListItemButton onClick={() => navigate("/products")}>
-        <ListItemIcon sx={{ color: "background.paper" }}>
-          <CategoryIcon />
-        </ListItemIcon>
-        <ListItemText primary="Products" />
-      </ListItemButton>
-      <ListItemButton onClick={handleClickSimulator}>
-        <ListItemIcon sx={{ color: "background.paper" }}>
-          <CalculateIcon />
-        </ListItemIcon>
-        <ListItemText primary="Simulators" />
-        {openSimOption ? (
-          <ExpandLess sx={{ color: "background.paper" }} />
-        ) : (
-          <ExpandMore sx={{ color: "background.paper" }} />
-        )}
-      </ListItemButton>
-      <Collapse in={openSimOption} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/sim/sand")}>
-            <ListItemIcon sx={{ color: "background.paper" }}>
-              <GradientIcon />
-            </ListItemIcon>
-            <ListItemText primary="Sand" />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/sim/gas")}>
-            <ListItemIcon sx={{ color: "background.paper" }}>
-              <WorkspacesIcon />
-            </ListItemIcon>
-            <ListItemText primary="Gas" />
-          </ListItemButton>
-          <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/sim/press")}>
-            <ListItemIcon sx={{ color: "background.paper" }}>
-              <CompressIcon />
-            </ListItemIcon>
-            <ListItemText primary="Pressure" />
-          </ListItemButton>
-        </List>
-      </Collapse>
+          {item.children && (
+            <Collapse in={item.openCloseOption} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                {item.children.map((child) => (
+                  <ListItemButton
+                    sx={{ pl: 4 }}
+                    onClick={child.onClick}
+                    key={child.id}
+                  >
+                    <ListItemIcon sx={{ color: "background.paper" }}>
+                      {child.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={child.name} />
+                  </ListItemButton>
+                ))}
+              </List>
+            </Collapse>
+          )}
+        </React.Fragment>
+      ))}
     </List>
   );
 };

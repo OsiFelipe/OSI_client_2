@@ -1,3 +1,4 @@
+export { StepperPage } from './stepper/StepperPage';
 export { SandSimulator } from './simulator/SandSimulator';
 export { GasSimulator } from './simulator/GasSimulator';
 export { PressureSimulator } from './simulator/PressureSimulator';

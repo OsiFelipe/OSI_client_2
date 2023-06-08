@@ -15,6 +15,7 @@ import {
   SandSimulator,
   GasSimulator,
   PressureSimulator,
+  StepperPage,
 } from "./pages";
 import { Navigation } from "./routes/Navigation";
 import { Layout, NotFoundPage } from "./components";
@@ -51,6 +52,27 @@ const theme = createTheme({
   },
 });
 
+const routeItems = [
+  { path: "/", protected: false, component: <LoginPage /> },
+  { path: "/home", protected: true, component: <HomePage /> },
+  { path: "/admin", protected: true, component: <HomePage /> },
+  { path: "/tech/:idTech", protected: true, component: <TechDesignForm /> },
+  { path: "/tech/all", protected: true, component: <TechDesignList /> },
+  { path: "/tally/:idTally", protected: true, component: <TallyDesignForm /> },
+  { path: "/tally/all", protected: true, component: <TallyDesignList /> },
+  { path: "/well", protected: true, component: <WellPage /> },
+  { path: "/client", protected: true, component: <ClientPage /> },
+  { path: "/products", protected: true, component: <ProductPage /> },
+  { path: "/sales/all", protected: true, component: <SalesPage /> },
+  { path: "/sales/:idSales", protected: true, component: <SalesPrintPage /> },
+  { path: "/sales/:source/:id", protected: true, component: <SalesFormPage /> },
+  { path: "/sim/sand", protected: true, component: <SandSimulator /> },
+  { path: "/sim/gas", protected: true, component: <GasSimulator /> },
+  { path: "/sim/press", protected: true, component: <PressureSimulator /> },
+  { path: "/stepper", protected: true, component: <StepperPage /> },
+  { path: "/*", protected: false, component: <NotFoundPage /> },
+];
+
 function App() {
   return (
     // <ThemeProvider theme={theme}>
@@ -60,135 +82,19 @@ function App() {
           <Layout>
             <Navigation />
             <Routes>
-              <Route
-                path="/"
-                element={
-                  <PublicRoute>
-                    <LoginPage />
-                  </PublicRoute>
-                }
-              />
-              <Route
-                path="/home"
-                element={
-                  <ProtectedRoute>
-                    <HomePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/tech/:idTech"
-                element={
-                  <ProtectedRoute>
-                    <TechDesignForm />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/tech/all"
-                element={
-                  <ProtectedRoute>
-                    <TechDesignList />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/tally/:idTally"
-                element={
-                  <ProtectedRoute>
-                    <TallyDesignForm />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/tally/all"
-                element={
-                  <ProtectedRoute>
-                    <TallyDesignList />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/well"
-                element={
-                  <ProtectedRoute>
-                    <WellPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/client"
-                element={
-                  <ProtectedRoute>
-                    <ClientPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/products"
-                element={
-                  <ProtectedRoute>
-                    <ProductPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/admin"
-                element={
-                  <ProtectedRoute>
-                    <HomePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/sales/all"
-                element={
-                  <ProtectedRoute>
-                    <SalesPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/sales/:idSales"
-                element={
-                  <ProtectedRoute>
-                    <SalesPrintPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/sales/:source/:id"
-                element={
-                  <ProtectedRoute>
-                    <SalesFormPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/sim/sand"
-                element={
-                  <ProtectedRoute>
-                    <SandSimulator />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/sim/gas"
-                element={
-                  <ProtectedRoute>
-                    <GasSimulator />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/sim/press"
-                element={
-                  <ProtectedRoute>
-                    <PressureSimulator />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/*" element={<NotFoundPage />} />
+              {routeItems.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                    route.protected ? (
+                      <ProtectedRoute>{route.component}</ProtectedRoute>
+                    ) : (
+                      <PublicRoute>{route.component}</PublicRoute>
+                    )
+                  }
+                />
+              ))}
             </Routes>
           </Layout>
         </SimulatorProvider>

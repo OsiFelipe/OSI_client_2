@@ -1,3 +1,4 @@
+export {StepperComponent} from './stepper/Stepper';
 export { DialogComponent } from './layout/DialogComponent';
 export { PdfPressSimulatorFile } from './pdf/files/PdfPressSimulatorFile';
 export { PdfSandSimulatorFile } from './pdf/files/PdfSandSimulatorFile';
@@ -55,6 +56,7 @@ export { TallyTable } from "./tally/TallyTable";
 export { TitleComponent } from "./ui/TitleComponent";
 export { UnderConstruction } from "./layout/UnderConstruction";
 export { WBDDesign } from "./wbd/WBDDesign";
+
 
 
 
