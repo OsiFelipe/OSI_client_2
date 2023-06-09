@@ -14,6 +14,7 @@ import {
   Spinner,
 } from "../../components";
 import DataContext from "../../context/DataContext";
+import PaginatorContext from "../../context/PaginatorContext";
 import { useFetch } from "../../hooks";
 import { ProductProps, WellProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
@@ -35,8 +36,9 @@ const dataGridStyles = {
 };
 
 export const WellPage = () => {
-  const { data, error, isLoading, fetchData } = useFetch<FetchResponse>("well");
-  const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
+  const { paginationModel,  fetchPaginationModel} = useContext(PaginatorContext);
+  const { data, error, isLoading, fetchData, pagination } = useFetch<FetchResponse>("well-paginate", paginationModel);
+   const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
   const [wellToEdit, setWellToEdit] = useState<WellProps>(initial_well_state);
   const [isCreateWell, setIsCreateWell] = useState<Boolean>(false);
   const { isSuccess, isError, onCreateWell, onEditWell } =
@@ -122,8 +124,12 @@ export const WellPage = () => {
               style={dataGridStyles}
               rows={data.data}
               columns={columns}
-              autoPageSize
               className={styles.dataTable}
+              loading={isLoading}
+              rowCount={+pagination?.totalRecords}
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={fetchPaginationModel}
             />
           </div>
           {isModalOpen && (

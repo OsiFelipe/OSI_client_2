@@ -20,6 +20,7 @@ import {
 import { Navigation } from "./routes/Navigation";
 import { Layout, NotFoundPage } from "./components";
 import DataProvider from "./context/DataProvider";
+import PaginatorProvider from "./context/PaginatorProvider";
 import SimulatorProvider from "./context/SimulatorProvider";
 import { ThemeProvider, createTheme } from "@mui/system";
 import AuthProvider from "./context/AuthProvider";
@@ -78,26 +79,28 @@ function App() {
     // <ThemeProvider theme={theme}>
     <AuthProvider>
       <DataProvider>
-        <SimulatorProvider>
-          <Layout>
-            <Navigation />
-            <Routes>
-              {routeItems.map((route, index) => (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={
-                    route.protected ? (
-                      <ProtectedRoute>{route.component}</ProtectedRoute>
-                    ) : (
-                      <PublicRoute>{route.component}</PublicRoute>
-                    )
-                  }
-                />
-              ))}
-            </Routes>
-          </Layout>
-        </SimulatorProvider>
+        <PaginatorProvider>
+          <SimulatorProvider>
+            <Layout>
+              <Navigation />
+              <Routes>
+                {routeItems.map((route, index) => (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    element={
+                      route.protected ? (
+                        <ProtectedRoute>{route.component}</ProtectedRoute>
+                      ) : (
+                        <PublicRoute>{route.component}</PublicRoute>
+                      )
+                    }
+                  />
+                ))}
+              </Routes>
+            </Layout>
+          </SimulatorProvider>
+        </PaginatorProvider>
       </DataProvider>
     </AuthProvider>
     // </ThemeProvider>

@@ -7,6 +7,7 @@ import {
 import { useContext, useState } from "react";
 import { AlertComponent, NavBar, ShowContent, Spinner } from "../../components";
 import DataContext from "../../context/DataContext";
+import PaginatorContext from "../../context/PaginatorContext";
 import { useFetch } from "../../hooks";
 import { ProductProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
@@ -31,7 +32,8 @@ const dataGridStyles = {
 };
 
 export const SalesPage = () => {
-  const { data, error, isLoading } = useFetch<FetchResponse>("sales");
+  const { paginationModel,  fetchPaginationModel} = useContext(PaginatorContext);
+  const { data, error, isLoading, pagination } = useFetch<FetchResponse>("sales-paginate", paginationModel);
   const { isSuccess, isError, onResetValues } = useContext(DataContext);
   const navigate = useNavigate();
   const { getDateFromString } = useDate();
@@ -135,8 +137,12 @@ export const SalesPage = () => {
               style={dataGridStyles}
               rows={data.data}
               columns={columns}
-              autoPageSize
               className={styles.dataTable}
+              loading={isLoading}
+              rowCount={+pagination?.totalRecords}
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={fetchPaginationModel}
             />
           </div>
           {isSuccess && <AlertComponent type="success" />}

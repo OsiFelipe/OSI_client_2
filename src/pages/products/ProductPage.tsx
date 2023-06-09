@@ -15,6 +15,7 @@ import {
   Spinner,
 } from "../../components";
 import DataContext from "../../context/DataContext";
+import PaginatorContext from "../../context/PaginatorContext";
 import { useFetch } from "../../hooks";
 import { ProductProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
@@ -35,8 +36,10 @@ const dataGridStyles = {
 };
 
 export const ProductPage = () => {
-  const { data, error, isLoading, fetchData } =
-    useFetch<FetchResponse>("product");
+  const { paginationModel,  fetchPaginationModel} =
+    useContext(PaginatorContext);
+  const { data, error, isLoading, fetchData, pagination } =
+    useFetch<FetchResponse>("product-paginate", paginationModel);
   const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
   const [toolToEdit, setToolToEdit] =
     useState<ProductProps>(initial_tool_state);
@@ -148,8 +151,12 @@ export const ProductPage = () => {
               style={dataGridStyles}
               rows={data.data}
               columns={columns}
-              autoPageSize
               className={styles.dataTable}
+              loading={isLoading}
+              rowCount={+pagination?.totalRecords}
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={fetchPaginationModel}
             />
           </div>
           {isModalOpen && (
