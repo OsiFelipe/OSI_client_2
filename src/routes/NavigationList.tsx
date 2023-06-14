@@ -22,8 +22,14 @@ import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import GradientIcon from "@mui/icons-material/Gradient";
 import CompressIcon from "@mui/icons-material/Compress";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
+import { ListItem } from "@mui/material";
 
-export const NavigationItems = () => {
+interface Props {
+  onCloseMenu: () => void;
+}
+
+export const NavigationList = ({ onCloseMenu }: Props) => {
+  const open = true;
   const [openPropOption, setOpenPropOption] = useState(false);
   const [openTallyOption, setOpenTallyOption] = useState(false);
   const [openSimOption, setOpenSimOption] = useState(false);
@@ -155,41 +161,64 @@ export const NavigationItems = () => {
     },
   ];
   return (
-    <List
-      sx={{ width: "100%", maxWidth: 360, color: "background.paper" }}
-      component="nav"
-    >
-      {navItems.map((item) => (
-        <React.Fragment key={item.id}>
-          <ListItemButton onClick={item.onClick}>
-            <ListItemIcon sx={{ color: "background.paper" }}>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText primary={item.name} />
-            {item.children && (
-              <>
-                {item.openCloseOption ? (
-                  <ExpandLess sx={{ color: "background.paper" }} />
-                ) : (
-                  <ExpandMore sx={{ color: "background.paper" }} />
-                )}
-              </>
-            )}
-          </ListItemButton>
+    <List>
+      {navItems.map((item, index) => (
+        <React.Fragment key={index}>
+          <ListItem
+            disablePadding
+            sx={{ display: "block" }}
+            onClick={() => {
+              item.onClick();
+              !item.children && onCloseMenu();
+            }}
+          >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={item.name}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+              {item.children && (
+                <>
+                  {item.openCloseOption ? (
+                    <ExpandLess sx={{ color: "background.paper" }} />
+                  ) : (
+                    <ExpandMore sx={{ color: "background.paper" }} />
+                  )}
+                </>
+              )}
+            </ListItemButton>
+          </ListItem>
           {item.children && (
             <Collapse in={item.openCloseOption} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
+              <List disablePadding>
                 {item.children.map((child) => (
-                  <ListItemButton
-                    sx={{ pl: 4 }}
-                    onClick={child.onClick}
-                    key={child.id}
-                  >
-                    <ListItemIcon sx={{ color: "background.paper" }}>
-                      {child.icon}
-                    </ListItemIcon>
-                    <ListItemText primary={child.name} />
-                  </ListItemButton>
+                  <ListItem>
+                    <ListItemButton
+                      onClick={() => {
+                        child.onClick();
+                        onCloseMenu();
+                      }}
+                      key={child.id}
+                    >
+                      <ListItemIcon>{child.icon}</ListItemIcon>
+                      <ListItemText primary={child.name} />
+                    </ListItemButton>
+                  </ListItem>
                 ))}
               </List>
             </Collapse>

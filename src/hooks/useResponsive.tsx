@@ -1,20 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { MobileBar } from "./MobileBar";
-import { DesktopBar } from "./DesktopBar";
+import { useEffect, useState } from "react";
 
-interface ButtonProps {
-  title: string;
-  action: () => void;
-  icon: JSX.Element;
-  disabled?: Boolean;
-}
-
-interface Props {
-  buttons: ButtonProps[];
-  title: string;
-}
-
-export const NavBar = ({ title, buttons }: Props) => {
+export const useResponsive = () => {
   const [state, setState] = useState({
     mobileView: false,
   });
@@ -34,13 +20,5 @@ export const NavBar = ({ title, buttons }: Props) => {
       window.removeEventListener("resize", () => setResponsiveness());
     };
   }, []);
-  return (
-    <>
-      {mobileView ? (
-        <MobileBar title={title} buttons={buttons} />
-      ) : (
-        <DesktopBar title={title} buttons={buttons} />
-      )}
-    </>
-  );
+  return { mobileView };
 };

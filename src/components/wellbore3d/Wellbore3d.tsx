@@ -1,13 +1,15 @@
 import styles from "../components.module.sass";
 import { useContext, useRef } from "react";
 import DataContext from "../../context/DataContext";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup, useMediaQuery } from "@mui/material";
 import ThreeDRotationIcon from "@mui/icons-material/ThreeDRotation";
 import ImageIcon from "@mui/icons-material/Image";
 import { useScreenshot } from "usescreenshot-react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import clsx from "clsx";
 
 export const Wellbore3d = () => {
+  const matches = useMediaQuery("(min-width:600px)");
   const { takeScreenshot } = useScreenshot();
   const ref = useRef<HTMLIFrameElement>(null);
   const {
@@ -46,7 +48,11 @@ export const Wellbore3d = () => {
   return (
     <div className={styles.wellbore3d}>
       <div>
-        <ButtonGroup variant="outlined" sx={{ mb: 2 }}>
+        <ButtonGroup
+          variant="outlined"
+          sx={{ mb: 2 }}
+          orientation={`${matches ? `horizontal` : `vertical`}`}
+        >
           <Button
             variant="outlined"
             color="primary"
@@ -83,7 +89,7 @@ export const Wellbore3d = () => {
           </Button>
         </ButtonGroup>
         <div>
-          <div className={styles.center}>
+          <div className={clsx(styles.center, styles.iframe3d)}>
             {wellbore3dImg ? (
               <img src={wellbore3dImg} alt="wellbore 3d" />
             ) : (

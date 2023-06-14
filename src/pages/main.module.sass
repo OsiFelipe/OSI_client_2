@@ -16,6 +16,16 @@
     flex-direction: column,
     padding: 2rem 1rem
     overflow-x: hidden
+    @include mobile()
+        padding: 2rem 0.5rem
+
+.simulatorPage
+    display: flex,
+    flex-direction: column,
+    padding: 2rem 1rem
+    overflow-x: hidden
+    @include mobile()
+        padding: 0
 
 .grid
     display: flex
@@ -25,7 +35,7 @@
     height: 85vh
     margin-top: 1rem
 
-@include smallScreen()
+@include tablet()
     .grid
         flex-direction: column
 
@@ -102,9 +112,24 @@
     margin-bottom: 1rem
     margin-top: 2rem
 
+    @include mobile()
+        padding: 0
+
+
 .center
     text-align: -webkit-center
 
 .pageContent
     padding: 3%
+
+.loginForm
+    display: flex,
+    flex-direction: column
+    padding-top: 25vh,
+    padding-left: 50vh
+
+    @include mobile()
+        padding-top: 20vh,
+        padding-left: 5vh
+        padding-right: 5vh
 

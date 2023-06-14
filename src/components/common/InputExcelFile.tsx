@@ -1,4 +1,4 @@
-import { Button, ButtonGroup } from "@mui/material";
+import { Button, ButtonGroup, useMediaQuery } from "@mui/material";
 import React from "react";
 import readXlsxFile from "read-excel-file";
 import FileOpenIcon from "@mui/icons-material/FileOpen";
@@ -16,6 +16,7 @@ export const InputExcelFile = ({
   onRemoveImage: () => void;
   disabled: boolean;
 }) => {
+  const matches = useMediaQuery("(min-width:600px)");
   const handleChangeFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       let input = event.target.files[0];
@@ -31,7 +32,11 @@ export const InputExcelFile = ({
 
   return (
     <div style={{ alignSelf: "center", marginBottom: "1rem" }}>
-      <ButtonGroup variant="outlined" sx={{ mb: 2 }}>
+      <ButtonGroup
+        variant="outlined"
+        sx={{ mb: 2 }}
+        orientation={`${matches ? `horizontal` : `vertical`}`}
+      >
         <Button
           variant="outlined"
           color="primary"

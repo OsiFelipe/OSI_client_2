@@ -54,7 +54,7 @@ export const PressureSimulator = () => {
   content = (
     <>
       <NavBar title="Pressure Simulation" buttons={buttons} />
-      <div className={styles.techProposalForm}>
+      <div className={styles.simulatorPage}>
         {inPdf ? (
           <PDFView
             children={

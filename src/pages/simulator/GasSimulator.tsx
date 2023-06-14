@@ -59,7 +59,7 @@ export const GasSimulator = () => {
   content = (
     <>
       <NavBar title="Gas Simulation" buttons={buttons} />
-      <div className={styles.techProposalForm}>
+      <div className={styles.simulatorPage}>
         {inPdf ? (
           <PDFView
             children={

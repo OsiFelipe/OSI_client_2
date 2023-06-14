@@ -52,7 +52,7 @@ export const GasSimulatorForm = ({
           </Grid>
           {packerless ? (
             <>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <Autocomplete
                   renderOption={(props, option) => {
                     return (
@@ -69,25 +69,25 @@ export const GasSimulatorForm = ({
                     options: gForceOption,
                   }}
                   disablePortal
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   renderInput={(params) => (
                     <TextField {...params} label="G-Force Packerless Size" />
                   )}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="Number of Gas Bodies"
                   value={gasSimulatorValues.numberGasBodies}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   onChange={(event) =>
                     handleUpdateValues("numberGasBodies", event.target.value)
                   }
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <Autocomplete
                   renderOption={(props, option) => {
                     return (
@@ -104,7 +104,7 @@ export const GasSimulatorForm = ({
                     options: gBodyDimensions,
                   }}
                   disablePortal
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   renderInput={(params) => (
                     <TextField {...params} label="Gas Body Dimensions" />
                   )}
@@ -113,13 +113,13 @@ export const GasSimulatorForm = ({
             </>
           ) : (
             <>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="Percentage Runtime (%)"
                   value={gasSimulatorValues.percentageRuntime}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   onChange={(event) =>
                     handleUpdateValues("percentageRuntime", event.target.value)
                   }
@@ -128,82 +128,82 @@ export const GasSimulatorForm = ({
             </>
           )}
 
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Plunger Size (in)"
               value={gasSimulatorValues.plungerSize}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("plungerSize", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Stroke Length (in)"
               value={gasSimulatorValues.strokeLength}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("strokeLength", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Pump Speed (spm)"
               value={gasSimulatorValues.pumpSpeed}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("pumpSpeed", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Pump Capacity (BFPD)"
               value={gasSimulatorValues.pumpCapacity}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               disabled
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Pump Capacity / Stroke(BFPD)"
               value={gasSimulatorValues.pumpCapacityByStroke}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               disabled
             />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Production of Fluid per day (BFPD)"
               value={gasSimulatorValues.bfpd}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("bfpd", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Water Cut (%)"
               value={gasSimulatorValues.wCut}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 parseInt(event.target.value) >= 0 &&
                 parseInt(event.target.value) <= 100 &&
@@ -211,99 +211,99 @@ export const GasSimulatorForm = ({
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Oil Flow (BOPD)"
               value={gasSimulatorValues.bopd}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               disabled
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="text"
               label="Water Flow"
               value={gasSimulatorValues.bwpd}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               disabled
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Gas Flow (MCFD)"
               value={gasSimulatorValues.gasRate}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("gasRate", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="GLR (SCF/STB)"
               value={gasSimulatorValues.glr}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               disabled
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="GOR (SCF/STB)"
               value={gasSimulatorValues.gor}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               disabled
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="WOR (BWPD/STBPD)"
               value={gasSimulatorValues.wor}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               disabled
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Temperature (F)"
               value={gasSimulatorValues.temperature}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("temperature", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="PIP (Psi)"
               value={gasSimulatorValues.pip}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("pip", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Casing ID (in)"
               value={gasSimulatorValues.casingId}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("casingId", event.target.value)
               }
@@ -311,13 +311,13 @@ export const GasSimulatorForm = ({
           </Grid>
           {poorboy ||
             (packerless && (
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="Tubing OD (in)"
                   value={gasSimulatorValues.tubingOd}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   onChange={(event) =>
                     handleUpdateValues("tubingOd", event.target.value)
                   }
@@ -326,80 +326,80 @@ export const GasSimulatorForm = ({
             ))}
           {packerless ? (
             <>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="Neck OD (in)"
                   value={gasSimulatorValues.neckOD}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   disabled
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="Gas Separator OD (in)"
                   value={gasSimulatorValues.gasSeparatorOD}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   disabled
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="Gas Separator ID (in)"
                   value={gasSimulatorValues.gasSeparatorId}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   disabled
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="OD Dip Tube (in)"
                   value={gasSimulatorValues.ODdiptube}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   disabled
                 />
               </Grid>
             </>
           ) : (
             <>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="Gas Separator OD (in)"
                   value={gasSimulatorValues.gasSeparatorOD}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   onChange={(event) =>
                     handleUpdateValues("gasSeparatorOD", event.target.value)
                   }
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="Gas Separator ID (in)"
                   value={gasSimulatorValues.gasSeparatorId}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   onChange={(event) =>
                     handleUpdateValues("gasSeparatorId", event.target.value)
                   }
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item lg={4} sm={6} xs={12}>
                 <TextField
                   type="number"
                   label="OD Dip Tube (in)"
                   value={gasSimulatorValues.ODdiptube}
                   variant="outlined"
-                  sx={{ width: "20vw" }}
+                  className={styles.simulatorField}
                   onChange={(event) =>
                     handleUpdateValues("ODdiptube", event.target.value)
                   }
@@ -408,72 +408,72 @@ export const GasSimulatorForm = ({
             </>
           )}
 
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Water SPGr"
               value={gasSimulatorValues.waterSP}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("waterSP", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Gas SPGr"
               value={gasSimulatorValues.gasSP}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("gasSP", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Oil SPGr"
               value={gasSimulatorValues.oilSP}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               disabled
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Oil API"
               value={gasSimulatorValues.oilApi}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("oilApi", event.target.value)
               }
             />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Interfacial Tension"
               value={gasSimulatorValues.interfacialTension}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("interfacialTension", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Gravitational Force"
               value={gasSimulatorValues.gravitationalForce}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("gravitationalForce", event.target.value)
               }
@@ -481,13 +481,13 @@ export const GasSimulatorForm = ({
           </Grid>
 
           {packertype && (
-            <Grid item xs={4}>
+            <Grid item lg={4} sm={6} xs={12}>
               <TextField
                 type="number"
                 label="Gas Separator Length (ft)"
                 value={gasSimulatorValues.gasSeparatorLength}
                 variant="outlined"
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 onChange={(event) =>
                   handleUpdateValues("gasSeparatorLength", event.target.value)
                 }

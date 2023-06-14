@@ -1,5 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { WellProps } from "../../interfaces/interfaces";
+import styles from "../components.module.sass";
 
 interface Props {
   value: WellProps;
@@ -30,7 +31,7 @@ export const WellSelector = ({ value, options, handleChangeWell }: Props) => {
         onChange={(_, newValue) => newValue && handleChangeWell(newValue)}
         {...defaultProps}
         disablePortal
-        sx={{ width: "30vw" }}
+        className={styles.textFieldClient}
         renderInput={(params) => <TextField {...params} label="Well name" />}
       />
     </>

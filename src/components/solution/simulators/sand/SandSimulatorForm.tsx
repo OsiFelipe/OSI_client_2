@@ -101,32 +101,32 @@ export const SandSimulatorForm = ({
             </Typography>
             <Divider />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Production of Total liquid barrel (BFPD)"
               value={sandSimulatorValues.bfpd}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("bfpd", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Percentage of Runtime"
               value={sandSimulatorValues.percentageRuntime}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               onChange={(event) =>
                 handleUpdateValues("percentageRuntime", event.target.value)
               }
             />
           </Grid>
           {tubingScreen && (
-            <Grid item xs={4}>
+            <Grid item lg={4} sm={6} xs={12}>
               <Autocomplete
                 renderOption={(props, option) => {
                   return (
@@ -146,7 +146,7 @@ export const SandSimulatorForm = ({
                   options: tsOptions,
                 }}
                 disablePortal
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 renderInput={(params) => (
                   <TextField {...params} label="Selected Tubing Screen" />
                 )}
@@ -154,7 +154,7 @@ export const SandSimulatorForm = ({
             </Grid>
           )}
           {superPerf && (
-            <Grid item xs={4}>
+            <Grid item lg={4} sm={6} xs={12}>
               <Autocomplete
                 renderOption={(props, option) => {
                   return (
@@ -174,7 +174,7 @@ export const SandSimulatorForm = ({
                   options: spOptions,
                 }}
                 disablePortal
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 renderInput={(params) => (
                   <TextField {...params} label="Selected Super Perf" />
                 )}
@@ -182,7 +182,7 @@ export const SandSimulatorForm = ({
             </Grid>
           )}
           {pumpGuard && (
-            <Grid item xs={4}>
+            <Grid item lg={4} sm={6} xs={12}>
               <Autocomplete
                 renderOption={(props, option) => {
                   return (
@@ -202,14 +202,14 @@ export const SandSimulatorForm = ({
                   options: pgOptions,
                 }}
                 disablePortal
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 renderInput={(params) => (
                   <TextField {...params} label="Selected Pump Guard" />
                 )}
               />
             </Grid>
           )}
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             {pumpGuard && (
               <Autocomplete
                 renderOption={(props, option) => {
@@ -230,7 +230,7 @@ export const SandSimulatorForm = ({
                   return true;
                 }}
                 disablePortal
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 renderInput={(params) => <TextField {...params} label="Slot" />}
               />
             )}
@@ -254,7 +254,7 @@ export const SandSimulatorForm = ({
                   return true;
                 }}
                 disablePortal
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 renderInput={(params) => <TextField {...params} label="Slot" />}
               />
             )}
@@ -278,12 +278,12 @@ export const SandSimulatorForm = ({
                   return true;
                 }}
                 disablePortal
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 renderInput={(params) => <TextField {...params} label="Slot" />}
               />
             )}
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <Autocomplete
               renderOption={(props, option) => {
                 return (
@@ -303,31 +303,31 @@ export const SandSimulatorForm = ({
                 options: wellClasification,
               }}
               disablePortal
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               renderInput={(params) => (
                 <TextField {...params} label="Well Clasification" />
               )}
             />
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item lg={4} sm={6} xs={12}>
             <TextField
               type="number"
               label="Open Area of Screen in2"
               value={sandSimulatorValues.openAreaOfScreen}
               variant="outlined"
-              sx={{ width: "20vw" }}
+              className={styles.simulatorField}
               disabled
             />
           </Grid>
           {tubingScreen && (
-            <Grid item xs={4}>
+            <Grid item lg={4} sm={6} xs={12}>
               <TextField
                 type="number"
                 label="# Tubing Screen"
                 value={sandSimulatorValues.numberOfTubingScreen}
                 variant="outlined"
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 onChange={(event) =>
                   handleUpdateValues("numberOfTubingScreen", event.target.value)
                 }
@@ -335,13 +335,13 @@ export const SandSimulatorForm = ({
             </Grid>
           )}
           {superPerf && (
-            <Grid item xs={4}>
+            <Grid item lg={4} sm={6} xs={12}>
               <TextField
                 type="number"
                 label="# Tubing Screen"
                 value={sandSimulatorValues.numberOfTubingScreen}
                 variant="outlined"
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 onChange={(event) =>
                   handleUpdateValues("numberOfTubingScreen", event.target.value)
                 }
@@ -349,13 +349,13 @@ export const SandSimulatorForm = ({
             </Grid>
           )}
           {pumpGuard && (
-            <Grid item xs={4}>
+            <Grid item lg={4} sm={6} xs={12}>
               <TextField
                 type="number"
                 label="# Pump Guards"
                 value={sandSimulatorValues.numberOfPumpGuard}
                 variant="outlined"
-                sx={{ width: "20vw" }}
+                className={styles.simulatorField}
                 onChange={(event) =>
                   handleUpdateValues("numberOfPumpGuard", event.target.value)
                 }

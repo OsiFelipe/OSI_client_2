@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { GForcePackerless } from "./GForcePackerless";
 import { PackerTypeGas } from "./PackerTypeGas";
@@ -42,6 +42,7 @@ function a11yProps(index: number) {
 
 export const GasSimSelector = () => {
   const [value, setValue] = React.useState(0);
+  const matches = useMediaQuery("(min-width:600px)");
   const { onUpdateOptSimulator, simulatorState } = useContext(SimulatorContext);
 
   useEffect(() => {
@@ -63,7 +64,12 @@ export const GasSimSelector = () => {
   return (
     <div>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange} centered>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          centered
+          orientation={`${matches ? `horizontal` : `vertical`}`}
+        >
           <Tab label="G Force Packerless" {...a11yProps(0)} />
           <Tab label="Packer Type" {...a11yProps(1)} />
           <Tab label="Poor Boy" {...a11yProps(2)} />

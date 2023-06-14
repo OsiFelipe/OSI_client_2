@@ -8,7 +8,8 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { Card, CardActions, CardContent, CardMedia } from "@mui/material";
+import { Card, CardActions, CardContent } from "@mui/material";
+import styles from "../components.module.sass";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -52,7 +53,6 @@ export const FullScreenModal = ({
             ? {
                 maxWidth: 345,
                 backgroundColor: "rgba(251,171,53,0.9)",
-                width: "30vw",
                 borderRadius: "15px",
                 color: "white",
                 border: "0.5px solid black",
@@ -67,7 +67,6 @@ export const FullScreenModal = ({
             : {
                 maxWidth: 345,
                 backgroundColor: "rgba(90,100,119,0.3)",
-                width: "30vw",
                 borderRadius: "15px",
                 color: "black",
                 border: "0.5px solid black",
@@ -78,6 +77,7 @@ export const FullScreenModal = ({
                 },
               }
         }
+        className={styles.cardSimulator}
       >
         <CardContent>
           <Typography gutterBottom variant="h6" component="div">

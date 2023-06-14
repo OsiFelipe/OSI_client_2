@@ -1,4 +1,10 @@
-import { Button, ButtonGroup, IconButton, Tooltip } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  IconButton,
+  Tooltip,
+  useMediaQuery,
+} from "@mui/material";
 import React, { useReducer, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useContext } from "react";
@@ -14,6 +20,7 @@ import styles from "../components.module.sass";
 
 export const SalesOrderTable = () => {
   const [isModalProductOpen, setIsModalProductOpen] = useState(false);
+  const matches = useMediaQuery("(min-width:600px)");
   const {
     data: { salesInfo },
     productOptions,
@@ -27,7 +34,10 @@ export const SalesOrderTable = () => {
     <div>
       <TitleComponent title="Product List" />
       <div className={styles.buttonTally}>
-        <ButtonGroup variant="outlined">
+        <ButtonGroup
+          variant="outlined"
+          orientation={`${matches ? `horizontal` : `vertical`}`}
+        >
           <Button
             variant="outlined"
             color="primary"

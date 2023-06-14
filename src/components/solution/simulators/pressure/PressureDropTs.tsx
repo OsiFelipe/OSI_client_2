@@ -45,7 +45,7 @@ export const PressureDropTs = () => {
           </Grid>
           <Grid item xs={12}>
             <TableContainer>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <Table aria-label="simple table">
                 <TableBody>
                   <StyledTableRow
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

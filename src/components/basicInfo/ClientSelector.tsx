@@ -1,5 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { ClientProps } from "../../interfaces/interfaces";
+import styles from "../components.module.sass";
 
 interface Props {
   options: ClientProps[];
@@ -34,7 +35,7 @@ export const ClientSelector = ({
         }}
         {...defaultProps}
         disablePortal
-        sx={{ width: "30vw" }}
+        className={styles.textFieldClient}
         renderInput={(params) => <TextField {...params} label="Client name" />}
       />
     </>

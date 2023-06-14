@@ -26,15 +26,15 @@ export const AddClientForm = ({
   return (
     <div className={styles.customToolForm}>
       <TitleComponent title="Client" />
-      <Grid container spacing={12}>
-        <Grid item xs={6}>
+      <Grid container spacing={2}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Name"
             variant="outlined"
             name="name"
-            sx={{ width: 300 }}
+            className={styles.formFieldModal}
             value={clientName}
             onChange={(event) => setClientName(event.target.value)}
           />

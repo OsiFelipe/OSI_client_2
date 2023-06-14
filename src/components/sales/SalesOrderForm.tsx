@@ -26,7 +26,7 @@ export const SalesOrderForm = ({ inEdit = false }: { inEdit?: boolean }) => {
     onUpdateSalesInfo(event.target.name, event.target.value);
   };
   return (
-    <div>
+    <div className={styles.salesForm}>
       <TitleComponent title="Billing Information" />
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -35,7 +35,7 @@ export const SalesOrderForm = ({ inEdit = false }: { inEdit?: boolean }) => {
             type="date"
             helperText="Order Date"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="orderDate"
             value={getDateFromDatabaseString(salesInfo.orderDate)}
             onChange={onChangeValue}
@@ -55,110 +55,110 @@ export const SalesOrderForm = ({ inEdit = false }: { inEdit?: boolean }) => {
             </div>
           )}
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} md={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Quote Number"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="quoteNumber"
             value={salesInfo.quoteNumber}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} md={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Company"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="client"
             value={salesInfo.client}
             disabled
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} md={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="City"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="city"
             value={salesInfo.city}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} md={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="State/Zip"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="stateZip"
             value={salesInfo.stateZip}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} md={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Country"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="country"
             value={salesInfo.country}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} md={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Phone"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="phoneNumber"
             value={salesInfo.phoneNumber}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} md={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="email"
             label="Email"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="email"
             value={salesInfo.email}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} md={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="email"
             label="Contact"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="contact"
             value={salesInfo.contact}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} md={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="email"
             label="PO"
             variant="outlined"
-            sx={{ width: 380 }}
+            className={styles.salesFormField}
             name="po"
             value={salesInfo.po}
             onChange={onChangeValue}
@@ -167,14 +167,15 @@ export const SalesOrderForm = ({ inEdit = false }: { inEdit?: boolean }) => {
       </Grid>
       <TitleComponent title="Order Information" />
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <Grid item xs={12}>
             <TextField
               id="outlined-basic"
               type="datetime-local"
               helperText="Need By"
               variant="outlined"
-              sx={{ width: 400, mb: 2 }}
+              sx={{ mb: 2 }}
+              className={styles.OrderFormField}
               name="needBy"
               value={getDateTimeFromDatabaseString(salesInfo.needBy)}
               onChange={onChangeValue}
@@ -186,7 +187,7 @@ export const SalesOrderForm = ({ inEdit = false }: { inEdit?: boolean }) => {
               type="text"
               label="Well Name"
               variant="outlined"
-              sx={{ width: 400, mb: 2 }}
+              className={styles.OrderFormField}
               name="wellName"
               disabled
               value={salesInfo.wellName}
@@ -194,21 +195,21 @@ export const SalesOrderForm = ({ inEdit = false }: { inEdit?: boolean }) => {
             />
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Directions"
             name="directions"
             variant="outlined"
-            sx={{ width: 450 }}
+            className={styles.salesFormBox}
             multiline
             rows={4}
             value={salesInfo.directions}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <Grid item xs={12}>
             <TextField
               id="outlined-basic"
@@ -216,7 +217,8 @@ export const SalesOrderForm = ({ inEdit = false }: { inEdit?: boolean }) => {
               label="Delivery Contact"
               name="deliveryContact"
               variant="outlined"
-              sx={{ width: 400, mb: 2 }}
+              sx={{ mb: 2 }}
+              className={styles.OrderFormField}
               value={salesInfo.deliveryContact}
               onChange={onChangeValue}
             />
@@ -228,13 +230,13 @@ export const SalesOrderForm = ({ inEdit = false }: { inEdit?: boolean }) => {
               label="Salesman Contact"
               name="salesmanContact"
               variant="outlined"
-              sx={{ width: 400, mb: 2 }}
+              className={styles.OrderFormField}
               value={salesInfo.salesmanContact}
               onChange={onChangeValue}
             />
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
@@ -243,7 +245,7 @@ export const SalesOrderForm = ({ inEdit = false }: { inEdit?: boolean }) => {
             variant="outlined"
             multiline
             rows={4}
-            sx={{ width: 450 }}
+            className={styles.salesFormBox}
             value={salesInfo.specialNotes}
             onChange={onChangeValue}
           />

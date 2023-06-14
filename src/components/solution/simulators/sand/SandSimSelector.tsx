@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { PumpGuard } from "./PumpGuard";
 import { SandSimulatorForm } from "./SandSimulatorForm";
@@ -42,6 +42,7 @@ function a11yProps(index: number) {
 
 export const SandSimSelector = () => {
   const [value, setValue] = React.useState(0);
+  const matches = useMediaQuery("(min-width:600px)");
   const { onUpdateOptSimulator, simulatorState } = useContext(SimulatorContext);
 
   useEffect(() => {
@@ -66,8 +67,13 @@ export const SandSimSelector = () => {
   };
   return (
     <div>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange} centered>
+      <Box sx={{ borderBottom: 1, borderColor: "divider", padding: 0 }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          centered
+          orientation={`${matches ? `horizontal` : `vertical`}`}
+        >
           <Tab label="Tubing Screen" {...a11yProps(0)} />
           <Tab label="Pump Guard" {...a11yProps(1)} />
           <Tab label="Super Perf" {...a11yProps(2)} />
