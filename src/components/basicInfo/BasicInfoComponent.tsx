@@ -17,6 +17,7 @@ import { ModalComponent } from "../layout/ModalComponent";
 import { AddClientForm } from "../common/AddClientForm";
 import { AddWellForm } from "../common/AddWellForm";
 import { DataWbd } from "../basicInfo/DataWbd";
+import clsx from "clsx";
 import styles from "../components.module.sass";
 
 export function BasicInfoComponent({ bhaInfo = true }: { bhaInfo?: boolean }) {
@@ -80,14 +81,14 @@ export function BasicInfoComponent({ bhaInfo = true }: { bhaInfo?: boolean }) {
               id="outlined-basic"
               label="Custom Design Name"
               variant="outlined"
-              sx={{ width: "30vw" }}
               value={basicInfo.customName}
+              className={clsx(styles.textFieldBasic, styles.justifyLeft)}
               onChange={(event) =>
                 onUpdateBasicInfo("customName", event.target.value)
               }
             />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item lg={8} xs={12}>
             <div className={styles.fieldButton}>
               <ClientSelector
                 options={clientOptions}
@@ -104,7 +105,7 @@ export function BasicInfoComponent({ bhaInfo = true }: { bhaInfo?: boolean }) {
               </Tooltip>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} xs={12}>
             <Autocomplete
               renderOption={(props, option) => {
                 return (
@@ -122,13 +123,13 @@ export function BasicInfoComponent({ bhaInfo = true }: { bhaInfo?: boolean }) {
               }
               {...defaultProps}
               disablePortal
-              sx={{ width: "15vw" }}
+              className={styles.textFieldBasic}
               renderInput={(params) => (
                 <TextField {...params} label="Artificial Lift System" />
               )}
             />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item lg={8} xs={12}>
             <div className={styles.fieldButton}>
               <WellSelector
                 options={wellOptions || []}
@@ -151,7 +152,7 @@ export function BasicInfoComponent({ bhaInfo = true }: { bhaInfo?: boolean }) {
             </div>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item lg={4} xs={12}>
             <TextField
               id="outlined-basic"
               type="number"
@@ -159,7 +160,7 @@ export function BasicInfoComponent({ bhaInfo = true }: { bhaInfo?: boolean }) {
               value={basicInfo.mdDepth}
               disabled={!!!basicInfo.sla.reqField}
               variant="outlined"
-              sx={{ width: "15vw" }}
+              className={styles.textFieldBasic}
               onChange={(event) => {
                 const inputValue = parseFloat(event.target.value);
                 if (!isNaN(inputValue))

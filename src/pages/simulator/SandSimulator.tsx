@@ -54,7 +54,7 @@ export const SandSimulator = () => {
   content = (
     <>
       <NavBar title="Sand Simulation" buttons={buttons} />
-      <div className={styles.techProposalForm}>
+      <div className={styles.simulatorPage}>
         {inPdf ? (
           <PDFView
             children={

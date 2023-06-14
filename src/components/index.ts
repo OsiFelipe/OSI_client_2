@@ -23,13 +23,13 @@ export { QuantityField } from './tally';
 export { PdfSalesOrderFile } from './pdf/files/PdfSalesOrderFile';
 export { SalesOrderForm } from './sales/SalesOrderForm';
 export { PdfTallyFile } from './pdf/files/PdfTallyFile';
-export {ButtonMailto} from './common/ButtonMailTo';
+export { ButtonMailto } from './common/ButtonMailTo';
 export { CardHomePage } from './ui/CardHomePage';
 export { ScreenShoot } from './ui/ScreenShoot';
 export { InputExcelFile } from './common/InputExcelFile';
 export { CombinedChart } from './charts/CombinedChart';
 export { SubLayout } from './layout/SubLayout';
-export { LoginForm } from './common/LoginForm';
+export { LoginComponent } from './common/LoginComponent';
 export { AddClientForm } from './common/AddClientForm';
 export { AddWellForm } from './common/AddWellForm';
 export { ScreenCapture } from './ui/ScreenCapture';
@@ -56,6 +56,7 @@ export { TallyTable } from "./tally/TallyTable";
 export { TitleComponent } from "./ui/TitleComponent";
 export { UnderConstruction } from "./layout/UnderConstruction";
 export { WBDDesign } from "./wbd/WBDDesign";
+
 
 
 

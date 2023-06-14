@@ -3,7 +3,7 @@ import DataContext from "../../context/DataContext";
 import styles from "../components.module.sass";
 import { TitleComponent } from "../ui/TitleComponent";
 import { ImageWbd } from "./ImageWbd";
-import { Slider } from "@mui/material";
+import { Slider, useMediaQuery } from "@mui/material";
 import { ProductProps } from "../../interfaces/interfaces";
 
 const marks = [
@@ -34,6 +34,7 @@ const marks = [
 ];
 
 export const WBDDesign = () => {
+  const matches = useMediaQuery("(min-width:600px)");
   const {
     data: { wbdDesign },
     onUpdateTally,
@@ -74,6 +75,8 @@ export const WBDDesign = () => {
                   <td style={{ width: "30%" }}>
                     <div>
                       <Slider
+                        orientation="horizontal"
+                        size={`${matches ? `medium` : `small`}`}
                         value={item.tool.size}
                         step={1}
                         marks={marks}

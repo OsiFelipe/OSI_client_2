@@ -38,7 +38,8 @@
   display: flex,
   flex-direction: row
 
-
+  @include tablet()
+    flex-direction: column,
 
 .form
   display: flex,
@@ -50,6 +51,10 @@
   width: 25vw,
   padding: 1rem,
   margin-top: 5rem
+  @include tablet()
+    width: 80vw,
+    padding: 0,
+    margin-top: 1rem
 
 .slaImage
   width: 100%,
@@ -84,6 +89,9 @@
     color: $primary-color,
     font-weight: bold,
     font-size: 1rem
+    @include mobile()
+      font-size: 0.8rem,
+      font-weight: normal
 
 .addToolForm
   display: flex,
@@ -93,8 +101,7 @@
   text-align: -webkit-center
   display: flex,
   flex-direction: column,
-  padding-left: 10%,
-  padding-right: 10%,
+
 
 .solItem
   height: 300px
@@ -116,24 +123,52 @@
   flex-direction: row,
   justify-content: space-evenly
 
+  @include tablet()
+    flex-direction: column,
+    align-content: center,
+    align-self: center
+
+.cardSimulator
+  width: 30vw
+  @include tablet()
+    width: 20vw
+    height: 200px
+  @include smallScreen()
+    width: 30px,
+    height: 150px,
+  @include tablet()
+    width: 70vw,
+    height: 150px,
+    margin-bottom: 1rem
+
 .buttonTally
   padding: 0 5rem
   display: flex,
   flex-direction: row,
   justify-content: space-around,
   margin-bottom: 1rem
+  @include mobile()
+    padding: 0
 
 .buttonGral
   @extend .buttonTally
   margin-top: 2rem
 
 .buttonForm
+  width: 90%
+  align-self: center,
   padding: 0 2rem
   display: flex,
   flex-direction: row,
   justify-content: space-around,
   margin-bottom: 1rem
   margin-top: 2rem
+
+  button
+    width: 100px
+    @include mobile()
+      width: 80px
+
 
 .tableContainer
   overflow-x: scroll
@@ -167,6 +202,33 @@
     font-weight: bold
     color: #009879
 
+.salesFormField
+  width: 20vw
+  @include tablet()
+    width: 30vw
+  @include smallScreen()
+    width: 50vw
+  @include mobile()
+    width: 80vw 
+    
+.OrderFormField
+  width: 30vw
+  @include tablet()
+    width: 40vw
+  @include smallScreen()
+    width: 50vw
+  @include mobile()
+    width: 80vw 
+
+.salesFormBox
+  width: 40vw
+  @include tablet()
+    width: 40vw
+  @include smallScreen()
+    width: 50vw
+  @include mobile()
+    width: 80vw 
+  
 .tableSales
   border-collapse: collapse,
   border-radius: 10px
@@ -175,6 +237,10 @@
   min-width: 400px,
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15),
 
+  @include mobile()
+    margin: 0.5rem  
+    min-width: 10rem,
+    font-size: 0.8rem
   thead tr
     background-color: #2F75B5
     color: #ffffff
@@ -182,6 +248,8 @@
 
   th, td
     padding: 12px 15px,
+    @include mobile()
+      padding: 12px 2px
 
   tbody tr
     border-bottom: 1px solid #dddddd
@@ -204,6 +272,8 @@
   margin: 25px 0,
   font-size: 1.2em,
   min-width: 400px,
+  @include mobile()
+    min-width: 300px
 
   thead tr
     background-color: $primary-color
@@ -213,6 +283,8 @@
   th, td
     padding: 10px 20px,
     text-align: center,
+    @include mobile()
+      padding: 10px 2px,
 
   tbody tr
     border-bottom: 1px solid #dddddd
@@ -269,6 +341,13 @@
   flex-direction: row,
   align-items: inherit,
   justify-content: center,
+  // @include tablet()
+  //   justify-content: left,
+
+// .justifyLeft
+//   @include tablet()
+//     justify-content: left,
+
 
 .errorPage
   margin-top: 5rem
@@ -282,8 +361,6 @@
   color: $danger-color
   font-size: 1.5rem
   text-align: -webkit-center
-
-
 
 .frame 
   position: fixed,
@@ -302,6 +379,10 @@
   @include mobile()
     width: 90%
 
+.iframe3d
+  @include mobile()
+    display: none
+
 .modal-closed 
   position: fixed,
   z-index: 200,
@@ -317,7 +398,20 @@
 
   @include mobile()
     width: 90%
-  
+
+.formFieldModal
+  width: 30vw
+  @include tablet()
+    width: 40vw
+  @include mobile()
+    width: 60vw  
+
+.formFieldModalCustom
+  width: 20vw
+  @include tablet()
+    width: 40vw
+  @include mobile()
+    width: 60vw  
 
 .modal__message 
   padding: 1rem,
@@ -397,6 +491,11 @@
   flex-direction: column,
   width: 70%
 
+  @include tablet()
+    width: 90%
+  @include mobile()
+    width: 90%
+
 .simulatorResults
   border: solid 1px $primary-color
   padding: 1rem 2rem,
@@ -404,6 +503,9 @@
   text-align: center
   border-radius: 15px
   text-align: -webkit-center
+  @include tablet()
+    padding: 0
+    margin: 1rem 0
 
 .simulator
   border: solid 1px $primary-color
@@ -413,7 +515,18 @@
   border-radius: 15px
   background-color: rgba(90,100,119,0.1)
   text-align: -webkit-center
+  @include mobile()
+    margin: 1rem 0,
+    padding: 1rem
 
+.simulatorField
+  width: 20vw
+  @include tablet()
+    width: 20vw
+  @include smallScreen()
+    width: 30vw
+  @include mobile()
+    width: 60vw 
 .wellbore3d
   text-align: center
   text-align: -webkit-center
@@ -513,6 +626,8 @@
 .chart 
   width: 90%,
   align-self: center 
+    
+
 
 .productImage
   height: 20vh,
@@ -526,6 +641,41 @@
   img
     width: 10%
     transform: rotate(-90deg)
+
+.textField
+  width: 15vw
+  @include tablet()
+    width: 30vw
+  @include smallScreen()
+    width: 60vw
+  @include mobile()
+    width: 70vw
+
+.textFieldClient
+  width: 30vw
+  @include tablet()
+    width: 57vw
+  @include smallScreen()
+    width: 55vw
+  @include mobile()
+    width: 63vw
+
+.textFieldBasic
+  width: 15vw
+  @include tablet()
+    width: 60vw
+  @include smallScreen()
+    width: 60vw
+  @include mobile()
+    width: 70vw
+
+.textFieldAdd
+  width: 25vw
+  @include tablet()
+    width: 60vw
+  @include mobile()
+    width: 70vw
+
 
 
 @keyframes popup 

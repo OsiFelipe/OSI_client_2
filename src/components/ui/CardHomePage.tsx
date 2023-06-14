@@ -22,7 +22,6 @@ export const CardHomePage = ({
       sx={{
         maxWidth: 345,
         backgroundColor: "rgba(90,100,119,0.3)",
-        width: "30vw",
         borderRadius: "15px",
         color: "black",
         border: "0.5px solid black",

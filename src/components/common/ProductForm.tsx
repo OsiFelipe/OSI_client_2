@@ -73,26 +73,26 @@ export const ProductForm = ({
               label="Part Number"
               variant="outlined"
               name="partNumber"
-              sx={{ width: 500 }}
+              className={styles.formFieldModalCustomCustom}
               value={values.partNumber}
               onChange={onChangeValue}
             />
           </Grid>
         )}
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Description"
             variant="outlined"
             name="name"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.name}
             disabled={disabled}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <Autocomplete
             renderOption={(props, option) => {
               return (
@@ -112,13 +112,13 @@ export const ProductForm = ({
               options: diameterOptions,
             }}
             disablePortal
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             renderInput={(params) => (
               <TextField {...params} label="Top Thread Connection" />
             )}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <Autocomplete
             renderOption={(props, option) => {
               return (
@@ -138,66 +138,66 @@ export const ProductForm = ({
               options: diameterOptions,
             }}
             disablePortal
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             renderInput={(params) => (
               <TextField {...params} label="Bottom Thread Connection" />
             )}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Max OD (in)"
             name="maxOD"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.maxOD}
             disabled={disabled}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Body OD (in)"
             name="bodyOD"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.bodyOD}
             disabled={disabled}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="number"
             label="Length (ft)"
             name="length"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.length}
             disabled={disabled}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="number"
             label="Weight (Lb)"
             name="weight"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.weight}
             disabled={disabled}
             onChange={onChangeValue}
           />
         </Grid>
       </Grid>
-      <div className={styles.buttonGral}>
+      <div className={styles.buttonForm}>
         <Button onClick={onCancel} variant="contained">
           Cancel
         </Button>

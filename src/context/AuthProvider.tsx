@@ -4,6 +4,7 @@ import AuthContext from "./AuthContext";
 import { Base64 } from "js-base64";
 import { isExpired, decodeToken } from "react-jwt";
 import { useRequest } from "../hooks";
+import { useMediaQuery } from "@mui/material";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
@@ -12,10 +13,12 @@ interface Props {
 const AuthProvider = ({ children }: Props) => {
   const { handleRequest } = useRequest();
   const navigate = useNavigate();
+  const desktop = useMediaQuery("(min-width:900px)");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     validateSession();
@@ -26,6 +29,10 @@ const AuthProvider = ({ children }: Props) => {
       setIsError(false);
     }, 3000);
   }, [isSuccess]);
+
+  useEffect(() => {
+    desktop && setIsDrawerOpen(true);
+  }, []);
 
   const logoutHandler = async () => {
     setIsLoading(true);
@@ -101,6 +108,9 @@ const AuthProvider = ({ children }: Props) => {
         isSuccess,
         isError,
         isLoading,
+        isDrawerOpen,
+        desktop,
+        onMoveDrawer: (action: boolean) => setIsDrawerOpen(action),
         onLogin: loginHandler,
         onLogout: logoutHandler,
         validateToken,

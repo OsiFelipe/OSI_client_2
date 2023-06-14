@@ -74,20 +74,20 @@ export const AddWellForm = ({
       <TitleComponent title="Well Info" />
       <Grid container spacing={2}>
         {client ? (
-          <Grid item xs={6}>
+          <Grid item lg={6} xs={12}>
             <TextField
               id="outlined-basic"
               type="text"
               label="Client"
               variant="outlined"
-              sx={{ width: 300 }}
+              className={styles.formFieldModalCustom}
               value={client.name}
               disabled
               onChange={onChangeValue}
             />
           </Grid>
         ) : (
-          <Grid item xs={6}>
+          <Grid item lg={6} xs={12}>
             <Autocomplete
               id="client-selector"
               value={values.client}
@@ -104,43 +104,43 @@ export const AddWellForm = ({
               }}
               {...defaultProps}
               disablePortal
-              sx={{ width: "20vw" }}
+              className={styles.formFieldModalCustom}
               renderInput={(params) => <TextField {...params} label="Client" />}
             />
           </Grid>
         )}
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Well Name"
             name="name"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.name}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Contact Name"
             variant="outlined"
             name="contact"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.contact}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Phone Number"
             name="phoneNumber"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.phoneNumber}
             onChange={onChangeValue}
           />

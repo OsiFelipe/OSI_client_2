@@ -26,7 +26,7 @@ import { ThemeProvider, createTheme } from "@mui/system";
 import AuthProvider from "./context/AuthProvider";
 import { ProtectedRoute } from "./routes/ProtectedRoutes";
 import { PublicRoute } from "./routes/PublicRoutes";
-import { ChemSimulator } from "./components/solution/simulators/chem/ChemSimulator";
+import DesignerProvider from "./context/DesignerProvider";
 
 const theme = createTheme({
   palette: {
@@ -70,7 +70,15 @@ const routeItems = [
   { path: "/sim/sand", protected: true, component: <SandSimulator /> },
   { path: "/sim/gas", protected: true, component: <GasSimulator /> },
   { path: "/sim/press", protected: true, component: <PressureSimulator /> },
-  { path: "/stepper", protected: true, component: <StepperPage /> },
+  {
+    path: "/stepper",
+    protected: true,
+    component: (
+      <DesignerProvider>
+        <StepperPage />
+      </DesignerProvider>
+    ),
+  },
   { path: "/*", protected: false, component: <NotFoundPage /> },
 ];
 

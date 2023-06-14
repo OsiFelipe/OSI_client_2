@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import { PressureDropDiptube } from "./PressureDropDiptube";
 import { PressureDropTs } from "./PressureDropTs";
@@ -41,6 +41,7 @@ function a11yProps(index: number) {
 
 export const PressureSimSelector = () => {
   const [value, setValue] = React.useState(0);
+  const matches = useMediaQuery("(min-width:600px)");
   const { onUpdateOptSimulator, simulatorState } = useContext(SimulatorContext);
   useEffect(() => {
     getIndexFromSimulatorState();
@@ -59,7 +60,12 @@ export const PressureSimSelector = () => {
   return (
     <div>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={value} onChange={handleChange} centered>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          centered
+          orientation={`${matches ? `horizontal` : `vertical`}`}
+        >
           <Tab label="Dip Tube" {...a11yProps(0)} />
           <Tab label="Screen" {...a11yProps(1)} />
         </Tabs>

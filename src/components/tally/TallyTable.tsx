@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import DataContext from "../../context/DataContext";
-import { Button, ButtonGroup, Tooltip } from "@mui/material";
+import { Button, ButtonGroup, Tooltip, useMediaQuery } from "@mui/material";
 import { ModalComponent } from "../layout/ModalComponent";
 import { AddCustomToolForm } from "../common/AddCustomToolForm";
 import BusinessIcon from "@mui/icons-material/Business";
@@ -66,6 +66,7 @@ export const TallyTable = ({
     isModalOpen,
   } = useContext(DataContext);
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
+  const matches = useMediaQuery("(min-width:600px)");
 
   const getMudWeight = (): number => {
     let weight: number = 0;
@@ -108,7 +109,10 @@ export const TallyTable = ({
   return (
     <>
       <div className={styles.buttonTally}>
-        <ButtonGroup variant="outlined">
+        <ButtonGroup
+          variant="outlined"
+          orientation={`${matches ? `horizontal` : `vertical`}`}
+        >
           <Button
             variant="outlined"
             color="primary"
@@ -140,290 +144,322 @@ export const TallyTable = ({
         </ButtonGroup>
       </div>
       {tallyDesign.length > 0 && (
-        <div className={styles.tableContainer}>
-          <table className={styles.tableTally}>
-            <thead>
-              <tr>
-                <th>Actions</th>
-                <th>Add Inner Tools</th>
-                <th>Add OSI Tools</th>
-                <th>Add Custom Tools</th>
-                <th>Position</th>
-                <th>Part Number</th>
-                <th>Description</th>
-                <th>Supplier</th>
-                <th>Top Thread Connection</th>
-                <th>Bottom Thread Connection</th>
-                <th>Status</th>
-                <th>{"Max. OD (in)"}</th>
-                <th>{"Body OD (in)"}</th>
-                <th>{"Length(ft)"}</th>
-                <th>{"QTY"}</th>
-                <th>{"Top (ft)"}</th>
-                <th>{"Bottom (ft)"}</th>
-                <th>{"Weight (lb)"}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tallyDesign.map((item, index) => (
-                <tr key={index}>
-                  <td>
-                    <div className={styles["grid-col"]}>
-                      <Tooltip title="Remove row">
-                        <IconButton
-                          size="small"
-                          sx={{ width: "2rem" }}
-                          onClick={() => onDeleteTallyRow(index)}
-                        >
-                          <DeleteOutlineOutlinedIcon
-                            sx={{ color: "#CD1719" }}
-                          />
-                        </IconButton>
-                      </Tooltip>
-                      {!!!item.id ? (
-                        <IconButton
-                          disabled
-                          size="small"
-                          sx={{ width: "2rem" }}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                      ) : (
-                        <>
-                          {item.osi ? (
-                            <Tooltip title="Edit Product">
-                              <IconButton
-                                size="small"
-                                sx={{ width: "2rem" }}
-                                onClick={() => {
-                                  setToolToEdit(item);
-                                  setIndexToEdit(index);
-                                  setIsModalOpenCreatetool(true);
-                                }}
-                              >
-                                <EditIcon sx={{ color: "#2F75B5" }} />
-                              </IconButton>
-                            </Tooltip>
-                          ) : (
-                            <Tooltip title="Edit Custom Tool">
-                              <IconButton
-                                size="small"
-                                sx={{ width: "2rem" }}
-                                onClick={() => {
-                                  setToolToEdit(item);
-                                  setIndexToEdit(index);
-                                  onOpenModal();
-                                }}
-                              >
-                                <EditIcon sx={{ color: "#2F75B5" }} />
-                              </IconButton>
-                            </Tooltip>
-                          )}
-                        </>
-                      )}
-                    </div>
-                  </td>
-                  <td>
-                    <div className={styles["grid-col"]}>
-                      {!!!item.id || item.innerTools || !item.osi ? (
-                        <IconButton size="small" sx={{ width: "80%" }} disabled>
-                          <FormatLineSpacingIcon />
-                        </IconButton>
-                      ) : (
-                        <Tooltip title="Add Inner tool">
+        <>
+          <div className={styles.tableContainer}>
+            <table className={styles.tableTally}>
+              <thead>
+                <tr>
+                  <th>Actions</th>
+                  <th>Add Inner Tools</th>
+                  <th>Add OSI Tools</th>
+                  <th>Add Custom Tools</th>
+                  <th>Position</th>
+                  <th>Part Number</th>
+                  <th>Description</th>
+                  <th>Supplier</th>
+                  <th>Top Thread Connection</th>
+                  <th>Bottom Thread Connection</th>
+                  <th>Status</th>
+                  <th>{"Max. OD (in)"}</th>
+                  <th>{"Body OD (in)"}</th>
+                  <th>{"Length(ft)"}</th>
+                  <th>{"QTY"}</th>
+                  <th>{"Top (ft)"}</th>
+                  <th>{"Bottom (ft)"}</th>
+                  <th>{"Weight (lb)"}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tallyDesign.map((item, index) => (
+                  <tr key={index}>
+                    <td>
+                      <div className={styles["grid-col"]}>
+                        <Tooltip title="Remove row">
+                          <IconButton
+                            size="small"
+                            sx={{ width: "2rem" }}
+                            onClick={() => onDeleteTallyRow(index)}
+                          >
+                            <DeleteOutlineOutlinedIcon
+                              sx={{ color: "#CD1719" }}
+                            />
+                          </IconButton>
+                        </Tooltip>
+                        {!!!item.id ? (
+                          <IconButton
+                            disabled
+                            size="small"
+                            sx={{ width: "2rem" }}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        ) : (
+                          <>
+                            {item.osi ? (
+                              <Tooltip title="Edit Product">
+                                <IconButton
+                                  size="small"
+                                  sx={{ width: "2rem" }}
+                                  onClick={() => {
+                                    setToolToEdit(item);
+                                    setIndexToEdit(index);
+                                    setIsModalOpenCreatetool(true);
+                                  }}
+                                >
+                                  <EditIcon sx={{ color: "#2F75B5" }} />
+                                </IconButton>
+                              </Tooltip>
+                            ) : (
+                              <Tooltip title="Edit Custom Tool">
+                                <IconButton
+                                  size="small"
+                                  sx={{ width: "2rem" }}
+                                  onClick={() => {
+                                    setToolToEdit(item);
+                                    setIndexToEdit(index);
+                                    onOpenModal();
+                                  }}
+                                >
+                                  <EditIcon sx={{ color: "#2F75B5" }} />
+                                </IconButton>
+                              </Tooltip>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      <div className={styles["grid-col"]}>
+                        {!!!item.id || item.innerTools || !item.osi ? (
                           <IconButton
                             size="small"
                             sx={{ width: "80%" }}
-                            onClick={() => {
-                              setToolToAddInner(index);
-                              setIsModalOpenInnerTool(true);
-                            }}
+                            disabled
                           >
-                            <FormatLineSpacingIcon sx={{ color: "#4BB543" }} />
+                            <FormatLineSpacingIcon />
                           </IconButton>
-                        </Tooltip>
-                      )}
-                      {!item.innerTools ? (
-                        <IconButton size="small" sx={{ width: "80%" }} disabled>
-                          <DataArrayOutlinedIcon />
-                        </IconButton>
-                      ) : (
-                        <Tooltip title="Inner Tools Detail">
+                        ) : (
+                          <Tooltip title="Add Inner tool">
+                            <IconButton
+                              size="small"
+                              sx={{ width: "80%" }}
+                              onClick={() => {
+                                setToolToAddInner(index);
+                                setIsModalOpenInnerTool(true);
+                              }}
+                            >
+                              <FormatLineSpacingIcon
+                                sx={{ color: "#4BB543" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                        {!item.innerTools ? (
+                          <IconButton
+                            size="small"
+                            sx={{ width: "80%" }}
+                            disabled
+                          >
+                            <DataArrayOutlinedIcon />
+                          </IconButton>
+                        ) : (
+                          <Tooltip title="Inner Tools Detail">
+                            <IconButton
+                              size="small"
+                              sx={{ width: "2rem" }}
+                              onClick={() => {
+                                item.innerTools &&
+                                  setToolToEdit(item.innerTools);
+                                setToolToRemoveInner(index);
+                                setIsModalOpenInnerDetail(true);
+                              }}
+                            >
+                              <DataArrayOutlinedIcon
+                                sx={{ color: "#4BB543" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      <div className={styles["grid-col"]}>
+                        <Tooltip title="Add OSI">
                           <IconButton
                             size="small"
                             sx={{ width: "2rem" }}
                             onClick={() => {
-                              item.innerTools && setToolToEdit(item.innerTools);
-                              setToolToRemoveInner(index);
-                              setIsModalOpenInnerDetail(true);
+                              onAddTool(index);
                             }}
                           >
-                            <DataArrayOutlinedIcon sx={{ color: "#4BB543" }} />
+                            <NorthEastIcon sx={{ color: "#FBAB53" }} />
                           </IconButton>
                         </Tooltip>
+                        <Tooltip title="Add OSI">
+                          <IconButton
+                            size="small"
+                            sx={{ width: "2rem" }}
+                            onClick={() => {
+                              onAddTool(index + 1);
+                            }}
+                          >
+                            <SouthEastIcon sx={{ color: "#FBAB53" }} />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                    </td>
+                    <td>
+                      <div className={styles["grid-col"]}>
+                        <Tooltip title="Add Custom">
+                          <IconButton
+                            size="small"
+                            sx={{ width: "2rem" }}
+                            onClick={() => {
+                              onAddCustomTool(index);
+                            }}
+                          >
+                            <NorthEastIcon sx={{ color: "rgb(90,100,119)" }} />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Add Custom">
+                          <IconButton
+                            sx={{ width: "2rem" }}
+                            size="small"
+                            onClick={() => {
+                              onAddCustomTool(index + 1);
+                            }}
+                          >
+                            <SouthEastIcon sx={{ color: "rgb(90,100,119)" }} />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                    </td>
+                    <td>{index}</td>
+                    <td>
+                      {item.osi ? (
+                        <ProductSelectorByPN
+                          options={products}
+                          onSelectPN={(newValue: any) => {
+                            onUpdateTally(
+                              index,
+                              { ...item, ...newValue },
+                              true
+                            );
+                            forceUpdate();
+                          }}
+                          value={item}
+                        />
+                      ) : (
+                        ""
                       )}
-                    </div>
-                  </td>
-                  <td>
-                    <div className={styles["grid-col"]}>
-                      <Tooltip title="Add OSI">
-                        <IconButton
-                          size="small"
-                          sx={{ width: "2rem" }}
-                          onClick={() => {
-                            onAddTool(index);
+                    </td>
+                    <td>
+                      {item.osi ? (
+                        <ProductSelectorByName
+                          options={products}
+                          onSelectName={(newValue: any) => {
+                            onUpdateTally(
+                              index,
+                              { ...item, ...newValue },
+                              true
+                            );
+                            forceUpdate();
                           }}
-                        >
-                          <NorthEastIcon sx={{ color: "#FBAB53" }} />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Add OSI">
-                        <IconButton
-                          size="small"
-                          sx={{ width: "2rem" }}
-                          onClick={() => {
-                            onAddTool(index + 1);
+                          value={item}
+                        />
+                      ) : (
+                        <ProductSelectorByName
+                          options={customTools}
+                          onSelectName={(newValue: any) => {
+                            onUpdateTally(
+                              index,
+                              { ...item, ...newValue },
+                              true
+                            );
+                            forceUpdate();
                           }}
-                        >
-                          <SouthEastIcon sx={{ color: "#FBAB53" }} />
-                        </IconButton>
-                      </Tooltip>
-                    </div>
-                  </td>
-                  <td>
-                    <div className={styles["grid-col"]}>
-                      <Tooltip title="Add Custom">
-                        <IconButton
-                          size="small"
-                          sx={{ width: "2rem" }}
-                          onClick={() => {
-                            onAddCustomTool(index);
+                          value={item}
+                        />
+                      )}
+                    </td>
+                    <td>{item?.supplier || "-"}</td>
+                    <td>{item?.topThreadConnection || "-"}</td>
+                    <td>{item?.bottomThreadConnection || "-"}</td>
+                    <td>
+                      {item?.id !== 0 ? (
+                        <StatusSelector
+                          value={item.status}
+                          onUpdateStatus={(newValue) => {
+                            onUpdateTally(index, { ...item, status: newValue });
+                            forceUpdate();
                           }}
-                        >
-                          <NorthEastIcon sx={{ color: "rgb(90,100,119)" }} />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Add Custom">
-                        <IconButton
-                          sx={{ width: "2rem" }}
-                          size="small"
-                          onClick={() => {
-                            onAddCustomTool(index + 1);
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </td>
+                    <td>{item?.maxOD || "-"}</td>
+                    <td>{item?.bodyOD || "-"}</td>
+                    <td>
+                      {item.length && item.quantity
+                        ? item.length * item.quantity
+                        : item.length}
+                    </td>
+                    <td>
+                      {item?.id !== 0 ? (
+                        <QuantityField
+                          value={item.quantity}
+                          onChangeQTY={(newValue) => {
+                            onUpdateTally(
+                              index,
+                              { ...item, quantity: newValue },
+                              true
+                            );
+                            forceUpdate();
                           }}
-                        >
-                          <SouthEastIcon sx={{ color: "rgb(90,100,119)" }} />
-                        </IconButton>
-                      </Tooltip>
-                    </div>
-                  </td>
-                  <td>{index}</td>
-                  <td>
-                    {item.osi ? (
-                      <ProductSelectorByPN
-                        options={products}
-                        onSelectPN={(newValue: any) => {
-                          onUpdateTally(index, { ...item, ...newValue }, true);
-                          forceUpdate();
-                        }}
-                        value={item}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </td>
-                  <td>
-                    {item.osi ? (
-                      <ProductSelectorByName
-                        options={products}
-                        onSelectName={(newValue: any) => {
-                          onUpdateTally(index, { ...item, ...newValue }, true);
-                          forceUpdate();
-                        }}
-                        value={item}
-                      />
-                    ) : (
-                      <ProductSelectorByName
-                        options={customTools}
-                        onSelectName={(newValue: any) => {
-                          onUpdateTally(index, { ...item, ...newValue }, true);
-                          forceUpdate();
-                        }}
-                        value={item}
-                      />
-                    )}
-                  </td>
-                  <td>{item?.supplier || "-"}</td>
-                  <td>{item?.topThreadConnection || "-"}</td>
-                  <td>{item?.bottomThreadConnection || "-"}</td>
-                  <td>
-                    {item?.id !== 0 ? (
-                      <StatusSelector
-                        value={item.status}
-                        onUpdateStatus={(newValue) => {
-                          onUpdateTally(index, { ...item, status: newValue });
-                          forceUpdate();
-                        }}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </td>
-                  <td>{item?.maxOD || "-"}</td>
-                  <td>{item?.bodyOD || "-"}</td>
-                  <td>
-                    {item.length && item.quantity
-                      ? item.length * item.quantity
-                      : item.length}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </td>
+                    <td>
+                      {item.top !== undefined && item.top >= 0 ? item.top : "-"}
+                    </td>
+                    <td>
+                      {item.bottom !== undefined && item.bottom >= 0
+                        ? item.bottom
+                        : "-"}
+                    </td>
+                    <td>{item?.totalWeight}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan={14}>
+                    Total Weight of Mud Joints full with sand
                   </td>
                   <td>
-                    {item?.id !== 0 ? (
-                      <QuantityField
-                        value={item.quantity}
-                        onChangeQTY={(newValue) => {
-                          onUpdateTally(
-                            index,
-                            { ...item, quantity: newValue },
-                            true
-                          );
-                          forceUpdate();
-                        }}
-                      />
-                    ) : (
-                      ""
-                    )}
+                    <strong>{getMudWeight()}</strong>
                   </td>
-                  <td>
-                    {item.top !== undefined && item.top >= 0 ? item.top : "-"}
-                  </td>
-                  <td>
-                    {item.bottom !== undefined && item.bottom >= 0
-                      ? item.bottom
-                      : "-"}
-                  </td>
-                  <td>{item?.totalWeight}</td>
                 </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan={14}>Total Weight of Mud Joints full with sand</td>
-                <td>
-                  <strong>{getMudWeight()}</strong>
-                </td>
-              </tr>
-              <tr>
-                <td colSpan={10}>Total</td>
-                <td colSpan={4}>
-                  <strong>{getTotalLenght()}</strong>
-                </td>
-                <td>
-                  <strong>{getTotalWeight()}</strong>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
+                <tr>
+                  <td colSpan={10}>Total</td>
+                  <td colSpan={4}>
+                    <strong>{getTotalLenght()}</strong>
+                  </td>
+                  <td>
+                    <strong>{getTotalWeight()}</strong>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
           <div className={styles.buttonTally}>
-            <ButtonGroup variant="outlined">
+            <ButtonGroup
+              variant="outlined"
+              orientation={`${matches ? `horizontal` : `vertical`}`}
+            >
               <Button
                 variant="outlined"
                 color="primary"
@@ -454,7 +490,7 @@ export const TallyTable = ({
               </Button>
             </ButtonGroup>
           </div>
-        </div>
+        </>
       )}
       {isModalOpen && (
         <ModalComponent

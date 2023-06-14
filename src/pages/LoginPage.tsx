@@ -1,5 +1,5 @@
 import React from "react";
-import { AlertComponent, LoginForm, ShowContent } from "../components";
+import { AlertComponent, LoginComponent, ShowContent } from "../components";
 import styles from "./main.module.sass";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
@@ -9,8 +9,8 @@ export const LoginPage = () => {
   let content: JSX.Element | JSX.Element[];
   content = (
     <>
-      <div className={styles.center}>
-        <LoginForm onClickLogin={onLogin} />
+      <div className={styles.loginForm}>
+        <LoginComponent onClickLogin={onLogin} />
       </div>
       {isSuccess && <AlertComponent type="success" />}
       {isError && (

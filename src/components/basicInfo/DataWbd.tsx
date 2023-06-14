@@ -9,6 +9,7 @@ import {
 import { BasicInfoprops } from "../../interfaces/interfaces";
 import { api_casing_table_drift, casingOdOptions } from "../../utils/data";
 import { useEffect, useState } from "react";
+import styles from "../components.module.sass";
 
 interface Props {
   basicInfo: BasicInfoprops;
@@ -97,7 +98,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
               </Typography>
               <Divider />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <Autocomplete
                 renderOption={(props, option) => {
                   return (
@@ -115,7 +116,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
                 }}
                 disablePortal
                 disabled={!bhaInfo}
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -124,48 +125,48 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
                 )}
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="text"
                 label="Casing ID (in)"
                 value={basicInfo.bhaInfo?.casingId}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 disabled
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="text"
                 label="Drift Casing (in)"
                 value={basicInfo.bhaInfo?.driftCasing}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 disabled
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="number"
                 label="Fluid Production (BFPD)"
                 value={basicInfo.bhaInfo?.bfpd}
                 disabled={!bhaInfo}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 onChange={(event) =>
                   parseInt(event.target.value) >= 0 &&
                   handleUpdateWbd("bfpd", event.target.value || 0)
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="number"
                 label="Water Cut (%)"
                 value={basicInfo.bhaInfo?.waterCut}
                 disabled={!bhaInfo}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 onChange={(event) =>
                   parseInt(event.target.value) >= 0 &&
                   parseInt(event.target.value) <= 100 &&
@@ -173,80 +174,80 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="text"
                 label="Oil Flow (BOPD)"
                 value={basicInfo.bhaInfo?.bopd}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 disabled
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="text"
                 label="Water Flow"
                 value={basicInfo.bhaInfo?.bwpd}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 disabled
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="number"
                 label="Gas Flow (MCFD)"
                 value={basicInfo.bhaInfo?.gasFlow}
                 disabled={!bhaInfo}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 onChange={(event) =>
                   parseInt(event.target.value) >= 0 &&
                   handleUpdateWbd("gasFlow", event.target.value || 0)
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="number"
                 label="GOR (SCF/STB)"
                 value={basicInfo.bhaInfo?.gor}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 disabled
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="number"
                 label="GLR (SCF/STB)"
                 value={basicInfo.bhaInfo?.glr}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 disabled
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="text"
                 label="Liner (in)"
                 value={basicInfo.bhaInfo?.liner}
                 disabled={!bhaInfo}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 onChange={(event) =>
                   handleUpdateWbd("liner", event.target.value || "")
                 }
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item lg={4} md={6} xs={12}>
               <TextField
                 type="number"
                 label="Top of Liner (MD ft)"
                 value={basicInfo.bhaInfo?.tol}
                 variant="outlined"
-                sx={{ width: "15vw" }}
+                className={styles.textField}
                 onChange={(event) =>
                   parseInt(event.target.value) >= 0 &&
                   handleUpdateWbd("tol", event.target.value)
@@ -261,7 +262,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
             </Typography>
             <Divider />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item lg={6} xs={12}>
             <Autocomplete
               renderOption={(props, option) => {
                 return (
@@ -270,6 +271,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
                   </li>
                 );
               }}
+              className={styles.textFieldAdd}
               value={wellClassification}
               onChange={(_, newValue) =>
                 (newValue === "Unconventional" ||
@@ -280,7 +282,6 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
                 options: deviationOptions,
               }}
               disablePortal
-              sx={{ width: "25vw" }}
               renderInput={(params) => (
                 <TextField {...params} label="Well Classification" />
               )}
@@ -288,7 +289,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
           </Grid>
           {basicInfo.sla.id === 0 && basicInfo.sla.name === "Rod Pump" && (
             <>
-              <Grid item xs={6}>
+              <Grid item lg={6} xs={12}>
                 <Autocomplete
                   renderOption={(props, option) => {
                     return (
@@ -306,7 +307,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
                     options: yesNoOptions,
                   }}
                   disablePortal
-                  sx={{ width: "25vw" }}
+                  className={styles.textFieldAdd}
                   renderInput={(params) => (
                     <TextField {...params} label="TAC above SN?" />
                   )}
@@ -316,7 +317,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
           )}
           {basicInfo.sla.id === 1 && (
             <>
-              <Grid item xs={6}>
+              <Grid item lg={6} xs={12}>
                 <Autocomplete
                   renderOption={(props, option) => {
                     return (
@@ -334,7 +335,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
                     options: yesNoOptions,
                   }}
                   disablePortal
-                  sx={{ width: "25vw" }}
+                  className={styles.textFieldAdd}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -347,7 +348,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
           )}
           {basicInfo.sla.id === 2 && (
             <>
-              <Grid item xs={6}>
+              <Grid item lg={6} xs={12}>
                 <Autocomplete
                   renderOption={(props, option) => {
                     return (
@@ -365,13 +366,13 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
                     options: gasLiftOptions2,
                   }}
                   disablePortal
-                  sx={{ width: "25vw" }}
+                  className={styles.textFieldAdd}
                   renderInput={(params) => (
                     <TextField {...params} label="Gas Lift Options" />
                   )}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item lg={6} xs={12}>
                 <Autocomplete
                   renderOption={(props, option) => {
                     return (
@@ -388,7 +389,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
                     options: gasLiftOptions,
                   }}
                   disablePortal
-                  sx={{ width: "25vw" }}
+                  className={styles.textFieldAdd}
                   renderInput={(params) => (
                     <TextField {...params} label="Flow" />
                   )}

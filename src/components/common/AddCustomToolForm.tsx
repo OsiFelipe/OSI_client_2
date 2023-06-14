@@ -104,31 +104,31 @@ export const AddCustomToolForm = ({
     <div className={styles.customToolForm}>
       <TitleComponent title="Custom Tool" />
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Description"
             variant="outlined"
             name="description"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.description}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Supplier"
             name="supplier"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.supplier}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <Autocomplete
             renderOption={(props, option) => {
               return (
@@ -148,13 +148,13 @@ export const AddCustomToolForm = ({
               options: diameterOptions,
             }}
             disablePortal
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             renderInput={(params) => (
               <TextField {...params} label="Top Thread Connection" />
             )}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <Autocomplete
             renderOption={(props, option) => {
               return (
@@ -174,13 +174,13 @@ export const AddCustomToolForm = ({
               options: diameterOptions,
             }}
             disablePortal
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             renderInput={(params) => (
               <TextField {...params} label="Bottom Thread Connection" />
             )}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <Autocomplete
             renderOption={(props, option) => {
               return (
@@ -200,42 +200,42 @@ export const AddCustomToolForm = ({
                 option.name,
             }}
             disablePortal
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             renderInput={(params) => <TextField {...params} label="Status" />}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Max OD"
             name="maxOD"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.maxOD}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="text"
             label="Body OD"
             name="bodyOD"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.bodyOD}
             onChange={onChangeValue}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="number"
             label="Length"
             name="length"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.length}
             onChange={(event) => {
               const inputValue = parseFloat(event.target.value);
@@ -249,14 +249,14 @@ export const AddCustomToolForm = ({
             }}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="number"
             label="QTY"
             name="quantity"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.quantity}
             onChange={(event) => {
               parseInt(event.target.value) >= 1 &&
@@ -269,14 +269,14 @@ export const AddCustomToolForm = ({
             }}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <TextField
             id="outlined-basic"
             type="number"
             label="Weight"
             name="weight"
             variant="outlined"
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             value={values.weight}
             onChange={(event) => {
               const inputValue = parseFloat(event.target.value);
@@ -290,7 +290,7 @@ export const AddCustomToolForm = ({
             }}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <Autocomplete
             renderOption={(props, option) => {
               return (
@@ -308,7 +308,7 @@ export const AddCustomToolForm = ({
               options: ["YES", "NO"],
             }}
             disablePortal
-            sx={{ width: 300 }}
+            className={styles.formFieldModalCustom}
             renderInput={(params) => (
               <TextField {...params} label="Is tail Joint" />
             )}

@@ -5,6 +5,9 @@ interface Props {
   isSuccess: boolean;
   isError: boolean;
   isLoading: boolean;
+  isDrawerOpen: boolean;
+  desktop: boolean;
+  onMoveDrawer: (action: boolean) => void;
   onLogin: (username: string, password: string) => void;
   onLogout: () => void;
   validateToken: () => boolean;
@@ -15,6 +18,9 @@ const AuthContext = React.createContext<Props>({
   isSuccess: false,
   isError: false,
   isLoading: false,
+  isDrawerOpen: false,
+  desktop: false,
+  onMoveDrawer: () => {},
   onLogin: () => {},
   onLogout: () => {},
   validateToken: () => false,
