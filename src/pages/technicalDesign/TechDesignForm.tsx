@@ -73,6 +73,12 @@ export const TechDesignForm = () => {
   const { fetchTechSolution } = useContext(SimulatorContext);
 
   useEffect(() => {
+    if (pdf) {
+      onCreatePdf();
+    }
+  }, []);
+
+  useEffect(() => {
     if (idTech && idTech !== "0") {
       fetchDataTechProp(parseInt(idTech));
       fetchTechSolution(parseInt(idTech));

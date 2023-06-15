@@ -229,16 +229,27 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
               />
             </Grid>
             <Grid item lg={4} md={6} xs={12}>
-              <TextField
-                type="text"
-                label="Liner (in)"
-                value={basicInfo.bhaInfo?.liner}
-                disabled={!bhaInfo}
-                variant="outlined"
-                className={styles.textField}
-                onChange={(event) =>
-                  handleUpdateWbd("liner", event.target.value || "")
+              <Autocomplete
+                renderOption={(props, option) => {
+                  return (
+                    <li {...props} key={option}>
+                      {option}
+                    </li>
+                  );
+                }}
+                value={basicInfo.bhaInfo?.tubing}
+                onChange={(_, newValue) =>
+                  newValue && handleUpdateWbd("tubing", newValue)
                 }
+                {...{
+                  options: ['2-3/8"', '2-7/8"'],
+                }}
+                disablePortal
+                disabled={!bhaInfo}
+                className={styles.textField}
+                renderInput={(params) => (
+                  <TextField {...params} label="Tubing (in)" />
+                )}
               />
             </Grid>
             <Grid item lg={4} md={6} xs={12}>
