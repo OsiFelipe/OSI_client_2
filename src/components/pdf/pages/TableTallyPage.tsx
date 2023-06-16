@@ -47,9 +47,9 @@ export const TableTallyPage = ({
           <Table.Body>
             <>
               {tallyDesign.map((item) => (
-                <>
+                <React.Fragment key={item.id}>
                   {item.id !== 0 && (
-                    <Table.Row key={item.id}>
+                    <Table.Row>
                       <Table.CellMain>
                         {item.name || item.description}{" "}
                         {item.tailJoint && `QTY ${item.quantity}`}
@@ -75,7 +75,7 @@ export const TableTallyPage = ({
                       </Table.Cell>
                     </Table.Row>
                   )}
-                </>
+                </React.Fragment>
               ))}
               <Table.Row>
                 <Table.Cell>

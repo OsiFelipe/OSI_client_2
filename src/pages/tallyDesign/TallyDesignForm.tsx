@@ -112,6 +112,7 @@ export const TallyDesignForm = () => {
             <PDFView
               fileName={pdfData.basicInfo.customName}
               children={<PdfTallyFile data={pdfData} />}
+              action={pdf ? onCreatePdf : () => {}}
             />
           ) : (
             <>

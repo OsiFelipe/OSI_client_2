@@ -171,6 +171,7 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
               item.onClick();
               !item.children && onCloseMenu();
             }}
+            key={index}
           >
             <ListItemButton
               sx={{
@@ -207,13 +208,12 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
             <Collapse in={item.openCloseOption} timeout="auto" unmountOnExit>
               <List disablePadding>
                 {item.children.map((child) => (
-                  <ListItem>
+                  <ListItem key={child.id}>
                     <ListItemButton
                       onClick={() => {
                         child.onClick();
                         onCloseMenu();
                       }}
-                      key={child.id}
                     >
                       <ListItemIcon>{child.icon}</ListItemIcon>
                       <ListItemText primary={child.name} />

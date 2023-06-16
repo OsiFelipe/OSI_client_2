@@ -53,9 +53,9 @@ export const Wellbore3dpage = ({
       <Header title={basicInfo.client.name} subtitle={basicInfo.well.name} />
       <Text style={styles.titleProd}>Wellbore 3D</Text>
       <View style={styles.prodChart}>
-        {wellbore3dImg && (
+        {wellbore3dImg ? (
           <Image style={styles.image} src={wellbore3dImg} fixed />
-        )}
+        ) : null}
       </View>
       <Footer />
     </Page>

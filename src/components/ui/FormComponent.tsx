@@ -53,7 +53,7 @@ export function FormComponent<T>({
         <div className={styles.title}>{title}</div>
         {fields.map(({ id, name, type, placeholder, options }) =>
           type === "select" ? (
-            <>
+            <React.Fragment key={id}>
               <select onChange={onChangeValue} name={name}>
                 <option value={"null"}>{placeholder}</option>
                 {options.map((option: any) => (
@@ -62,7 +62,7 @@ export function FormComponent<T>({
                   </option>
                 ))}
               </select>
-            </>
+            </React.Fragment>
           ) : (
             <input
               key={id}

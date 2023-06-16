@@ -328,7 +328,7 @@ export const SalesFormPage = ({
         </View>
         <>
           {productList.map((item) => (
-            <>
+            <React.Fragment key={item.id}>
               {item.id !== 0 && item.osi && (
                 <View style={styles.tableRow} key={item.id}>
                   <View style={styles.tableColPartNumber}>
@@ -344,7 +344,7 @@ export const SalesFormPage = ({
                   </View>
                 </View>
               )}
-            </>
+            </React.Fragment>
           ))}
         </>
       </View>

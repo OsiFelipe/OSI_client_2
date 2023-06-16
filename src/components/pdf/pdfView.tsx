@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import { IconButton } from "@mui/material";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
@@ -7,10 +7,16 @@ import { Spinner } from "../ui/Spinner";
 export const PDFView = ({
   children,
   fileName,
+  action,
 }: {
   children: any;
   fileName?: string;
+  action?: () => void;
 }) => {
+  useEffect(() => {
+    if (action) action();
+  }, []);
+
   return (
     <>
       <div

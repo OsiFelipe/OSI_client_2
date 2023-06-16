@@ -17,7 +17,7 @@ import {
 import { useFetch } from "../../hooks";
 import { ClientProps, ProductProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useReducer, useRef, useState } from "react";
 import DataContext from "../../context/DataContext";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { PDFView } from "../../components/pdf";
@@ -51,9 +51,10 @@ export const TechDesignForm = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { data, error, isLoading } = useFetch<FetchResponse>("tech-proposal");
   const [inEdit, setInEdit] = useState(false);
-  const [inPdf, setInPdf] = useState(pdf || false);
+  const [inPdf, setInPdf] = useState(false);
   const [isThereProdImage, setIsThereProdImage] = useState(false);
   const navigate = useNavigate();
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const {
     toSave,
@@ -73,17 +74,12 @@ export const TechDesignForm = () => {
   const { fetchTechSolution } = useContext(SimulatorContext);
 
   useEffect(() => {
-    if (pdf) {
-      onCreatePdf();
-    }
-  }, []);
-
-  useEffect(() => {
     if (idTech && idTech !== "0") {
       fetchDataTechProp(parseInt(idTech));
       fetchTechSolution(parseInt(idTech));
       setInEdit(true);
       dataProposal.basicInfo.prodImage && setIsThereProdImage(true);
+      if (pdf) setInPdf(true);
     } else {
       setInEdit(false);
       setInPdf(false);
@@ -177,6 +173,7 @@ export const TechDesignForm = () => {
             <PDFView
               fileName={dataProposal.basicInfo.customName}
               children={<PdfProposalFile data={dataProposal} />}
+              action={pdf ? onCreatePdf : () => {}}
             />
           ) : (
             <>
