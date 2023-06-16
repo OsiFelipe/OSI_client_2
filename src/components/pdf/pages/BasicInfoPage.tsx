@@ -164,13 +164,13 @@ export const BasicInfoPage = ({
             </View>
           </View>
         )}
-        {bhaInfo?.liner && (
+        {bhaInfo?.tubing && (
           <View style={styles.tableRow}>
             <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>LINER:</Text>
+              <Text style={styles.tableCell}>TUBING:</Text>
             </View>
             <View style={styles.tableCol}>
-              <Text style={styles.tableCell}>{bhaInfo?.liner} in</Text>
+              <Text style={styles.tableCell}>{bhaInfo?.tubing} in</Text>
             </View>
           </View>
         )}

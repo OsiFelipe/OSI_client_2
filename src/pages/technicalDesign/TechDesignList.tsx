@@ -115,11 +115,13 @@ export const TechDesignList = () => {
                 <SellIcon />
               </IconButton>
             </Tooltip>
-            <IconButton
-              onClick={() => navigate(`/tech/${params.row?.id}?pdf=true`)}
-            >
-              <PrintIcon />
-            </IconButton>
+            <Tooltip title="Print">
+              <IconButton
+                onClick={() => navigate(`/tech/${params.row?.id}?pdf=true`)}
+              >
+                <PrintIcon />
+              </IconButton>
+            </Tooltip>
             <Tooltip title="Delete">
               <IconButton
                 onClick={() => {

@@ -28,7 +28,7 @@ export const initial_bha_state = {
   weight: "",
   casingId: "",
   driftCasing: "",
-  liner: "",
+  tubing: "",
   bfpd: 0,
   bwpd: 0,
   bopd: 0,

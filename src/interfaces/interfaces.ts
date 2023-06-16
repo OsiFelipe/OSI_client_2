@@ -92,7 +92,7 @@ export interface BhaProps {
   weight: string | null;
   casingId: string | null;
   driftCasing: string | null;
-  liner: string | null;
+  tubing: string | null;
   bfpd: number | null;
   bwpd: number | null;
   bopd: number | null;
