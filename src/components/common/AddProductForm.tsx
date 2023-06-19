@@ -35,17 +35,16 @@ export const AddProductForm = ({
       <TitleComponent title="Add Product" />
       <div className={styles.customToolForm}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item lg={6} xs={12}>
             <ProductSelectorByName
               options={products}
               onSelectName={(newValue: any) => {
                 setValue(newValue);
               }}
-              size={300}
               value={value}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item lg={4} xs={12}>
             <ProductSelectorByPN
               options={products}
               onSelectPN={(newValue: any) => {
@@ -54,7 +53,7 @@ export const AddProductForm = ({
               value={value}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item lg={2} xs={12}>
             <QuantityField
               value={value.quantity || 0}
               onChangeQTY={(newValue) => {

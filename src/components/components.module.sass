@@ -101,6 +101,8 @@
   text-align: -webkit-center
   display: flex,
   flex-direction: column,
+  @include mobile()
+    margin:10px
 
 
 .solItem
@@ -489,7 +491,8 @@
   text-align: -webkit-center,
   display: flex,
   flex-direction: column,
-  width: 70%
+  width: 70%,
+  background-color: white,
 
   @include tablet()
     width: 90%
@@ -499,10 +502,11 @@
 .simulatorResults
   border: solid 1px $primary-color
   padding: 1rem 2rem,
-  margin: 2rem 1rem 1rem 1rem
-  text-align: center
-  border-radius: 15px
-  text-align: -webkit-center
+  margin: 2rem 1rem 1rem 1rem,
+  text-align: center,
+  border-radius: 15px,
+  text-align: -webkit-center,
+  background-color: white 
   @include tablet()
     padding: 0
     margin: 1rem 0
@@ -513,7 +517,7 @@
   margin: 2rem 1rem 1rem 1rem
   text-align: center
   border-radius: 15px
-  background-color: rgba(90,100,119,0.1)
+  background-color: white
   text-align: -webkit-center
   @include mobile()
     margin: 1rem 0,
@@ -676,7 +680,24 @@
   @include mobile()
     width: 70vw
 
+.dataTableTech
+  width: 40vw,
+  place-self: center
+  @include tablet()
+    width: 40vw
+  @include smallScreen()
+    width: 50vw
+  @include mobile()
+    width: 72vw
 
+.tableContainerTech
+  display: flex,
+  flex-direction: row,
+  height: 60vh,
+  width: 80vw
+  @include tablet()
+    flex-direction: column,
+    height: 150vh,
 
 @keyframes popup 
   from 
