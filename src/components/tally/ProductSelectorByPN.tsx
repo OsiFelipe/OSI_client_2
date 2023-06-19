@@ -1,5 +1,6 @@
 import { Autocomplete, TextField } from "@mui/material";
 import { ProductProps } from "../../interfaces/interfaces";
+import styles from "../components.module.sass";
 
 export const ProductSelectorByPN = ({
   options,
@@ -33,7 +34,7 @@ export const ProductSelectorByPN = ({
         }}
         {...defaultProps}
         disablePortal
-        sx={{ width: 180 }}
+        className={styles.textField}
         renderInput={(params) => <TextField {...params} label="Part Number" />}
       />
     </>
