@@ -1,3 +1,4 @@
+export { WbdFirstPageGenVert } from './wbd/WbdFirstPageGenVert';
 export { GasSimulatorPage } from './solution/GasSimulatorPage';
 export { SalesFormPage } from './sales/SalesFormPage';
 export { WbdFirstPageEspSL } from './wbd/WbdFirstPageEspSL';
@@ -13,4 +14,5 @@ export { BasicInfoPage } from './BasicInfoPage';
 export { PresentationPage } from './PresentationPage';
 export {TableTallyPage} from './TableTallyPage';
 export { Wellbore3dpage } from './wellbore3d/Wellbore3dPage';
+
 

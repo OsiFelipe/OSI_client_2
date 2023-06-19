@@ -14,6 +14,7 @@ import {
   WbdLastPageHor,
   GasSimulatorPage,
   WbdFirstPagePCP,
+  WbdFirstPageGenVert,
 } from "../pages";
 import { DataProps } from "../../../interfaces/interfaces";
 import { SandSimulatorPage } from "../pages/solution/SandSimulatorPage";
@@ -132,11 +133,21 @@ export const PdfProposalFile = ({ data }: { data: DataProps }) => {
             )
           )}
         {data.designByPage?.length === 1 ? (
-          <WbdFirstPageGen
-            tools={data.designByPage[0]}
-            slaId={data.basicInfo.sla.id}
-            data={data}
-          />
+          <>
+            {data.basicInfo.bhaInfo?.horizontal ? (
+              <WbdFirstPageGen
+                tools={data.designByPage[0]}
+                slaId={data.basicInfo.sla.id}
+                data={data}
+              />
+            ) : (
+              <WbdFirstPageGenVert
+                tools={data.designByPage[0]}
+                slaId={data.basicInfo.sla.id}
+                data={data}
+              />
+            )}
+          </>
         ) : null}
       </>
     </Document>

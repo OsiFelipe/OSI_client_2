@@ -39,6 +39,7 @@ export const DataWbd = ({ basicInfo, handleUpdateWbd, bhaInfo }: Props) => {
 
   const handleChangeWClass = (value: "Conventional" | "Unconventional") => {
     if (value === "Conventional") {
+      console.log(value);
       handleUpdateWbd("horizontal", false);
     } else {
       handleUpdateWbd("horizontal", true);
