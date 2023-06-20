@@ -22,6 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import DataContext from "../../context/DataContext";
+import PaginatorContext from "../../context/PaginatorContext";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { NavBar } from "../../components/layout/Navbar";
 
@@ -39,8 +40,10 @@ const dataGridStyles = {
 
 export const TechDesignList = () => {
   const navigate = useNavigate();
-  const { data, error, isLoading, fetchData } =
-    useFetch<FetchResponse>("proposal-detail");
+  const { paginationModel,  fetchPaginationModel} =
+    useContext(PaginatorContext);
+  const { data, error, isLoading, fetchData, pagination } =
+    useFetch<FetchResponse>("proposal-detail", paginationModel);
   const { onResetValues, fetchDataTechProp, onDeleteProp, isSuccess, isError } =
     useContext(DataContext);
   const { getDateFromString } = useDate();
@@ -163,8 +166,12 @@ export const TechDesignList = () => {
               rows={data.data}
               columns={columns}
               slots={{ toolbar: GridToolbar }}
-              autoPageSize
               className={styles.dataTable}
+              loading={isLoading}
+              rowCount={+pagination?.totalRecords}
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={fetchPaginationModel}
             />
           </div>
           {isSuccess && <AlertComponent type="success" />}

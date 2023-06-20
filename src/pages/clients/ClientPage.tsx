@@ -9,6 +9,7 @@ import {
   Spinner,
 } from "../../components";
 import DataContext from "../../context/DataContext";
+import PaginatorContext from "../../context/PaginatorContext";
 import { useFetch } from "../../hooks";
 import { ClientProps, ProductProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
@@ -29,8 +30,10 @@ const dataGridStyles = {
 };
 
 export const ClientPage = () => {
-  const { data, error, isLoading, fetchData } =
-    useFetch<FetchResponse>("client");
+  const { paginationModel,  fetchPaginationModel} =
+    useContext(PaginatorContext);
+  const { data, error, isLoading, fetchData, pagination } =
+    useFetch<FetchResponse>("client-paginate", paginationModel);
   const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
   const [clientToEdit, setClientToEdit] = useState<ClientProps>({
     id: 0,
@@ -99,8 +102,12 @@ export const ClientPage = () => {
               style={dataGridStyles}
               rows={data.data}
               columns={columns}
-              autoPageSize
               className={styles.dataTable}
+              loading={isLoading}
+              rowCount={+pagination?.totalRecords}
+              paginationMode="server"
+              paginationModel={paginationModel}
+              onPaginationModelChange={fetchPaginationModel}
             />
           </div>
           {isModalOpen && (
