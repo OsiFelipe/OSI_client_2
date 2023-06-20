@@ -1,3 +1,5 @@
+export { ClientDetail } from './clients/ClientDetail';
+export { WellDetail } from './well/WellDetail';
 export { StepperPage } from './stepper/StepperPage';
 export { SandSimulator } from './simulator/SandSimulator';
 export { GasSimulator } from './simulator/GasSimulator';

@@ -14,8 +14,8 @@
 .techProposalForm
     display: flex,
     flex-direction: column,
-    padding: 2rem 1rem
-    overflow-x: hidden
+    padding: 2rem 1rem,
+    overflow-x: hidden,
     @include mobile()
         padding: 2rem 0.5rem
 
@@ -132,4 +132,23 @@
         padding-top: 20vh,
         padding-left: 5vh
         padding-right: 5vh
+
+.infoForm
+    padding: 1rem,
+    height: 70vh, 
+    width: 80vw
+    @include mobile()
+        width: 75vw
+        
+
+.dataTableClient
+    width: 80vw,
+    place-self: center
+    @include tablet()
+        width: 40vw
+    @include smallScreen()
+        width: 50vw
+    @include mobile()
+        width: 72vw
+
 

@@ -16,6 +16,8 @@ import {
   GasSimulator,
   PressureSimulator,
   StepperPage,
+  WellDetail,
+  ClientDetail,
 } from "./pages";
 import { Navigation } from "./routes/Navigation";
 import { Layout, NotFoundPage } from "./components";
@@ -61,7 +63,9 @@ const routeItems = [
   { path: "/tally/:idTally", protected: true, component: <TallyDesignForm /> },
   { path: "/tally/all", protected: true, component: <TallyDesignList /> },
   { path: "/well", protected: true, component: <WellPage /> },
+  { path: "/well/:idWell", protected: true, component: <WellDetail /> },
   { path: "/client", protected: true, component: <ClientPage /> },
+  { path: "/client/:idClient", protected: true, component: <ClientDetail /> },
   { path: "/products", protected: true, component: <ProductPage /> },
   { path: "/sales/all", protected: true, component: <SalesPage /> },
   { path: "/sales/:idSales", protected: true, component: <SalesPrintPage /> },
