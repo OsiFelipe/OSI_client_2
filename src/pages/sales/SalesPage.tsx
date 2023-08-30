@@ -12,7 +12,7 @@ import { useFetch } from "../../hooks";
 import { ProductProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import PrintIcon from "@mui/icons-material/Print";
 import { useNavigate } from "react-router-dom";
@@ -25,15 +25,20 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "2px solid #135C61",
+  border: "1px solid rgb(251,171,53)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#F1ECE7",
+  backgroundColor: "#FFF",
 };
 
 export const SalesPage = () => {
-  const { paginationModel,  fetchPaginationModel} = useContext(PaginatorContext);
-  const { data, error, isLoading, pagination } = useFetch<FetchResponse>("sales-paginate", paginationModel);
+  const { paginationModel, fetchPaginationModel } =
+    useContext(PaginatorContext);
+  const matches = useMediaQuery("(min-width:600px)");
+  const { data, error, isLoading, pagination } = useFetch<FetchResponse>(
+    "sales-paginate",
+    paginationModel
+  );
   const { isSuccess, isError, onResetValues } = useContext(DataContext);
   const navigate = useNavigate();
   const { getDateFromString } = useDate();
@@ -77,11 +82,11 @@ export const SalesPage = () => {
       width: 200,
     },
     {
-      field: "edit",
-      headerName: "Action",
+      field: "action",
+      headerName: "ACTION",
       filterable: false,
       sortable: false,
-      renderHeader: () => <strong>{"Edit"}</strong>,
+      renderHeader: () => <strong>{"Action"}</strong>,
       width: 150,
       renderCell: (params: any) => {
         return (
@@ -128,12 +133,10 @@ export const SalesPage = () => {
       <>
         <NavBar title="Sales Orders" buttons={buttons} />
         <div className={styles.center}>
-          <div
-            style={{ height: "83vh", width: "80vw" }}
-            className={styles.techProposalForm}
-          >
+          <div style={{ height: "80vh" }} className={styles.techProposalForm}>
             <DataGrid
               slots={{ toolbar: GridToolbar }}
+              density={matches ? "standard" : "compact"}
               style={dataGridStyles}
               rows={data.data}
               columns={columns}

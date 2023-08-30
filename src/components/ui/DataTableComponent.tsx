@@ -12,7 +12,7 @@ interface Props<T> {
 }
 
 const dataGridStyles = {
-  border: "2px solid #135C61",
+  border: "1px solid rgb(251,171,53)",
   borderRadius: "10px",
   padding: "1%",
   // backgroundColor: "white",

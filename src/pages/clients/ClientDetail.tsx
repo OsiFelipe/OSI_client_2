@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFetch } from "../../hooks";
 import { WellProps } from "../../interfaces/interfaces";
-import { NavBar, ShowContent, Spinner } from "../../components";
+import { AlertComponent, NavBar, ShowContent, Spinner } from "../../components";
 import EditIcon from "@mui/icons-material/Edit";
 import {
   Autocomplete,
@@ -10,6 +10,7 @@ import {
   Grid,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import styles from "../main.module.sass";
 import {
@@ -18,14 +19,15 @@ import {
   GridToolbar,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
-import LoupeIcon from "@mui/icons-material/Loupe";
 import { IconButton } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import DataContext from "../../context/DataContext";
 
 const dataGridStyles = {
-  border: "1px solid #135C61",
+  border: "1px solid rgb(251,171,53)",
   borderRadius: "10px",
   marginTop: "5vh",
+  backgroundColor: "#FFF",
 };
 
 interface Props {
@@ -44,14 +46,36 @@ interface FetchResponse {
 export const ClientDetail = () => {
   const navigate = useNavigate();
   const { idClient } = useParams();
+  const matches = useMediaQuery("(min-width:600px)");
   const { data, error, isLoading } = useFetch<FetchResponse>(
     `client-detail/${idClient}`
   );
+  const [clientName, setClientName] = useState("");
+  const [clientStatus, setClientStatus] = useState("Active");
+  const { isSuccess, isError, onEditClient } = useContext(DataContext);
+
+  useEffect(() => {
+    if (data) {
+      const {
+        data: { name, active },
+      } = data;
+      setClientName(name);
+      active ? setClientStatus("Active") : setClientStatus("Inactive");
+    }
+  }, [data]);
+
   const buttons = [
     {
       title: "Edit",
-      action: () => {},
+      action: () =>
+        idClient &&
+        onEditClient(
+          parseInt(idClient),
+          clientName,
+          clientStatus === "Active" ? true : false
+        ),
       icon: <EditIcon />,
+      disabled: !idClient,
     },
   ];
 
@@ -116,11 +140,11 @@ export const ClientDetail = () => {
     content = <Spinner />;
   } else {
     const {
-      data: { name, wells },
+      data: { wells },
     } = data;
     content = (
       <>
-        <NavBar title={name} buttons={buttons} />
+        <NavBar title={clientName} buttons={buttons} />
         <div className={styles.infoForm}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -132,13 +156,11 @@ export const ClientDetail = () => {
             <Grid item lg={6} xs={12}>
               <TextField
                 id="outlined-basic"
-                label="name"
+                label="Client Name"
                 variant="outlined"
-                value={name}
-                sx={{ width: "100%" }}
-                onChange={(event) =>
-                  console.log("customName", event.target.value)
-                }
+                value={clientName}
+                sx={{ width: "100%", backgroundColor: "#FFF" }}
+                onChange={(event) => setClientName(event.target.value)}
               />
             </Grid>
             <Grid item lg={6} xs={12}>
@@ -150,15 +172,16 @@ export const ClientDetail = () => {
                     </li>
                   );
                 }}
-                value="Active"
+                value={clientStatus}
                 onChange={(_, newValue) =>
                   (newValue === "Active" || newValue === "Inactive") &&
-                  console.log(newValue)
+                  setClientStatus(newValue)
                 }
                 {...{
                   options: ["Active", "Inactive"],
                 }}
                 disablePortal
+                sx={{ width: "100%", backgroundColor: "#FFF" }}
                 renderInput={(params) => (
                   <TextField {...params} label="Status" />
                 )}
@@ -167,6 +190,7 @@ export const ClientDetail = () => {
           </Grid>
           <DataGrid
             slots={{ toolbar: GridToolbar }}
+            density={matches ? "standard" : "compact"}
             style={dataGridStyles}
             rows={wells}
             columns={columns}
@@ -174,6 +198,8 @@ export const ClientDetail = () => {
             className={styles.dataTableClient}
           />
         </div>
+        {isSuccess && <AlertComponent type="success" />}
+        {isError && <AlertComponent type="error" />}
       </>
     );
   }

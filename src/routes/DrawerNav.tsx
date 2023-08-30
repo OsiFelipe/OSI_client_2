@@ -108,10 +108,10 @@ export function DrawerNav() {
             display: {
               xs: "none",
               sm: "block",
-              color: "white",
+              color: "black",
               position: "fixed",
-              bottom: 1,
-              left: 1,
+              bottom: 2,
+              left: 2,
             },
           }}
         >

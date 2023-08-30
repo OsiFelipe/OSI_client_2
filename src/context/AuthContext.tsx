@@ -7,6 +7,7 @@ interface Props {
   isLoading: boolean;
   isDrawerOpen: boolean;
   desktop: boolean;
+  idRole: null | number;
   onMoveDrawer: (action: boolean) => void;
   onLogin: (username: string, password: string) => void;
   onLogout: () => void;
@@ -20,6 +21,7 @@ const AuthContext = React.createContext<Props>({
   isLoading: false,
   isDrawerOpen: false,
   desktop: false,
+  idRole: null,
   onMoveDrawer: () => {},
   onLogin: () => {},
   onLogout: () => {},

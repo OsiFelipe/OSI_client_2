@@ -56,14 +56,14 @@ interface Props {
   onEditTally: (tallyId: string) => void;
   onDeleteTally: (tallyId: string) => void;
   onCreateClient: (item: string) => void;
-  onEditClient: (id: number, item: string) => void;
+  onEditClient: (id: number, item: string, active?: boolean) => void;
   onCreateWell: (values: any) => void;
   onEditWell: (values: any) => void;
   onCreateTool: (values: ProductProps) => void;
   onEditTool: (values: ProductProps, index?: number) => void;
   onCreateSales: () => void;
   onEditSales: (id: number | string) => void;
-  onExportExcel: (format: ExportType) => void;
+  onExportExcel: (format: ExportType, source?: String) => void;
   onCreatePdf: () => void;
   onResetValues: () => void;
   onCloseModal: () => void;

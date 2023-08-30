@@ -597,7 +597,7 @@ export const GasSimulatorPage = ({ data, results, simulatorState }: Props) => {
         <View style={styles.tableRow}>
           <View style={styles.tableColTitleResults}>
             <Text style={styles.tableCell}>
-              In-situ Superficial Liquid Velicity Inside Casing Anular, Vsl
+              In-situ Superficial Liquid Velocity Inside Casing Anular, Vsl
             </Text>
           </View>
           <View style={styles.tableCol}>
@@ -634,7 +634,7 @@ export const GasSimulatorPage = ({ data, results, simulatorState }: Props) => {
             </Text>
           </View>
           <View style={styles.tableCol}>
-            <Text style={styles.tableCell}>gal</Text>
+            <Text style={styles.tableCell}>SCF/D</Text>
           </View>
         </View>
         {!simulatorState.gas.poorBoy && (

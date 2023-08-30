@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -32,15 +32,16 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "2px solid #135C61",
+  border: "1px solid rgb(251,171,53)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#F1ECE7",
+  backgroundColor: "#FFF",
 };
 
 export const TechDesignList = () => {
   const navigate = useNavigate();
-  const { paginationModel,  fetchPaginationModel} =
+  const matches = useMediaQuery("(min-width:600px)");
+  const { paginationModel, fetchPaginationModel } =
     useContext(PaginatorContext);
   const { data, error, isLoading, fetchData, pagination } =
     useFetch<FetchResponse>("proposal-detail", paginationModel);
@@ -157,12 +158,10 @@ export const TechDesignList = () => {
       <>
         <NavBar title="Technical Proposals" buttons={buttons} />
         <div className={styles.center}>
-          <div
-            style={{ height: "75vh", width: "70vw" }}
-            className={styles.techProposalForm}
-          >
+          <div style={{ height: "80vh" }} className={styles.techProposalForm}>
             <DataGrid
               style={dataGridStyles}
+              density={matches ? "standard" : "compact"}
               rows={data.data}
               columns={columns}
               slots={{ toolbar: GridToolbar }}

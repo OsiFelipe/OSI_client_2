@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, useMediaQuery } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -20,11 +20,13 @@ interface Props {
 export const TableWellDetail = ({ proposals, tallies }: Props) => {
   const navigate = useNavigate();
   const { getDateFromString } = useDate();
+  const matches = useMediaQuery("(min-width:600px)");
   const dataGridStyles = {
-    border: "1px solid #135C61",
+    border: "1px solid rgb(251,171,53)",
     borderRadius: "10px",
     margin: "1rem",
     marginTop: "5vh",
+    backgroundColor: "#FFF",
   };
   const columnsTech: GridColDef[] = [
     {
@@ -102,6 +104,7 @@ export const TableWellDetail = ({ proposals, tallies }: Props) => {
     <div className={styles.tableContainerTech}>
       <DataGrid
         slots={{ toolbar: GridToolbar }}
+        density={matches ? "standard" : "compact"}
         style={dataGridStyles}
         rows={proposals}
         columns={columnsTech}
@@ -110,6 +113,7 @@ export const TableWellDetail = ({ proposals, tallies }: Props) => {
       />
       <DataGrid
         slots={{ toolbar: GridToolbar }}
+        density={matches ? "standard" : "compact"}
         style={dataGridStyles}
         rows={tallies}
         columns={columnsTally}

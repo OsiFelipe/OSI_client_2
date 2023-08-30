@@ -649,7 +649,13 @@ const DataProvider = ({ children }: Props) => {
       body: JSON.stringify(data),
     };
     handleRequest({ endpoint: `proposal/${techId}`, options })
-      .then(() => setIsSuccess(true))
+      .then((response) => {
+        if (response.success) {
+          setIsSuccess(true);
+        } else {
+          setIsError(true);
+        }
+      })
       .catch(() => setIsError(true));
   };
 
@@ -724,10 +730,10 @@ const DataProvider = ({ children }: Props) => {
       .catch(() => setIsError(true));
   };
 
-  const handleEditClient = (id: number, name: string) => {
+  const handleEditClient = (id: number, name: string, active?: boolean) => {
     let options: RequestInit = {
       method: "PUT",
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ name, active }),
     };
     handleRequest({ endpoint: `client/${id}`, options })
       .then((response) => {
@@ -853,25 +859,41 @@ const DataProvider = ({ children }: Props) => {
       .catch(() => setIsError(true));
   };
 
-  const handleExportExcel = (format: ExportType) => {
+  const handleExportExcel = (format: ExportType, source?: String) => {
     try {
-      const data = tallyDesign.map((item) => {
-        return (
-          item.id && {
-            Description: item.name || item.description,
-            "Top Thread Connection": item.topThreadConnection || "",
-            "Bottom Thread Connection": item.bottomThreadConnection || "",
-            Status: item.status.name || "",
-            "Max. OD (in)": item.maxOD || "",
-            "Body OD (in)": item.bodyOD || "",
-            "Length (ft)": item.length || 0,
-            "Top (ft)": item.top || 0,
-            "Bottom (ft)": item.bottom || 0,
-            "Weight (lb)": item.weight || 0,
-          }
-        );
-      });
-      const fileName = `${basicInfo.customName} ${basicInfo.client.name} ${basicInfo.well.name}`;
+      let data = {};
+      let fileName = "";
+      if (source === "sales") {
+        data = salesInfo.productList.map((item) => {
+          return (
+            item.id &&
+            item.osi && {
+              "Part Number": item.partNumber,
+              Description: item.description || item.name,
+              Quantity: item.quantity,
+            }
+          );
+        });
+        fileName = `SALES ORDER - ${basicInfo.client.name} ${basicInfo.well.name}`;
+      } else {
+        data = tallyDesign.map((item) => {
+          return (
+            item.id && {
+              Description: item.name || item.description,
+              "Top Thread Connection": item.topThreadConnection || "",
+              "Bottom Thread Connection": item.bottomThreadConnection || "",
+              Status: item.status.name || "",
+              "Max. OD (in)": item.maxOD || "",
+              "Body OD (in)": item.bodyOD || "",
+              "Length (ft)": item.length || 0,
+              "Top (ft)": item.top || 0,
+              "Bottom (ft)": item.bottom || 0,
+              "Weight (lb)": item.weight || 0,
+            }
+          );
+        });
+        fileName = `${basicInfo.customName} ${basicInfo.client.name} ${basicInfo.well.name}`;
+      }
       const exportType = format;
       exportFromJSON({ data, fileName, exportType });
     } catch {

@@ -10,6 +10,13 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
+interface UserDataProps {
+  idRol: number;
+  name: string;
+  user: string;
+  userId: number;
+}
+
 const AuthProvider = ({ children }: Props) => {
   const { handleRequest } = useRequest();
   const navigate = useNavigate();
@@ -19,6 +26,7 @@ const AuthProvider = ({ children }: Props) => {
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [idRole, setIdRole] = useState<null | number>(null);
 
   useEffect(() => {
     validateSession();
@@ -32,6 +40,12 @@ const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     desktop && setIsDrawerOpen(true);
+    const tokenCoded = localStorage.getItem("info");
+    if (tokenCoded) {
+      const dataUser: UserDataProps | null = decodeToken(tokenCoded);
+      dataUser && setIdRole(dataUser.idRol);
+      console.log(dataUser?.idRol);
+    }
   }, []);
 
   const logoutHandler = async () => {
@@ -110,6 +124,7 @@ const AuthProvider = ({ children }: Props) => {
         isLoading,
         isDrawerOpen,
         desktop,
+        idRole,
         onMoveDrawer: (action: boolean) => setIsDrawerOpen(action),
         onLogin: loginHandler,
         onLogout: logoutHandler,

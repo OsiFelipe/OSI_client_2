@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -23,6 +23,7 @@ import GradientIcon from "@mui/icons-material/Gradient";
 import CompressIcon from "@mui/icons-material/Compress";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { ListItem } from "@mui/material";
+import AuthContext from "../context/AuthContext";
 
 interface Props {
   onCloseMenu: () => void;
@@ -33,6 +34,7 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
   const [openPropOption, setOpenPropOption] = useState(false);
   const [openTallyOption, setOpenTallyOption] = useState(false);
   const [openSimOption, setOpenSimOption] = useState(false);
+  const { idRole } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleClickProp = () => {
@@ -51,18 +53,21 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
       onClick: () => navigate("/home"),
       icon: <HomeIcon />,
       name: "Home",
+      roles: [0, 1, 2, 3],
     },
     {
       id: 1,
       onClick: () => navigate("/home"),
       icon: <SupervisorAccountIcon />,
       name: "Admin",
+      roles: [0],
     },
     {
       id: 2,
       onClick: handleClickProp,
       icon: <PrecisionManufacturingOutlinedIcon />,
       name: "Technical Design",
+      roles: [0, 1, 2],
       openCloseOption: openPropOption,
       children: [
         {
@@ -86,6 +91,7 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
       onClick: handleClickTally,
       icon: <VerticalSplitIcon />,
       name: "Tally Design",
+      roles: [0, 1, 2],
       openCloseOption: openTallyOption,
       children: [
         {
@@ -107,30 +113,35 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
       onClick: () => navigate("/well"),
       icon: <OilBarrelIcon />,
       name: "Wells",
+      roles: [0, 1, 2],
     },
     {
       id: 5,
       onClick: () => navigate("/client"),
       icon: <PermContactCalendarIcon />,
       name: "Clients",
+      roles: [0, 1, 2],
     },
     {
       id: 6,
       onClick: () => navigate("/sales/all"),
       icon: <SellIcon />,
       name: "Sales",
+      roles: [0, 1, 2],
     },
     {
       id: 7,
       onClick: () => navigate("/products"),
       icon: <CategoryIcon />,
       name: "Products",
+      roles: [0, 1, 2],
     },
     {
       id: 8,
       onClick: handleClickSimulator,
       icon: <CalculateIcon />,
       name: "Simulators",
+      roles: [0, 1],
       openCloseOption: openSimOption,
       children: [
         {
@@ -158,52 +169,62 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
       onClick: () => navigate("/stepper"),
       icon: <SmartToyIcon />,
       name: "Designer",
+      roles: [0],
+    },
+    {
+      id: 10,
+      onClick: () => navigate("/stepper"),
+      icon: <SmartToyIcon />,
+      name: "Designer",
+      roles: [0],
     },
   ];
   return (
     <List>
       {navItems.map((item, index) => (
         <React.Fragment key={index}>
-          <ListItem
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={() => {
-              item.onClick();
-              !item.children && onCloseMenu();
-            }}
-            key={index}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
+          {(idRole === 0 || idRole) && item.roles.includes(idRole) ? (
+            <ListItem
+              disablePadding
+              sx={{ display: "block" }}
+              onClick={() => {
+                item.onClick();
+                !item.children && onCloseMenu();
               }}
+              key={index}
             >
-              <ListItemIcon
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText
-                primary={item.name}
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-              {item.children && (
-                <>
-                  {item.openCloseOption ? (
-                    <ExpandLess sx={{ color: "background.paper" }} />
-                  ) : (
-                    <ExpandMore sx={{ color: "background.paper" }} />
-                  )}
-                </>
-              )}
-            </ListItemButton>
-          </ListItem>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.name}
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+                {item.children && (
+                  <>
+                    {item.openCloseOption ? (
+                      <ExpandLess sx={{ color: "background.paper" }} />
+                    ) : (
+                      <ExpandMore sx={{ color: "background.paper" }} />
+                    )}
+                  </>
+                )}
+              </ListItemButton>
+            </ListItem>
+          ) : null}
           {item.children && (
             <Collapse in={item.openCloseOption} timeout="auto" unmountOnExit>
               <List disablePadding>

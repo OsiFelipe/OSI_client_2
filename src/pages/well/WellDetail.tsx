@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFetch } from "../../hooks";
 import {
+  AlertComponent,
   NavBar,
   ShowContent,
   Spinner,
@@ -17,12 +18,14 @@ import {
 } from "@mui/material";
 import { ProposalProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
+import DataContext from "../../context/DataContext";
 
 interface Props {
   id: number;
   name: string;
   contact: string;
   phoneNumber: string;
+  active: boolean;
   proposals: ProposalProps[];
   tallies: ProposalProps[];
 }
@@ -37,10 +40,37 @@ export const WellDetail = () => {
   const { data, error, isLoading } = useFetch<FetchResponse>(
     `well-detail/${idWell}`
   );
+  const [wellName, setWellName] = useState("");
+  const [contactName, setContactName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [wellStatus, setWellStatus] = useState("Active");
+  const { isSuccess, isError, onEditWell } = useContext(DataContext);
+
+  useEffect(() => {
+    if (data) {
+      const {
+        data: { name, contact, phoneNumber, active },
+      } = data;
+      setWellName(name);
+      setContactName(contact);
+      setPhoneNumber(phoneNumber);
+      active ? setWellStatus("Active") : setWellStatus("Inactive");
+    }
+  }, [data]);
+
   const buttons = [
     {
       title: "Edit",
-      action: () => {},
+      action: () => {
+        idWell &&
+          onEditWell({
+            id: idWell,
+            name: wellName,
+            contact: contactName,
+            phoneNumber,
+            active: wellStatus === "Active" ? true : false,
+          });
+      },
       icon: <EditIcon />,
     },
   ];
@@ -51,11 +81,11 @@ export const WellDetail = () => {
     content = <Spinner />;
   } else {
     const {
-      data: { name, contact, phoneNumber, proposals, tallies },
+      data: { proposals, tallies },
     } = data;
     content = (
       <>
-        <NavBar title={name} buttons={buttons} />
+        <NavBar title={wellName} buttons={buttons} />
         <div className={styles.infoForm}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -69,11 +99,9 @@ export const WellDetail = () => {
                 id="outlined-basic"
                 label="Well Name"
                 variant="outlined"
-                value={name}
-                sx={{ width: "100%" }}
-                onChange={(event) =>
-                  console.log("customName", event.target.value)
-                }
+                value={wellName}
+                sx={{ width: "100%", backgroundColor: "#FFF" }}
+                onChange={(event) => setWellName(event.target.value)}
               />
             </Grid>
             <Grid item lg={6} md={6} xs={12}>
@@ -81,11 +109,9 @@ export const WellDetail = () => {
                 id="outlined-basic"
                 label="Contact"
                 variant="outlined"
-                value={contact}
-                sx={{ width: "100%" }}
-                onChange={(event) =>
-                  console.log("customName", event.target.value)
-                }
+                value={contactName}
+                sx={{ width: "100%", backgroundColor: "#FFF" }}
+                onChange={(event) => setContactName(event.target.value)}
               />
             </Grid>
             <Grid item lg={6} md={6} xs={12}>
@@ -94,10 +120,8 @@ export const WellDetail = () => {
                 label="Phone Number"
                 variant="outlined"
                 value={phoneNumber}
-                sx={{ width: "100%" }}
-                onChange={(event) =>
-                  console.log("customName", event.target.value)
-                }
+                sx={{ width: "100%", backgroundColor: "#FFF" }}
+                onChange={(event) => setPhoneNumber(event.target.value)}
               />
             </Grid>
             <Grid item lg={6} md={6} xs={12}>
@@ -109,14 +133,15 @@ export const WellDetail = () => {
                     </li>
                   );
                 }}
-                value="Active"
+                value={wellStatus}
                 onChange={(_, newValue) =>
                   (newValue === "Active" || newValue === "Inactive") &&
-                  console.log(newValue)
+                  setWellStatus(newValue)
                 }
                 {...{
                   options: ["Active", "Inactive"],
                 }}
+                sx={{ width: "100%", backgroundColor: "#FFF" }}
                 disablePortal
                 renderInput={(params) => (
                   <TextField {...params} label="Status" />
@@ -126,6 +151,8 @@ export const WellDetail = () => {
           </Grid>
           <TableWellDetail tallies={tallies} proposals={proposals} />
         </div>
+        {isSuccess && <AlertComponent type="success" />}
+        {isError && <AlertComponent type="error" />}
       </>
     );
   }

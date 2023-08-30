@@ -20,8 +20,10 @@ import { ProductProps, WellProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { initial_well_state } from "../../utils/data";
-import { IconButton } from "@mui/material";
+import { IconButton, useMediaQuery } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { useNavigate } from "react-router-dom";
 
 interface FetchResponse {
   success?: boolean;
@@ -29,16 +31,20 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "2px solid #135C61",
+  border: "1px solid rgb(251,171,53)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#F1ECE7",
+  backgroundColor: "#FFF",
 };
 
 export const WellPage = () => {
-  const { paginationModel,  fetchPaginationModel} = useContext(PaginatorContext);
-  const { data, error, isLoading, fetchData, pagination } = useFetch<FetchResponse>("well-paginate", paginationModel);
-   const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
+  const { paginationModel, fetchPaginationModel } =
+    useContext(PaginatorContext);
+  const navigate = useNavigate();
+  const matches = useMediaQuery("(min-width:600px)");
+  const { data, error, isLoading, fetchData, pagination } =
+    useFetch<FetchResponse>("well-paginate", paginationModel);
+  const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
   const [wellToEdit, setWellToEdit] = useState<WellProps>(initial_well_state);
   const [isCreateWell, setIsCreateWell] = useState<Boolean>(false);
   const { isSuccess, isError, onCreateWell, onEditWell } =
@@ -48,11 +54,18 @@ export const WellPage = () => {
     {
       field: "edit",
       headerName: "Action",
-      renderHeader: () => <strong>{"Edit"}</strong>,
+      renderHeader: () => <strong>{"ACTION"}</strong>,
       width: 100,
       renderCell: (params: any) => {
         return (
           <>
+            <IconButton
+              onClick={() => {
+                navigate(`/well/${params.row.id}`);
+              }}
+            >
+              <OpenInNewIcon />
+            </IconButton>
             <IconButton
               onClick={() => {
                 setIsCreateWell(false);
@@ -115,12 +128,10 @@ export const WellPage = () => {
       <>
         <NavBar title="Wells" buttons={buttons} />
         <div className={styles.center}>
-          <div
-            style={{ height: "75vh", width: "70vw" }}
-            className={styles.techProposalForm}
-          >
+          <div style={{ height: "80vh" }} className={styles.techProposalForm}>
             <DataGrid
               slots={{ toolbar: GridToolbar }}
+              density={matches ? "standard" : "compact"}
               style={dataGridStyles}
               rows={data.data}
               columns={columns}

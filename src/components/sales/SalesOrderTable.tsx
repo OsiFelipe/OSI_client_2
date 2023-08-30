@@ -48,11 +48,17 @@ export const SalesOrderTable = () => {
             <AddIcon fontSize="small" sx={{ mr: 1 }} />
             Add Product
           </Button>
-          <Button variant="outlined" onClick={() => onExportExcel("csv")}>
+          <Button
+            variant="outlined"
+            onClick={() => onExportExcel("csv", "sales")}
+          >
             <DocumentScannerIcon fontSize="small" sx={{ mr: 1 }} />
             Export CSV
           </Button>
-          <Button variant="outlined" onClick={() => onExportExcel("xls")}>
+          <Button
+            variant="outlined"
+            onClick={() => onExportExcel("xls", "sales")}
+          >
             <ArticleIcon fontSize="small" sx={{ mr: 1 }} />
             Export XLS
           </Button>

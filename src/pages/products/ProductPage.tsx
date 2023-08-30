@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton, useMediaQuery } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -29,15 +29,16 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "2px solid #135C61",
+  border: "1px solid rgb(251,171,53)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#F1ECE7",
+  backgroundColor: "#FFF",
 };
 
 export const ProductPage = () => {
-  const { paginationModel,  fetchPaginationModel} =
+  const { paginationModel, fetchPaginationModel } =
     useContext(PaginatorContext);
+  const matches = useMediaQuery("(min-width:600px)");
   const { data, error, isLoading, fetchData, pagination } =
     useFetch<FetchResponse>("product-paginate", paginationModel);
   const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
@@ -142,12 +143,10 @@ export const ProductPage = () => {
       <>
         <NavBar title="OSI Products" buttons={buttons} />
         <div className={styles.center}>
-          <div
-            style={{ height: "83vh", width: "80vw" }}
-            className={styles.techProposalForm}
-          >
+          <div style={{ height: "80vh" }} className={styles.techProposalForm}>
             <DataGrid
               slots={{ toolbar: GridToolbar }}
+              density={matches ? "standard" : "compact"}
               style={dataGridStyles}
               rows={data.data}
               columns={columns}

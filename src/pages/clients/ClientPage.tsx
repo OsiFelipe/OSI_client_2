@@ -14,8 +14,10 @@ import { useFetch } from "../../hooks";
 import { ClientProps, ProductProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { IconButton } from "@mui/material";
+import { IconButton, useMediaQuery } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { useNavigate } from "react-router-dom";
 
 interface FetchResponse {
   success?: boolean;
@@ -23,15 +25,17 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "2px solid #135C61",
+  border: "1px solid rgb(251,171,53)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#F1ECE7",
+  backgroundColor: "#FFF",
 };
 
 export const ClientPage = () => {
-  const { paginationModel,  fetchPaginationModel} =
+  const { paginationModel, fetchPaginationModel } =
     useContext(PaginatorContext);
+  const matches = useMediaQuery("(min-width:600px)");
+  const navigate = useNavigate();
   const { data, error, isLoading, fetchData, pagination } =
     useFetch<FetchResponse>("client-paginate", paginationModel);
   const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
@@ -52,6 +56,13 @@ export const ClientPage = () => {
       renderCell: (params: any) => {
         return (
           <>
+            <IconButton
+              onClick={() => {
+                navigate(`/client/${params.row.id}`);
+              }}
+            >
+              <OpenInNewIcon />
+            </IconButton>
             <IconButton
               onClick={() => {
                 setIsCreateClient(false);
@@ -93,12 +104,10 @@ export const ClientPage = () => {
       <>
         <NavBar title="Clients" buttons={buttons} />
         <div className={styles.center}>
-          <div
-            style={{ height: "83vh", width: "50vw" }}
-            className={styles.techProposalForm}
-          >
+          <div style={{ height: "80vh" }} className={styles.techProposalForm}>
             <DataGrid
               slots={{ toolbar: GridToolbar }}
+              density={matches ? "standard" : "compact"}
               style={dataGridStyles}
               rows={data.data}
               columns={columns}
