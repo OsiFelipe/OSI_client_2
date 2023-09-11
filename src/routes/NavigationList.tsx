@@ -166,18 +166,25 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
     },
     {
       id: 9,
-      onClick: () => navigate("/stepper"),
+      onClick: () => navigate("/pulling-report"),
       icon: <SmartToyIcon />,
-      name: "Designer",
+      name: "Pulling Reports",
       roles: [0],
     },
-    {
-      id: 10,
-      onClick: () => navigate("/stepper"),
-      icon: <SmartToyIcon />,
-      name: "Designer",
-      roles: [0],
-    },
+    // {
+    //   id: 9,
+    //   onClick: () => navigate("/stepper"),
+    //   icon: <SmartToyIcon />,
+    //   name: "Designer",
+    //   roles: [0],
+    // },
+    // {
+    //   id: 10,
+    //   onClick: () => navigate("/stepper"),
+    //   icon: <SmartToyIcon />,
+    //   name: "Designer",
+    //   roles: [0],
+    // },
   ];
   return (
     <List>
