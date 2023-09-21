@@ -1,8 +1,8 @@
 import { Autocomplete, TextField } from "@mui/material";
 
 const options = [
-  { id: 0, name: "New" },
-  { id: 1, name: "Reused" },
+  { id: 0, name: "NEW" },
+  { id: 1, name: "USED" },
 ];
 
 interface Props {

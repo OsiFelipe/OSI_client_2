@@ -25,7 +25,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export function LoginComponent({
+export function LoginClientComponent({
   onClickLogin,
 }: {
   onClickLogin: (
@@ -39,7 +39,7 @@ export function LoginComponent({
   const [pass, setPass] = useState("");
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onClickLogin("user", username, pass);
+    onClickLogin("client", username, pass);
   };
 
   return (
@@ -58,18 +58,18 @@ export function LoginComponent({
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Login to OSI System
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="dense"
             required
             fullWidth
-            id="email"
+            id="clientKey"
             hiddenLabel
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            label="Client Key"
+            name="client"
+            autoComplete="text"
             sx={{ backgroundColor: "white", borderRadius: "5px" }}
             style={{ color: "red" }}
             onChange={(event) => setUsername(event.target.value)}
@@ -101,13 +101,13 @@ export function LoginComponent({
               </Link> */}
             </Grid>
             <Grid item>
-              {/* <Link
-                href="/login"
+              <Link
+                href="/"
                 variant="body2"
                 style={{ color: "black", fontWeight: "bold" }}
               >
-                {"Login as Client"}
-              </Link> */}
+                {"Login as User"}
+              </Link>
             </Grid>
           </Grid>
         </Box>

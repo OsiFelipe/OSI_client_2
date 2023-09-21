@@ -54,9 +54,9 @@ export const TechDesignForm = () => {
   const [inPdf, setInPdf] = useState(false);
   const [isThereProdImage, setIsThereProdImage] = useState(false);
   const navigate = useNavigate();
-  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const {
+    fetchDataClient,
     toSave,
     onSaveProp,
     onEditprop,
@@ -74,6 +74,7 @@ export const TechDesignForm = () => {
   const { fetchTechSolution } = useContext(SimulatorContext);
 
   useEffect(() => {
+    fetchDataClient();
     if (idTech && idTech !== "0") {
       fetchDataTechProp(parseInt(idTech));
       fetchTechSolution(parseInt(idTech));

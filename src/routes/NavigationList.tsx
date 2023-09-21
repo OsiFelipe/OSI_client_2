@@ -22,6 +22,7 @@ import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import GradientIcon from "@mui/icons-material/Gradient";
 import CompressIcon from "@mui/icons-material/Compress";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { ListItem } from "@mui/material";
 import AuthContext from "../context/AuthContext";
 
@@ -53,7 +54,7 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
       onClick: () => navigate("/home"),
       icon: <HomeIcon />,
       name: "Home",
-      roles: [0, 1, 2, 3],
+      roles: [0, 1, 2],
     },
     {
       id: 1,
@@ -167,9 +168,9 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
     {
       id: 9,
       onClick: () => navigate("/pulling-report"),
-      icon: <SmartToyIcon />,
+      icon: <PictureAsPdfIcon />,
       name: "Pulling Reports",
-      roles: [0],
+      roles: [0, 1, 2, 3],
     },
     // {
     //   id: 9,

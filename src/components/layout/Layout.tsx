@@ -8,7 +8,8 @@ interface Props {
 }
 export const Layout = ({ children }: Props) => {
   let location = useLocation();
-  let isLoginPage = !!(location.pathname === "/");
+  let isLoginPage =
+    !!(location.pathname === "/") || !!(location.pathname === "/login");
   const matches = useMediaQuery("(min-width:600px)");
   const bgImage = matches ? backgroundImage : backgroundImageMobile;
   return (

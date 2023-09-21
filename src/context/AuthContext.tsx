@@ -9,7 +9,11 @@ interface Props {
   desktop: boolean;
   idRole: null | number;
   onMoveDrawer: (action: boolean) => void;
-  onLogin: (username: string, password: string) => void;
+  onLogin: (
+    type: "user" | "client",
+    username: string,
+    password: string
+  ) => void;
   onLogout: () => void;
   validateToken: () => boolean;
 }

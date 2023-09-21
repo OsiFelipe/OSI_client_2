@@ -42,6 +42,7 @@ export const TallyDesignForm = () => {
   const [inPdf, setInPdf] = useState(pdf || false);
   const { idTally } = useParams();
   const {
+    fetchDataClient,
     toSave,
     onSaveTally,
     onEditTally,
@@ -57,6 +58,7 @@ export const TallyDesignForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    fetchDataClient();
     if (idTally && idTally !== "0") {
       fetchDataTally(parseInt(idTally));
       setInEdit(true);

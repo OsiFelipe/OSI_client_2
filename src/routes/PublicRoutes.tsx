@@ -7,8 +7,11 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 export const PublicRoute = ({ children }: Props) => {
-  const { validateToken } = useContext(AuthContext);
+  const { validateToken, idRole } = useContext(AuthContext);
   if (validateToken()) {
+    if (idRole === 3) {
+      return <Navigate to="/pulling-report" replace />;
+    }
     return <Navigate to="/home" replace />;
   } else {
     return <Layout>{children}</Layout>;

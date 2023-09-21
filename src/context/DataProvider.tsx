@@ -50,9 +50,9 @@ const DataProvider = ({ children }: Props) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    handleFetchDataClient();
-  }, []);
+  // useEffect(() => {
+  //   handleFetchDataClient();
+  // }, []);
 
   useEffect(() => {
     setTimeout(() => {

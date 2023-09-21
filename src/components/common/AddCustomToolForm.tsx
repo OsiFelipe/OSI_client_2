@@ -20,7 +20,7 @@ interface Props {
 
 const options = [
   { id: 0, name: "NEW" },
-  { id: 1, name: "REUSED" },
+  { id: 1, name: "USED" },
 ];
 
 const diameterOptions = [

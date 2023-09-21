@@ -1,3 +1,4 @@
+export { LoginClientComponent } from './common/LoginClientComponent';
 export { TableWellDetail } from './well/TableWellDetail';
 export {StepperComponent} from './stepper/Stepper';
 export { DialogComponent } from './layout/DialogComponent';

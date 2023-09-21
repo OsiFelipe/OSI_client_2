@@ -15,9 +15,9 @@ import {
   SandSimulator,
   GasSimulator,
   PressureSimulator,
-  StepperPage,
   WellDetail,
   ClientDetail,
+  PullingReportPage,
 } from "./pages";
 import { Navigation } from "./routes/Navigation";
 import { Layout, NotFoundPage } from "./components";
@@ -30,6 +30,7 @@ import { ProtectedRoute } from "./routes/ProtectedRoutes";
 import { PublicRoute } from "./routes/PublicRoutes";
 import DesignerProvider from "./context/DesignerProvider";
 import { CssBaseline } from "@mui/material";
+import { LoginClient } from "./pages/login/LoginClient";
 
 const theme = createTheme({
   palette: {
@@ -58,6 +59,7 @@ const theme = createTheme({
 
 const routeItems = [
   { path: "/", protected: false, component: <LoginPage /> },
+  { path: "/login", protected: false, component: <LoginClient /> },
   { path: "/home", protected: true, component: <HomePage /> },
   { path: "/admin", protected: true, component: <HomePage /> },
   { path: "/tech/:idTech", protected: true, component: <TechDesignForm /> },
@@ -76,14 +78,19 @@ const routeItems = [
   { path: "/sim/gas", protected: true, component: <GasSimulator /> },
   { path: "/sim/press", protected: true, component: <PressureSimulator /> },
   {
-    path: "/stepper",
+    path: "/pulling-report",
     protected: true,
-    component: (
-      <DesignerProvider>
-        <StepperPage />
-      </DesignerProvider>
-    ),
+    component: <PullingReportPage />,
   },
+  // {
+  //   path: "/stepper",
+  //   protected: true,
+  //   component: (
+  //     <DesignerProvider>
+  //       <StepperPage />
+  //     </DesignerProvider>
+  //   ),
+  // },
   { path: "/*", protected: false, component: <NotFoundPage /> },
 ];
 

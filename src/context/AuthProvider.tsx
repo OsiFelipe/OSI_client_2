@@ -52,13 +52,18 @@ const AuthProvider = ({ children }: Props) => {
     setIsLoading(true);
     localStorage.clear();
     setIsLoggedIn(false);
-    navigate("/");
+    // navigate("/");
     setIsLoading(false);
   };
 
-  const loginHandler = (username: string, pass: string) => {
+  const loginHandler = (
+    type: "user" | "client",
+    username: string,
+    pass: string
+  ) => {
     setIsLoading(true);
     try {
+      const endpoint = type === "user" ? "login" : "login-client";
       const loop1Pass = Base64.encode(pass);
       const loop2Pass = Base64.encode(loop1Pass);
       const data = {
@@ -69,7 +74,7 @@ const AuthProvider = ({ children }: Props) => {
         method: "POST",
         body: JSON.stringify(data),
       };
-      handleRequest({ endpoint: "login", options })
+      handleRequest({ endpoint, options })
         .then((response) => {
           if (response.data.token) {
             // const loop1 = Base64.encode(response.data.token);
@@ -87,7 +92,10 @@ const AuthProvider = ({ children }: Props) => {
             setIsError(true);
           }
         })
-        .catch(() => setIsError(true));
+        .catch(() => {
+          setIsLoading(false);
+          setIsError(true);
+        });
     } catch (e) {
       setIsLoading(false);
       setIsError(true);

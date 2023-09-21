@@ -1,8 +1,8 @@
 import React from "react";
-import { AlertComponent, LoginComponent, ShowContent } from "../components";
-import styles from "./main.module.sass";
+import { AlertComponent, LoginComponent, ShowContent } from "../../components";
 import { useContext } from "react";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
+import styles from "../main.module.sass";
 
 export const LoginPage = () => {
   const { onLogin, isLoading, isSuccess, isError } = useContext(AuthContext);

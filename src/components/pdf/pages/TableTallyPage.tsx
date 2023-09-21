@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     borderBottomColor: "rgb(251,171,53)",
   },
+  red: {
+    color: "red",
+  },
 });
 
 export const TableTallyPage = ({
@@ -26,6 +29,10 @@ export const TableTallyPage = ({
 }: {
   data: DataProps;
 }) => {
+  const getStatusColor = (status: string) => {
+    if (status === "USED") return <Text style={styles.red}>{status}</Text>;
+    return status;
+  };
   return (
     <Page size="A4" orientation="landscape" style={styles.page}>
       <Header title={basicInfo.client.name} subtitle={basicInfo.well.name} />
@@ -58,7 +65,11 @@ export const TableTallyPage = ({
                       <Table.Cell>
                         {item.bottomThreadConnection || "-"}
                       </Table.Cell>
-                      <Table.Cell>{item?.status?.name || "-"}</Table.Cell>
+                      <Table.Cell>
+                        {item?.status?.name
+                          ? getStatusColor(item?.status?.name)
+                          : "-"}
+                      </Table.Cell>
                       <Table.Cell>{item.maxOD || "-"}</Table.Cell>
                       <Table.Cell>{item.bodyOD || "-"}</Table.Cell>
                       <Table.Cell>
