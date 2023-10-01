@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import { IconButton } from "@mui/material";
-import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
+import { IconButton, Tooltip } from "@mui/material";
 import { Spinner } from "../ui/Spinner";
+import { Download } from "@mui/icons-material";
 
 export const PDFView = ({
   children,
@@ -34,9 +34,17 @@ export const PDFView = ({
             loading ? (
               <Spinner />
             ) : (
-              <IconButton sx={{ color: "rgb(251,171,53)" }} size="large">
-                <DownloadForOfflineIcon fontSize="large" />
-              </IconButton>
+              <Tooltip title="Download">
+                <IconButton
+                  sx={{
+                    backgroundColor: "rgb(251,171,53)",
+                    "&:hover": { backgroundColor: "#FFF" },
+                  }}
+                  size="large"
+                >
+                  <Download fontSize="large" />
+                </IconButton>
+              </Tooltip>
             )
           }
         </PDFDownloadLink>

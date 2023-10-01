@@ -24,10 +24,20 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DataContext from "../../context/DataContext";
 
 const dataGridStyles = {
-  border: "1px solid rgb(251,171,53)",
+  border: "1px solid rgb(90,100,119)",
   borderRadius: "10px",
+  padding: "1%",
   marginTop: "5vh",
-  backgroundColor: "#FFF",
+};
+
+const iconButtonStyles = {
+  backgroundColor: "rgb(90,100,119)",
+  color: "white",
+  marginRight: "5px",
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: "rgb(251,171,53)",
+  },
 };
 
 interface Props {
@@ -92,8 +102,10 @@ export const ClientDetail = () => {
               onClick={() => {
                 navigate(`/well/${params.row.id}`);
               }}
+              sx={iconButtonStyles}
+              size="small"
             >
-              <OpenInNewIcon />
+              <OpenInNewIcon fontSize="small" />
             </IconButton>
           </>
         );

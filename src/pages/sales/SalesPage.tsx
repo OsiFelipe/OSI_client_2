@@ -25,10 +25,20 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "1px solid rgb(251,171,53)",
+  border: "1px solid rgb(90,100,119)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#FFF",
+  marginRight: "1rem",
+};
+
+const iconButtonStyles = {
+  backgroundColor: "rgb(90,100,119)",
+  color: "white",
+  marginRight: "5px",
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: "rgb(251,171,53)",
+  },
 };
 
 export const SalesPage = () => {
@@ -44,6 +54,47 @@ export const SalesPage = () => {
   const { getDateFromString } = useDate();
 
   const columns: GridColDef[] = [
+    {
+      field: "action",
+      headerName: "ACTION",
+      filterable: false,
+      sortable: false,
+      renderHeader: () => <></>,
+      width: 150,
+      renderCell: (params: any) => {
+        return (
+          <>
+            <Tooltip title="Edit">
+              <IconButton
+                onClick={() => navigate(`/sales/edit/${params.row?.id}`)}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Duplicate">
+              <IconButton
+                onClick={() => navigate(`/sales/${params.row?.id}`)}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <FileCopyIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Print">
+              <IconButton
+                onClick={() => navigate(`/sales/${params.row?.id}`)}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <PrintIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          </>
+        );
+      },
+    },
     {
       field: "orderDate",
       headerName: "Order Date",
@@ -80,37 +131,6 @@ export const SalesPage = () => {
       renderHeader: () => <strong>{"Salesman Contact"}</strong>,
       sortable: true,
       width: 200,
-    },
-    {
-      field: "action",
-      headerName: "ACTION",
-      filterable: false,
-      sortable: false,
-      renderHeader: () => <strong>{"Action"}</strong>,
-      width: 150,
-      renderCell: (params: any) => {
-        return (
-          <>
-            <Tooltip title="Edit">
-              <IconButton
-                onClick={() => navigate(`/sales/edit/${params.row?.id}`)}
-              >
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Duplicate">
-              <IconButton onClick={() => navigate(`/sales/${params.row?.id}`)}>
-                <FileCopyIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Print">
-              <IconButton onClick={() => navigate(`/sales/${params.row?.id}`)}>
-                <PrintIcon />
-              </IconButton>
-            </Tooltip>
-          </>
-        );
-      },
     },
   ];
 

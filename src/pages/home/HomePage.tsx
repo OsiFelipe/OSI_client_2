@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Grid } from "@mui/material";
 import { NavBar, ShowContent, CardHomePage } from "../../components";
 import styles from "../main.module.sass";
@@ -8,7 +8,11 @@ import AuthContext from "../../context/AuthContext";
 
 export const HomePage = () => {
   const navigate = useNavigate();
-  const { isLoading } = useContext(AuthContext);
+  const { isClient, isLoading } = useContext(AuthContext);
+
+  useEffect(() => {
+    isClient && navigate("/pulling-report");
+  }, [isClient]);
 
   const cards = [
     {

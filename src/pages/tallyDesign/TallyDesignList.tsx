@@ -32,10 +32,19 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "1px solid rgb(251,171,53)",
+  border: "1px solid rgb(90,100,119)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#FFF",
+};
+
+const iconButtonStyles = {
+  backgroundColor: "rgb(90,100,119)",
+  color: "white",
+  marginRight: "5px",
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: "rgb(251,171,53)",
+  },
 };
 
 export const TallyDesignList = () => {
@@ -52,6 +61,69 @@ export const TallyDesignList = () => {
   const matches = useMediaQuery("(min-width:600px)");
 
   const columns: GridColDef[] = [
+    {
+      field: "action",
+      headerName: "Action",
+      renderHeader: () => <strong>{"ACTION"}</strong>,
+      width: 270,
+      filterable: false,
+      sortable: false,
+      renderCell: (params: any) => {
+        return (
+          <>
+            <Tooltip title="Edit">
+              <IconButton
+                onClick={() => navigate(`/tally/${params.row?.id}`)}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Duplicate">
+              <IconButton
+                onClick={() => {
+                  fetchDataTally(params.row?.id);
+                  navigate("/tally/0");
+                }}
+                size="small"
+                sx={iconButtonStyles}
+              >
+                <FileCopyIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Create Order">
+              <IconButton
+                onClick={() => navigate(`/sales/tally/${params.row?.id}`)}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <SellIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <IconButton
+              onClick={() => navigate(`/tally/${params.row?.id}?pdf=true`)}
+              sx={iconButtonStyles}
+              size="small"
+            >
+              <PrintIcon fontSize="small" />
+            </IconButton>
+            <Tooltip title="Delete">
+              <IconButton
+                onClick={() => {
+                  setIdToDelete(params.row?.id);
+                  setIsOpenAlert(true);
+                }}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          </>
+        );
+      },
+    },
     {
       field: "client",
       headerName: "Client",
@@ -83,57 +155,6 @@ export const TallyDesignList = () => {
       width: 120,
       valueGetter: (params: GridValueGetterParams) =>
         getDateFromString(params.row?.date),
-    },
-    {
-      field: "action",
-      headerName: "Action",
-      renderHeader: () => <strong>{"ACTION"}</strong>,
-      width: 270,
-      filterable: false,
-      sortable: false,
-      renderCell: (params: any) => {
-        return (
-          <>
-            <Tooltip title="Edit">
-              <IconButton onClick={() => navigate(`/tally/${params.row?.id}`)}>
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Duplicate">
-              <IconButton
-                onClick={() => {
-                  fetchDataTally(params.row?.id);
-                  navigate("/tally/0");
-                }}
-              >
-                <FileCopyIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Create Order">
-              <IconButton
-                onClick={() => navigate(`/sales/tally/${params.row?.id}`)}
-              >
-                <SellIcon />
-              </IconButton>
-            </Tooltip>
-            <IconButton
-              onClick={() => navigate(`/tally/${params.row?.id}?pdf=true`)}
-            >
-              <PrintIcon />
-            </IconButton>
-            <Tooltip title="Delete">
-              <IconButton
-                onClick={() => {
-                  setIdToDelete(params.row?.id);
-                  setIsOpenAlert(true);
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-          </>
-        );
-      },
     },
   ];
 

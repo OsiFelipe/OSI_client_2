@@ -8,6 +8,8 @@ interface Props {
   isDrawerOpen: boolean;
   desktop: boolean;
   idRole: null | number;
+  isClient: boolean;
+  clientId: number | null;
   onMoveDrawer: (action: boolean) => void;
   onLogin: (
     type: "user" | "client",
@@ -26,6 +28,8 @@ const AuthContext = React.createContext<Props>({
   isDrawerOpen: false,
   desktop: false,
   idRole: null,
+  isClient: false,
+  clientId: null,
   onMoveDrawer: () => {},
   onLogin: () => {},
   onLogout: () => {},

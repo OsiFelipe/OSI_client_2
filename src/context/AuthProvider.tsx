@@ -5,16 +5,10 @@ import { Base64 } from "js-base64";
 import { isExpired, decodeToken } from "react-jwt";
 import { useRequest } from "../hooks";
 import { useMediaQuery } from "@mui/material";
+import { UserDataProps } from "../interfaces/interfaces";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
-}
-
-interface UserDataProps {
-  idRol: number;
-  name: string;
-  user: string;
-  userId: number;
 }
 
 const AuthProvider = ({ children }: Props) => {
@@ -27,6 +21,8 @@ const AuthProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [idRole, setIdRole] = useState<null | number>(null);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const [clientId, setClientId] = useState<number | null>(null);
 
   useEffect(() => {
     validateSession();
@@ -36,23 +32,27 @@ const AuthProvider = ({ children }: Props) => {
     setTimeout(() => {
       setIsError(false);
     }, 3000);
-  }, [isSuccess]);
+  }, [isSuccess, isError]);
 
   useEffect(() => {
     desktop && setIsDrawerOpen(true);
     const tokenCoded = localStorage.getItem("info");
     if (tokenCoded) {
       const dataUser: UserDataProps | null = decodeToken(tokenCoded);
-      dataUser && setIdRole(dataUser.idRol);
-      console.log(dataUser?.idRol);
+      if (dataUser) {
+        setIdRole(dataUser.idRol);
+        setIsClient(dataUser.client);
+        dataUser.clientId && setClientId(dataUser.clientId);
+      }
     }
-  }, []);
+  }, [desktop]);
 
   const logoutHandler = async () => {
+    const wasClient = isClient;
     setIsLoading(true);
     localStorage.clear();
     setIsLoggedIn(false);
-    // navigate("/");
+    wasClient ? navigate("/login") : navigate("/");
     setIsLoading(false);
   };
 
@@ -108,7 +108,10 @@ const AuthProvider = ({ children }: Props) => {
       setIsLoggedIn(true);
       setIsLoading(false);
     } else {
-      logoutHandler();
+      setIsLoading(true);
+      localStorage.clear();
+      setIsLoggedIn(false);
+      setIsLoading(false);
     }
   };
 
@@ -133,6 +136,8 @@ const AuthProvider = ({ children }: Props) => {
         isDrawerOpen,
         desktop,
         idRole,
+        isClient,
+        clientId,
         onMoveDrawer: (action: boolean) => setIsDrawerOpen(action),
         onLogin: loginHandler,
         onLogout: logoutHandler,

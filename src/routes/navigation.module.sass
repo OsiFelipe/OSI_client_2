@@ -1,14 +1,13 @@
 @use "../utils/" as *
 @import "../utils/variables"
 
-.navBar 
+.navBar
   background-color: $primary-color
 
-  img 
+  img
     padding: 1rem 2rem
 
-
-.nav-items 
+.nav-items
   margin-top: 10vh
   list-style: none,
   flex-direction: row,
@@ -26,23 +25,21 @@
 
     span
       color: $complementary-color
-  
-  a 
+
+  a
     text-decoration: none,
     color: white,
     font-weight: bold,
     font-size: 1.2rem
 
     &:hover, &:active
-     color: $complementary-color,
+      color: $complementary-color,
 
 .list
   display: flex
   flex-direction: row
   justify-content: space-between
   margin-top: 1vh
-  
-  &:hover, &:active
-   color: $complementary-color,
-  
 
+  &:hover, &:active
+    color: $complementary-color,

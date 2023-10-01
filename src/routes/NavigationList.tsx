@@ -21,14 +21,24 @@ import CalculateIcon from "@mui/icons-material/Calculate";
 import WorkspacesIcon from "@mui/icons-material/Workspaces";
 import GradientIcon from "@mui/icons-material/Gradient";
 import CompressIcon from "@mui/icons-material/Compress";
-import SmartToyIcon from "@mui/icons-material/SmartToy";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import { ListItem } from "@mui/material";
+import { ListItem, Tooltip } from "@mui/material";
 import AuthContext from "../context/AuthContext";
 
 interface Props {
   onCloseMenu: () => void;
 }
+
+const iconStyles = {
+  backgroundColor: "rgb(251,171,53, 0.9)",
+  padding: "4px",
+  color: "white",
+  marginRight: "5px",
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: "rgb(90,100,119)",
+  },
+};
 
 export const NavigationList = ({ onCloseMenu }: Props) => {
   const open = true;
@@ -52,21 +62,23 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
     {
       id: 0,
       onClick: () => navigate("/home"),
-      icon: <HomeIcon />,
+      icon: <HomeIcon sx={iconStyles} fontSize="medium" />,
       name: "Home",
       roles: [0, 1, 2],
     },
     {
       id: 1,
       onClick: () => navigate("/home"),
-      icon: <SupervisorAccountIcon />,
+      icon: <SupervisorAccountIcon sx={iconStyles} fontSize="medium" />,
       name: "Admin",
       roles: [0],
     },
     {
       id: 2,
       onClick: handleClickProp,
-      icon: <PrecisionManufacturingOutlinedIcon />,
+      icon: (
+        <PrecisionManufacturingOutlinedIcon sx={iconStyles} fontSize="medium" />
+      ),
       name: "Technical Design",
       roles: [0, 1, 2],
       openCloseOption: openPropOption,
@@ -74,14 +86,14 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
         {
           id: 0,
           onClick: () => navigate("/tech/0"),
-          icon: <DesignServicesIcon />,
+          icon: <DesignServicesIcon sx={iconStyles} fontSize="medium" />,
           name: "Create",
           children: [],
         },
         {
           id: 1,
           onClick: () => navigate("/tech/all"),
-          icon: <FormatListNumberedIcon />,
+          icon: <FormatListNumberedIcon sx={iconStyles} fontSize="medium" />,
           name: "See All",
           children: [],
         },
@@ -90,7 +102,7 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
     {
       id: 3,
       onClick: handleClickTally,
-      icon: <VerticalSplitIcon />,
+      icon: <VerticalSplitIcon sx={iconStyles} fontSize="medium" />,
       name: "Tally Design",
       roles: [0, 1, 2],
       openCloseOption: openTallyOption,
@@ -98,13 +110,13 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
         {
           id: 0,
           onClick: () => navigate("/tally/0"),
-          icon: <DesignServicesIcon />,
+          icon: <DesignServicesIcon sx={iconStyles} fontSize="medium" />,
           name: "Create",
         },
         {
           id: 1,
           onClick: () => navigate("/tally/all"),
-          icon: <FormatListNumberedIcon />,
+          icon: <FormatListNumberedIcon sx={iconStyles} fontSize="medium" />,
           name: "See All",
         },
       ],
@@ -112,35 +124,35 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
     {
       id: 4,
       onClick: () => navigate("/well"),
-      icon: <OilBarrelIcon />,
+      icon: <OilBarrelIcon sx={iconStyles} fontSize="medium" />,
       name: "Wells",
       roles: [0, 1, 2],
     },
     {
       id: 5,
       onClick: () => navigate("/client"),
-      icon: <PermContactCalendarIcon />,
+      icon: <PermContactCalendarIcon sx={iconStyles} fontSize="medium" />,
       name: "Clients",
       roles: [0, 1, 2],
     },
     {
       id: 6,
       onClick: () => navigate("/sales/all"),
-      icon: <SellIcon />,
+      icon: <SellIcon sx={iconStyles} fontSize="medium" />,
       name: "Sales",
       roles: [0, 1, 2],
     },
     {
       id: 7,
       onClick: () => navigate("/products"),
-      icon: <CategoryIcon />,
+      icon: <CategoryIcon sx={iconStyles} fontSize="medium" />,
       name: "Products",
       roles: [0, 1, 2],
     },
     {
       id: 8,
       onClick: handleClickSimulator,
-      icon: <CalculateIcon />,
+      icon: <CalculateIcon sx={iconStyles} fontSize="medium" />,
       name: "Simulators",
       roles: [0, 1],
       openCloseOption: openSimOption,
@@ -148,19 +160,19 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
         {
           id: 0,
           onClick: () => navigate("/sim/sand"),
-          icon: <GradientIcon />,
+          icon: <GradientIcon sx={iconStyles} fontSize="medium" />,
           name: "Sand",
         },
         {
           id: 1,
           onClick: () => navigate("/sim/gas"),
-          icon: <WorkspacesIcon />,
+          icon: <WorkspacesIcon sx={iconStyles} fontSize="medium" />,
           name: "Gas",
         },
         {
           id: 2,
           onClick: () => navigate("/sim/press"),
-          icon: <CompressIcon />,
+          icon: <CompressIcon sx={iconStyles} fontSize="medium" />,
           name: "Pressure",
         },
       ],
@@ -168,7 +180,7 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
     {
       id: 9,
       onClick: () => navigate("/pulling-report"),
-      icon: <PictureAsPdfIcon />,
+      icon: <PictureAsPdfIcon sx={iconStyles} fontSize="medium" />,
       name: "Pulling Reports",
       roles: [0, 1, 2, 3],
     },
@@ -208,15 +220,17 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
                   px: 2.5,
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {item.icon}
-                </ListItemIcon>
+                <Tooltip title={item.name}>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                </Tooltip>
                 <ListItemText
                   primary={item.name}
                   sx={{ opacity: open ? 1 : 0 }}
@@ -244,7 +258,9 @@ export const NavigationList = ({ onCloseMenu }: Props) => {
                         onCloseMenu();
                       }}
                     >
-                      <ListItemIcon>{child.icon}</ListItemIcon>
+                      <Tooltip title={child.name}>
+                        <ListItemIcon>{child.icon}</ListItemIcon>
+                      </Tooltip>
                       <ListItemText primary={child.name} />
                     </ListItemButton>
                   </ListItem>

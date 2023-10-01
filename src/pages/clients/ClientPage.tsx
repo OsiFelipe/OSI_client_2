@@ -14,7 +14,7 @@ import { useFetch } from "../../hooks";
 import { ClientProps, ProductProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { IconButton, useMediaQuery } from "@mui/material";
+import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { useNavigate } from "react-router-dom";
@@ -25,10 +25,19 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "1px solid rgb(251,171,53)",
+  border: "1px solid rgb(90,100,119)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#FFF",
+};
+
+const iconButtonStyles = {
+  backgroundColor: "rgb(90,100,119)",
+  color: "white",
+  marginRight: "5px",
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: "rgb(251,171,53)",
+  },
 };
 
 export const ClientPage = () => {
@@ -51,27 +60,35 @@ export const ClientPage = () => {
     {
       field: "edit",
       headerName: "Action",
-      renderHeader: () => <strong>{"Edit"}</strong>,
+      renderHeader: () => <></>,
       width: 150,
       renderCell: (params: any) => {
         return (
           <>
-            <IconButton
-              onClick={() => {
-                navigate(`/client/${params.row.id}`);
-              }}
-            >
-              <OpenInNewIcon />
-            </IconButton>
-            <IconButton
-              onClick={() => {
-                setIsCreateClient(false);
-                setClientToEdit(params.row);
-                setIsModalOpen(true);
-              }}
-            >
-              <EditIcon />
-            </IconButton>
+            <Tooltip title="Detail">
+              <IconButton
+                onClick={() => {
+                  navigate(`/client/${params.row.id}`);
+                }}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <OpenInNewIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Edit">
+              <IconButton
+                onClick={() => {
+                  setIsCreateClient(false);
+                  setClientToEdit(params.row);
+                  setIsModalOpen(true);
+                }}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
           </>
         );
       },

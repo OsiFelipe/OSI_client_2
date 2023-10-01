@@ -156,3 +156,42 @@
         width: 80vw
     @include mobile()
         width: 80vw
+
+.pullingTableContainer
+    display: flex,
+    flex-direction: row,
+    height: 80vh,
+    @include tablet()
+        flex-direction: column,
+        height: 180vh,
+
+.pullingTable
+    width: 50vw,
+    place-self: center,
+    margin: 1rem,
+    margin-top: 15vh,
+    @include tablet()
+        width: 70vw,
+        margin-top: 5vh
+    @include smallScreen()
+        width: 80vw
+    @include mobile()
+        width: 80vw
+
+.cellClass
+    cursor: pointer,
+    width: 100%,
+    text-align: center,
+    &:hover, &:active
+        background-color: $background-color,
+
+.backdrop
+    position: fixed,
+    top: 0,
+    left: 0,
+    z-index: 100,
+    width: 100vw,
+    height: 100vh,
+    background: rgba(0, 0, 0, 0.5),
+    transition: opacity 0.2s linear,
+    animation: 1s hide,

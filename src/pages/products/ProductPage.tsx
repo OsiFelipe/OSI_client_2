@@ -1,4 +1,4 @@
-import { IconButton, useMediaQuery } from "@mui/material";
+import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -29,10 +29,19 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "1px solid rgb(251,171,53)",
+  border: "1px solid rgb(90,100,119)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#FFF",
+};
+
+const iconButtonStyles = {
+  backgroundColor: "rgb(90,100,119)",
+  color: "white",
+  marginRight: "5px",
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: "rgb(251,171,53)",
+  },
 };
 
 export const ProductPage = () => {
@@ -52,21 +61,23 @@ export const ProductPage = () => {
     {
       field: "edit",
       headerName: "Action",
-      renderHeader: () => <strong>{"Edit"}</strong>,
+      renderHeader: () => <></>,
       width: 100,
       renderCell: (params: any) => {
         return (
-          <>
+          <Tooltip title="Edit">
             <IconButton
               onClick={() => {
                 setIsCreatetool(false);
                 setToolToEdit(params.row);
                 setIsModalOpen(true);
               }}
+              sx={iconButtonStyles}
+              size="small"
             >
-              <EditIcon />
+              <EditIcon fontSize="small" />
             </IconButton>
-          </>
+          </Tooltip>
         );
       },
     },

@@ -1,3 +1,12 @@
+export interface UserDataProps {
+  idRol: number;
+  name: string;
+  user: string;
+  userId: number;
+  client: boolean;
+  clientId?: number;
+}
+
 export interface ProposalProps  {
   company: string;
   well: string;

@@ -59,7 +59,7 @@ const DataProvider = ({ children }: Props) => {
       setIsSuccess(false);
       setIsError(false);
     }, 3000);
-  }, [isSuccess]);
+  }, [isSuccess, isError]);
 
   useEffect(() => {
     if (

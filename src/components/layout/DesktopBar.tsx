@@ -23,6 +23,17 @@ interface Props {
   title: string;
 }
 
+const iconStyles = {
+  backgroundColor: "rgb(251,171,53, 0.9)",
+  padding: "4px",
+  color: "white",
+  marginRight: "5px",
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: "rgb(90,100,119)",
+  },
+};
+
 export function DesktopBar({ title, buttons }: Props) {
   const { onLogout } = useContext(AuthContext);
   return (
@@ -73,8 +84,8 @@ export function DesktopBar({ title, buttons }: Props) {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Logout">
-              <IconButton onClick={onLogout} sx={{ p: 0 }}>
-                <LogoutIcon />
+              <IconButton onClick={onLogout} sx={iconStyles} size="medium">
+                <LogoutIcon fontSize="medium" sx={{ padding: "2px" }} />
               </IconButton>
             </Tooltip>
           </Box>

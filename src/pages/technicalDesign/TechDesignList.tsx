@@ -32,10 +32,19 @@ interface FetchResponse {
 }
 
 const dataGridStyles = {
-  border: "1px solid rgb(251,171,53)",
+  border: "1px solid rgb(90,100,119)",
   borderRadius: "10px",
   padding: "1%",
-  backgroundColor: "#FFF",
+};
+
+const iconButtonStyles = {
+  backgroundColor: "rgb(90,100,119)",
+  color: "white",
+  marginRight: "5px",
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: "rgb(251,171,53)",
+  },
 };
 
 export const TechDesignList = () => {
@@ -52,6 +61,71 @@ export const TechDesignList = () => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
 
   const columns: GridColDef[] = [
+    {
+      field: "action",
+      headerName: "Action",
+      renderHeader: () => <></>,
+      width: 290,
+      filterable: false,
+      sortable: false,
+      renderCell: (params: any) => {
+        return (
+          <>
+            <Tooltip title="Edit">
+              <IconButton
+                onClick={() => navigate(`/tech/${params.row?.id}`)}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <EditIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Duplicate">
+              <IconButton
+                onClick={() => {
+                  fetchDataTechProp(params.row?.id);
+                  navigate("/tech/0");
+                }}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <FileCopyIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Create Order">
+              <IconButton
+                onClick={() => navigate(`/sales/tech/${params.row?.id}`)}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <SellIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Print">
+              <IconButton
+                onClick={() => navigate(`/tech/${params.row?.id}?pdf=true`)}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <PrintIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Delete">
+              <IconButton
+                onClick={() => {
+                  setIdToDelete(params.row?.id);
+                  setIsOpenAlert(true);
+                }}
+                sx={iconButtonStyles}
+                size="small"
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          </>
+        );
+      },
+    },
     {
       field: "client",
       headerName: "Client",
@@ -83,59 +157,6 @@ export const TechDesignList = () => {
       width: 120,
       valueGetter: (params: GridValueGetterParams) =>
         getDateFromString(params.row?.date),
-    },
-    {
-      field: "action",
-      headerName: "Action",
-      renderHeader: () => <strong>{"ACTION"}</strong>,
-      width: 270,
-      filterable: false,
-      sortable: false,
-      renderCell: (params: any) => {
-        return (
-          <>
-            <Tooltip title="Edit">
-              <IconButton onClick={() => navigate(`/tech/${params.row?.id}`)}>
-                <EditIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Duplicate">
-              <IconButton
-                onClick={() => {
-                  fetchDataTechProp(params.row?.id);
-                  navigate("/tech/0");
-                }}
-              >
-                <FileCopyIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Create Order">
-              <IconButton
-                onClick={() => navigate(`/sales/tech/${params.row?.id}`)}
-              >
-                <SellIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Print">
-              <IconButton
-                onClick={() => navigate(`/tech/${params.row?.id}?pdf=true`)}
-              >
-                <PrintIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Delete">
-              <IconButton
-                onClick={() => {
-                  setIdToDelete(params.row?.id);
-                  setIsOpenAlert(true);
-                }}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-          </>
-        );
-      },
     },
   ];
 

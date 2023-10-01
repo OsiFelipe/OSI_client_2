@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton, useMediaQuery } from "@mui/material";
+import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import {
   DataGrid,
   GridColDef,
@@ -16,35 +16,48 @@ interface Props {
   proposals: ProposalProps[];
   tallies: ProposalProps[];
 }
+const dataGridStyles = {
+  border: "1px solid rgb(90,100,119)",
+  borderRadius: "10px",
+  padding: "1%",
+  marginTop: "5vh",
+  marginRight: "1rem",
+};
+
+const iconButtonStyles = {
+  backgroundColor: "rgb(90,100,119)",
+  color: "white",
+  marginRight: "5px",
+  borderRadius: "10px",
+  "&:hover": {
+    backgroundColor: "rgb(251,171,53)",
+  },
+};
 
 export const TableWellDetail = ({ proposals, tallies }: Props) => {
   const navigate = useNavigate();
   const { getDateFromString } = useDate();
   const matches = useMediaQuery("(min-width:600px)");
-  const dataGridStyles = {
-    border: "1px solid rgb(251,171,53)",
-    borderRadius: "10px",
-    margin: "1rem",
-    marginTop: "5vh",
-    backgroundColor: "#FFF",
-  };
+
   const columnsTech: GridColDef[] = [
     {
       field: "detail",
-      headerName: "Action",
-      renderHeader: () => <strong>{"DETAIL"}</strong>,
+      headerName: "Detail",
+      renderHeader: () => <></>,
       width: 100,
       renderCell: (params: any) => {
         return (
-          <>
+          <Tooltip title="Detail">
             <IconButton
               onClick={() => {
                 navigate(`/tech/${params.row.id}`);
               }}
+              sx={iconButtonStyles}
+              size="small"
             >
-              <OpenInNewIcon />
+              <OpenInNewIcon fontSize="small" />
             </IconButton>
-          </>
+          </Tooltip>
         );
       },
     },
@@ -77,8 +90,10 @@ export const TableWellDetail = ({ proposals, tallies }: Props) => {
               onClick={() => {
                 navigate(`/tech/${params.row.id}`);
               }}
+              sx={iconButtonStyles}
+              size="small"
             >
-              <OpenInNewIcon />
+              <OpenInNewIcon fontSize="small" />
             </IconButton>
           </>
         );
@@ -89,7 +104,7 @@ export const TableWellDetail = ({ proposals, tallies }: Props) => {
       headerName: "TALLY DESIGN",
       renderHeader: () => <strong>{"TALLY DESIGN"}</strong>,
       sortable: true,
-      width: 300,
+      width: 200,
     },
     {
       field: "date",

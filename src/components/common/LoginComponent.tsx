@@ -101,13 +101,13 @@ export function LoginComponent({
               </Link> */}
             </Grid>
             <Grid item>
-              {/* <Link
+              <Link
                 href="/login"
                 variant="body2"
                 style={{ color: "black", fontWeight: "bold" }}
               >
                 {"Login as Client"}
-              </Link> */}
+              </Link>
             </Grid>
           </Grid>
         </Box>
