@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
-import { AlertComponent, NavBar, ShowContent, Spinner } from "../../components";
+import {
+  AlertComponent,
+  NavBar,
+  SearchInput,
+  ShowContent,
+  Spinner,
+} from "../../components";
 import { useDate, useFetch, useRequest } from "../../hooks";
-import { UserDataProps } from "../../interfaces/interfaces";
+import {
+  ClientProps,
+  UserDataProps,
+  WellProps,
+} from "../../interfaces/interfaces";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
+import { Grid, IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import { Download } from "@mui/icons-material";
 import styles from "../main.module.sass";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { useFilter } from "../../hooks/useFilter";
 
 interface Props extends UserDataProps {
   id: number;
@@ -31,6 +42,8 @@ const dataGridStyles = {
   border: "1px solid rgb(90,100,119)",
   borderRadius: "10px",
   padding: "1%",
+  height: "75vh",
+  width: "90%",
 };
 
 const iconButtonStyles = {
@@ -50,9 +63,28 @@ export const PullingReportAdmin = () => {
   const { handleRequest } = useRequest();
   const { getDateFromString } = useDate();
   const [wellsByClient, setWellsByClient] = useState([]);
+  const [wellquery, setWellQuery] = useState("");
+  const [clientQuery, setClientQuery] = useState("");
+  const [pullQuery, setPullQuery] = useState("");
   const [dataPullingReport, setDataPullingReport] = useState<PullingProps[]>(
     []
   );
+  const { filteredData: clientData } = useFilter<ClientProps>(data?.data, {
+    query: clientQuery,
+    field: "name",
+  });
+  const { filteredData: wellData } = useFilter<WellProps>(wellsByClient, {
+    query: wellquery,
+    field: "name",
+  });
+  const { filteredData: pullingData } = useFilter<PullingProps>(
+    dataPullingReport,
+    {
+      query: pullQuery,
+      field: "customName",
+    }
+  );
+
   const [isCreatingReport, setIsCreatingReport] = useState(false);
   const [isError, setIsError] = useState(false);
   const matches = useMediaQuery("(min-width:600px)");
@@ -80,8 +112,13 @@ export const PullingReportAdmin = () => {
     };
     handleRequest({ endpoint: `pulling-list/${idWell}`, options })
       .then((response) => {
-        setDataPullingReport(response.data);
+        if (response.success) {
+          setDataPullingReport(response.data);
+        } else {
+          setIsError(true);
+        }
       })
+
       .catch((e) => setIsError(true));
   };
 
@@ -97,7 +134,12 @@ export const PullingReportAdmin = () => {
       };
       handleRequest({ endpoint: "pdf-pulling-adm", options })
         .then((response) => {
-          createPdfFile(response.data, name, download);
+          if (response.success) {
+            createPdfFile(response.data, name, download);
+          } else {
+            setIsError(true);
+          }
+          setIsCreatingReport(false);
         })
         .catch((e) => {
           setIsError(true);
@@ -128,7 +170,6 @@ export const PullingReportAdmin = () => {
       }
       setIsCreatingReport(false);
     } catch (e) {
-      console.log(e);
       setIsCreatingReport(false);
       setIsError(true);
     }
@@ -226,69 +267,93 @@ export const PullingReportAdmin = () => {
   let content: JSX.Element | JSX.Element[] = (
     <NavBar title="Pulling Reports" buttons={[]} />
   );
-  if (!data) {
+  if (!clientData) {
     content = <Spinner />;
   } else {
     content = (
       <>
         <NavBar title="Pulling Reports" buttons={[]} />
-        <div className={styles.pullingTableContainer}>
-          <DataGrid
-            slots={{ toolbar: GridToolbar }}
-            density={matches ? "standard" : "compact"}
-            style={dataGridStyles}
-            rows={data.data}
-            columns={clientColums}
-            className={styles.pullingTable}
-            loading={isLoading}
-            paginationModel={{
-              pageSize: 25,
-              page: 0,
-            }}
-            // rowCount={+pagination?.totalRecords}
-            onCellClick={(params) => fetchWellsByClientId(params.row.id)}
-            getCellClassName={() => {
-              return styles.cellClass;
-            }}
-            // paginationMode="server"
-            // autoPageSize
-            // paginationModel={paginationModel}
-            // onPaginationModelChange={fetchPaginationModel}
-          />
-          <DataGrid
-            slots={{ toolbar: GridToolbar }}
-            density={matches ? "standard" : "compact"}
-            style={dataGridStyles}
-            rows={wellsByClient}
-            columns={wellColumns}
-            className={styles.pullingTable}
-            loading={isLoading}
-            // rowCount={+pagination?.totalRecords}
+        <Grid container sx={{ marginTop: "2vh", marginLeft: "2vh" }}>
+          <Grid item xs={12} md={4}>
+            <SearchInput
+              label="Search Client"
+              value={clientQuery}
+              setValue={setClientQuery}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <SearchInput
+              label="Search Well"
+              value={wellquery}
+              setValue={setWellQuery}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <SearchInput
+              label="Search Pulling"
+              value={pullQuery}
+              setValue={setPullQuery}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <DataGrid
+              density={matches ? "standard" : "compact"}
+              style={dataGridStyles}
+              rows={clientData}
+              columns={clientColums}
+              className={styles.pullingTable}
+              loading={isLoading}
+              paginationModel={{
+                pageSize: 25,
+                page: 0,
+              }}
+              // rowCount={+pagination?.totalRecords}
+              onCellClick={(params) => fetchWellsByClientId(params.row.id)}
+              getCellClassName={() => {
+                return styles.cellClass;
+              }}
+              // paginationMode="server"
+              // autoPageSize
+              // paginationModel={paginationModel}
+              // onPaginationModelChange={fetchPaginationModel}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <DataGrid
+              density={matches ? "standard" : "compact"}
+              style={dataGridStyles}
+              rows={wellData}
+              columns={wellColumns}
+              className={styles.pullingTable}
+              loading={isLoading}
+              // rowCount={+pagination?.totalRecords}
 
-            onCellClick={(params) => fetchPullingReports(params.row.id)}
-            getCellClassName={() => {
-              return styles.cellClass;
-            }}
-            // paginationMode="server"
-            // autoPageSize
-            // paginationModel={paginationModel}
-            // onPaginationModelChange={fetchPaginationModel}
-          />
-          <DataGrid
-            slots={{ toolbar: GridToolbar }}
-            density={matches ? "standard" : "compact"}
-            style={dataGridStyles}
-            rows={dataPullingReport}
-            columns={columnsPullingReport}
-            className={styles.pullingTable}
-            loading={isLoading}
-            autoPageSize
-            // rowCount={+pagination?.totalRecords}
-            // paginationMode="server"
-            // paginationModel={paginationModel}
-            // onPaginationModelChange={fetchPaginationModel}
-          />
-        </div>
+              onCellClick={(params) => fetchPullingReports(params.row.id)}
+              getCellClassName={() => {
+                return styles.cellClass;
+              }}
+              // paginationMode="server"
+              // autoPageSize
+              // paginationModel={paginationModel}
+              // onPaginationModelChange={fetchPaginationModel}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <DataGrid
+              density={matches ? "standard" : "compact"}
+              style={dataGridStyles}
+              rows={pullingData}
+              columns={columnsPullingReport}
+              className={styles.pullingTable}
+              loading={isLoading}
+              autoPageSize
+              // rowCount={+pagination?.totalRecords}
+              // paginationMode="server"
+              // paginationModel={paginationModel}
+              // onPaginationModelChange={fetchPaginationModel}
+            />
+          </Grid>
+        </Grid>
         {isCreatingReport && <div className={styles.backdrop}></div>}
         {isError && <AlertComponent type="error" />}
       </>

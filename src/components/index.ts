@@ -1,3 +1,4 @@
+export { SearchInput } from './ui/SearchInput';
 export { LoginClientComponent } from './common/LoginClientComponent';
 export { TableWellDetail } from './well/TableWellDetail';
 export {StepperComponent} from './stepper/Stepper';

@@ -1,22 +1,34 @@
-import { useContext, useState } from "react";
-import { NavBar, ShowContent, Spinner } from "../../components";
+import { useContext, useEffect, useState } from "react";
+import {
+  AlertComponent,
+  NavBar,
+  SearchInput,
+  ShowContent,
+  Spinner,
+} from "../../components";
 import AuthContext from "../../context/AuthContext";
 import { useDate, useFetch, useRequest } from "../../hooks";
-import { UserDataProps } from "../../interfaces/interfaces";
+import { WellProps } from "../../interfaces/interfaces";
 import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import { IconButton, Tooltip, useMediaQuery } from "@mui/material";
+import {
+  Grid,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Tooltip,
+  useMediaQuery,
+} from "@mui/material";
 import PaginatorContext from "../../context/PaginatorContext";
 import { Download } from "@mui/icons-material";
 import styles from "../main.module.sass";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-
-interface Props extends UserDataProps {
-  id: number;
-}
+import { useFilter } from "../../hooks/useFilter";
+import SearchIcon from "@mui/icons-material/Search";
+import { Container } from "@mui/system";
 
 interface FetchResponse {
   success?: boolean;
-  data: Props[];
+  data: WellProps[];
 }
 
 interface PullingProps {
@@ -33,6 +45,8 @@ const dataGridStyles = {
   border: "1px solid rgb(90,100,119)",
   borderRadius: "10px",
   padding: "1%",
+  height: "75vh",
+  width: "90%",
 };
 
 const iconButtonStyles = {
@@ -50,13 +64,29 @@ export const PullingReportClient = () => {
   //   useContext(PaginatorContext);
   const { handleRequest } = useRequest();
   const { getDateFromString } = useDate();
-  const { clientId, isLoading } = useContext(AuthContext);
-  const { data, pagination } = useFetch<FetchResponse>(
+  const { clientId } = useContext(AuthContext);
+  const { data, pagination, isLoading } = useFetch<FetchResponse>(
     `well-client/${clientId}`
   );
   const matches = useMediaQuery("(min-width:600px)");
   const [dataPullingReport, setDataPullingReport] = useState<PullingProps[]>(
     []
+  );
+  const [isError, setIsError] = useState(false);
+  const [isCreatingReport, setIsCreatingReport] = useState(false);
+  const [wellquery, setWellQuery] = useState("");
+  const [pullQuery, setPullQuery] = useState("");
+  const { filteredData: wellData } = useFilter<WellProps>(data?.data, {
+    query: wellquery,
+    field: "name",
+  });
+
+  const { filteredData: pullingData } = useFilter<PullingProps>(
+    dataPullingReport,
+    {
+      query: pullQuery,
+      field: "customName",
+    }
   );
 
   const fetchPullingReports = (idWell: number) => {
@@ -67,11 +97,12 @@ export const PullingReportClient = () => {
       .then((response) => {
         setDataPullingReport(response.data);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => setIsError(true));
   };
 
   const fetchPullingByKey = (key: string, name: string, download: boolean) => {
     if (key) {
+      setIsCreatingReport(true);
       let options: RequestInit = {
         method: "POST",
         body: JSON.stringify({ key }),
@@ -81,9 +112,14 @@ export const PullingReportClient = () => {
       };
       handleRequest({ endpoint: "pdf-pulling", options })
         .then((response) => {
-          createPdfFile(response.data, name, download);
+          if (response.success) {
+            createPdfFile(response.data, name, download);
+          } else {
+            setIsError(true);
+          }
+          setIsCreatingReport(false);
         })
-        .catch((e) => console.log(e));
+        .catch((e) => setIsError(true));
     }
   };
 
@@ -108,7 +144,7 @@ export const PullingReportClient = () => {
         window.open(url);
       }
     } catch (e) {
-      console.log(e);
+      setIsError(true);
     }
   };
 
@@ -118,7 +154,7 @@ export const PullingReportClient = () => {
       headerName: "Well",
       renderHeader: () => <strong>{"WELL"}</strong>,
       sortable: true,
-      width: 500,
+      width: 200,
     },
   ];
 
@@ -194,46 +230,64 @@ export const PullingReportClient = () => {
   let content: JSX.Element | JSX.Element[] = (
     <NavBar title="Pulling Reports" buttons={[]} />
   );
-  if (!data) {
+  if (!wellData) {
     content = <Spinner />;
   } else {
     content = (
       <>
         <NavBar title="Pulling Reports" buttons={[]} />
-        <div className={styles.pullingTableContainer}>
-          <DataGrid
-            slots={{ toolbar: GridToolbar }}
-            density={matches ? "standard" : "compact"}
-            style={dataGridStyles}
-            rows={data.data}
-            columns={columns}
-            className={styles.pullingTable}
-            loading={isLoading}
-            rowCount={+pagination?.totalRecords}
-            onCellClick={(params) => fetchPullingReports(params.row.id)}
-            getCellClassName={() => {
-              return styles.cellClass;
-            }}
-            // paginationMode="server"
-            // autoPageSize
-            // paginationModel={paginationModel}
-            // onPaginationModelChange={fetchPaginationModel}
-          />
-          <DataGrid
-            slots={{ toolbar: GridToolbar }}
-            density={matches ? "standard" : "compact"}
-            style={dataGridStyles}
-            rows={dataPullingReport}
-            columns={columnsPullingReport}
-            className={styles.pullingTable}
-            loading={isLoading}
-            autoPageSize
-            // rowCount={+pagination?.totalRecords}
-            // paginationMode="server"
-            // paginationModel={paginationModel}
-            // onPaginationModelChange={fetchPaginationModel}
-          />
-        </div>
+        <Grid container sx={{ marginTop: "2vh", marginLeft: "2vh" }}>
+          <Grid item xs={12} md={6}>
+            <SearchInput
+              label="Search Well"
+              value={wellquery}
+              setValue={setWellQuery}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <SearchInput
+              label="Search Pulling Report"
+              value={pullQuery}
+              setValue={setPullQuery}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <DataGrid
+              density={matches ? "standard" : "compact"}
+              style={dataGridStyles}
+              rows={wellData}
+              columns={columns}
+              className={styles.pullingTable}
+              loading={isLoading}
+              rowCount={+pagination?.totalRecords}
+              onCellClick={(params) => fetchPullingReports(params.row.id)}
+              getCellClassName={() => {
+                return styles.cellClass;
+              }}
+              // paginationMode="server"
+              // autoPageSize
+              // paginationModel={paginationModel}
+              // onPaginationModelChange={fetchPaginationModel}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <DataGrid
+              density={matches ? "standard" : "compact"}
+              style={dataGridStyles}
+              rows={pullingData}
+              columns={columnsPullingReport}
+              className={styles.pullingTable}
+              loading={isLoading}
+              autoPageSize
+              // rowCount={+pagination?.totalRecords}
+              // paginationMode="server"
+              // paginationModel={paginationModel}
+              // onPaginationModelChange={fetchPaginationModel}
+            />
+          </Grid>
+        </Grid>
+        {isCreatingReport && <div className={styles.backdrop}></div>}
+        {isError && <AlertComponent type="error" />}
       </>
     );
   }
