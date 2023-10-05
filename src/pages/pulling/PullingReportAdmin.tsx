@@ -1,23 +1,28 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   AlertComponent,
+  ModalComponent,
   NavBar,
   SearchInput,
   ShowContent,
   Spinner,
+  UploadFileForm,
 } from "../../components";
 import { useDate, useFetch, useRequest } from "../../hooks";
 import {
   ClientProps,
+  PullingReportProps,
   UserDataProps,
   WellProps,
 } from "../../interfaces/interfaces";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Grid, IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import { Download } from "@mui/icons-material";
 import styles from "../main.module.sass";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import { useFilter } from "../../hooks/useFilter";
+import DataContext from "../../context/DataContext";
 
 interface Props extends UserDataProps {
   id: number;
@@ -57,8 +62,6 @@ const iconButtonStyles = {
 };
 
 export const PullingReportAdmin = () => {
-  // const { paginationModel, fetchPaginationModel } =
-  //   useContext(PaginatorContext);
   const { data, isLoading } = useFetch<FetchResponse>("client");
   const { handleRequest } = useRequest();
   const { getDateFromString } = useDate();
@@ -84,18 +87,29 @@ export const PullingReportAdmin = () => {
       field: "customName",
     }
   );
-
+  const [idClientSelected, setIdClientSelected] = useState(0);
+  const [idWellSelected, setIdWellSelected] = useState(null);
   const [isCreatingReport, setIsCreatingReport] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const matches = useMediaQuery("(min-width:600px)");
+  const { clientOptions, wellOptions, fetchDataWells, fetchDataClient } =
+    useContext(DataContext);
 
   useEffect(() => {
     setTimeout(() => {
       setIsError(false);
+      setIsSuccess(false);
     }, 4000);
-  }, [isError]);
+  }, [isError, isSuccess]);
+
+  useEffect(() => {
+    fetchDataClient();
+  }, []);
 
   const fetchWellsByClientId = (idClient: number) => {
+    setIdClientSelected(idClient);
     let options: RequestInit = {
       method: "GET",
     };
@@ -169,6 +183,38 @@ export const PullingReportAdmin = () => {
         window.open(url);
       }
       setIsCreatingReport(false);
+    } catch (e) {
+      setIsCreatingReport(false);
+      setIsError(true);
+    }
+  };
+
+  const handleUploadPulling = async ({
+    client,
+    well,
+    file,
+    customName,
+  }: PullingReportProps) => {
+    try {
+      setIsCreatingReport(true);
+      setIsModalOpen(false);
+      let formData = new FormData();
+      formData.append("client", JSON.stringify(client));
+      formData.append("well", JSON.stringify(well));
+      customName && formData.append("customName", customName);
+      formData.append("file", file, file.name);
+      const response = await fetch(
+        process.env.REACT_APP_DEV_API + "/pulling-upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const res = await response.json();
+      if (res.success) {
+        setIsCreatingReport(false);
+        setIsSuccess(true);
+      }
     } catch (e) {
       setIsCreatingReport(false);
       setIsError(true);
@@ -264,6 +310,15 @@ export const PullingReportAdmin = () => {
     },
   ];
 
+  const buttons = [
+    {
+      title: "Upload",
+      action: () => setIsModalOpen(true),
+      icon: <DriveFolderUploadIcon />,
+      disabled: false,
+    },
+  ];
+
   let content: JSX.Element | JSX.Element[] = (
     <NavBar title="Pulling Reports" buttons={[]} />
   );
@@ -272,7 +327,7 @@ export const PullingReportAdmin = () => {
   } else {
     content = (
       <>
-        <NavBar title="Pulling Reports" buttons={[]} />
+        <NavBar title="Pulling Reports" buttons={buttons} />
         <Grid container sx={{ marginTop: "2vh", marginLeft: "2vh" }}>
           <Grid item xs={12} md={4}>
             <SearchInput
@@ -303,19 +358,13 @@ export const PullingReportAdmin = () => {
               columns={clientColums}
               className={styles.pullingTable}
               loading={isLoading}
-              paginationModel={{
-                pageSize: 25,
-                page: 0,
+              onCellClick={(params) => {
+                fetchWellsByClientId(params.row.id);
               }}
-              // rowCount={+pagination?.totalRecords}
-              onCellClick={(params) => fetchWellsByClientId(params.row.id)}
               getCellClassName={() => {
                 return styles.cellClass;
               }}
-              // paginationMode="server"
-              // autoPageSize
-              // paginationModel={paginationModel}
-              // onPaginationModelChange={fetchPaginationModel}
+              pagination
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -326,16 +375,14 @@ export const PullingReportAdmin = () => {
               columns={wellColumns}
               className={styles.pullingTable}
               loading={isLoading}
-              // rowCount={+pagination?.totalRecords}
-
-              onCellClick={(params) => fetchPullingReports(params.row.id)}
+              onCellClick={(params) => {
+                fetchPullingReports(params.row.id);
+                setIdWellSelected(params.row.id);
+              }}
               getCellClassName={() => {
                 return styles.cellClass;
               }}
-              // paginationMode="server"
-              // autoPageSize
-              // paginationModel={paginationModel}
-              // onPaginationModelChange={fetchPaginationModel}
+              pagination
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -347,15 +394,30 @@ export const PullingReportAdmin = () => {
               className={styles.pullingTable}
               loading={isLoading}
               autoPageSize
-              // rowCount={+pagination?.totalRecords}
-              // paginationMode="server"
-              // paginationModel={paginationModel}
-              // onPaginationModelChange={fetchPaginationModel}
+              pagination
             />
           </Grid>
         </Grid>
         {isCreatingReport && <div className={styles.backdrop}></div>}
+        {isSuccess && <AlertComponent type="success" />}
         {isError && <AlertComponent type="error" />}
+        {isModalOpen && data && (
+          <ModalComponent
+            modalContent={
+              <UploadFileForm
+                clientOptions={clientOptions}
+                wellOptions={wellOptions}
+                fetchDataWells={fetchDataWells}
+                onUploadFile={(values: PullingReportProps) => {
+                  handleUploadPulling(values);
+                }}
+                onCancel={() => {
+                  setIsModalOpen(false);
+                }}
+              />
+            }
+          />
+        )}
       </>
     );
   }

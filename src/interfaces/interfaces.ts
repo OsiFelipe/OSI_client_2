@@ -367,4 +367,11 @@ export interface PressureSimulatorResultProps {
   lossPressure: number;
 }
 
+export interface PullingReportProps {
+  client: ClientProps;
+  well: WellProps;
+  customName?: string;
+  file: any
+}
+
 

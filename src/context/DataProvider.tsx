@@ -132,7 +132,6 @@ const DataProvider = ({ children }: Props) => {
   };
 
   const handleUpdateBhaDesign = (item: string, newValue: any) => {
-    console.log(item, newValue);
     item === "sandLift" &&
       setTallyDesign(updateTallyInfo(tallyDesign, undefined, newValue));
     setBasicinfo((prev) => {

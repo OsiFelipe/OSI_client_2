@@ -23,7 +23,7 @@ export const ImageSolution = ({ solution, onUploadImage }: Props) => {
       };
 
       reader.onerror = function () {
-        console.log(reader.error);
+        console.log();
       };
     }
   };

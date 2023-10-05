@@ -1,5 +1,3 @@
-import { Base64 } from "js-base64";
-
 interface Props {
   endpoint: string;
   options?: RequestInit;

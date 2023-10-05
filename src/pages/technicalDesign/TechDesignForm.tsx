@@ -17,7 +17,7 @@ import {
 import { useFetch } from "../../hooks";
 import { ClientProps, ProductProps } from "../../interfaces/interfaces";
 import styles from "../main.module.sass";
-import { useContext, useEffect, useReducer, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import DataContext from "../../context/DataContext";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { PDFView } from "../../components/pdf";

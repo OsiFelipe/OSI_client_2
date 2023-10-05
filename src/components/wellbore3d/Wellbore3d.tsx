@@ -40,7 +40,7 @@ export const Wellbore3d = () => {
       };
 
       reader.onerror = function () {
-        console.log(reader.error);
+        console.log();
       };
     }
   };

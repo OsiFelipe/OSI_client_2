@@ -1024,6 +1024,19 @@ export const max_vel_pg = {
 }
 
 
+export const additional_info_options  = [
+    "1ST PULLING REPORT", 
+    "2ND PULLING REPORT",
+    "3RD PULLING REPORT",
+    "4TH PULLING REPORT",
+    "5TH PULLING REPORT",
+    "6TH PULLING REPORT",
+    "7TH PULLING REPORT",
+    "8TH PULLING REPORT",
+    "9TH PULLING REPORT",
+    "10TH PULLING REPORT",
+];
+
 
                 
              

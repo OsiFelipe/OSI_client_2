@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
   AlertComponent,
   NavBar,
@@ -9,22 +9,12 @@ import {
 import AuthContext from "../../context/AuthContext";
 import { useDate, useFetch, useRequest } from "../../hooks";
 import { WellProps } from "../../interfaces/interfaces";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
-import {
-  Grid,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Tooltip,
-  useMediaQuery,
-} from "@mui/material";
-import PaginatorContext from "../../context/PaginatorContext";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Grid, IconButton, Tooltip, useMediaQuery } from "@mui/material";
 import { Download } from "@mui/icons-material";
 import styles from "../main.module.sass";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { useFilter } from "../../hooks/useFilter";
-import SearchIcon from "@mui/icons-material/Search";
-import { Container } from "@mui/system";
 
 interface FetchResponse {
   success?: boolean;
@@ -65,7 +55,7 @@ export const PullingReportClient = () => {
   const { handleRequest } = useRequest();
   const { getDateFromString } = useDate();
   const { clientId } = useContext(AuthContext);
-  const { data, pagination, isLoading } = useFetch<FetchResponse>(
+  const { data, isLoading } = useFetch<FetchResponse>(
     `well-client/${clientId}`
   );
   const matches = useMediaQuery("(min-width:600px)");
@@ -76,6 +66,7 @@ export const PullingReportClient = () => {
   const [isCreatingReport, setIsCreatingReport] = useState(false);
   const [wellquery, setWellQuery] = useState("");
   const [pullQuery, setPullQuery] = useState("");
+
   const { filteredData: wellData } = useFilter<WellProps>(data?.data, {
     query: wellquery,
     field: "name",
@@ -154,7 +145,7 @@ export const PullingReportClient = () => {
       headerName: "Well",
       renderHeader: () => <strong>{"WELL"}</strong>,
       sortable: true,
-      width: 200,
+      width: 500,
     },
   ];
 
@@ -206,7 +197,7 @@ export const PullingReportClient = () => {
       headerName: "Name",
       renderHeader: () => <strong>{"Pulling Report"}</strong>,
       sortable: true,
-      width: 260,
+      width: 400,
       renderCell: (params: any) => {
         return (
           <Tooltip title={params.row.customName}>
@@ -259,15 +250,13 @@ export const PullingReportClient = () => {
               columns={columns}
               className={styles.pullingTable}
               loading={isLoading}
-              rowCount={+pagination?.totalRecords}
-              onCellClick={(params) => fetchPullingReports(params.row.id)}
               getCellClassName={() => {
                 return styles.cellClass;
               }}
-              // paginationMode="server"
-              // autoPageSize
-              // paginationModel={paginationModel}
-              // onPaginationModelChange={fetchPaginationModel}
+              onCellClick={(params) => {
+                fetchPullingReports(params.row.id);
+              }}
+              pagination
             />
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
@@ -279,10 +268,10 @@ export const PullingReportClient = () => {
               className={styles.pullingTable}
               loading={isLoading}
               autoPageSize
-              // rowCount={+pagination?.totalRecords}
-              // paginationMode="server"
-              // paginationModel={paginationModel}
-              // onPaginationModelChange={fetchPaginationModel}
+              getCellClassName={() => {
+                return styles.cellClass;
+              }}
+              pagination
             />
           </Grid>
         </Grid>
